@@ -346,7 +346,7 @@ frontend/yarn.lock
 backend/bin/Debug/netcoreapp2.0/backend.runtimeconfig.dev.json
 
 # Config File in text
-
+backend/ConnectionStringFile.txt
 
 *.swp
 *.*~
@@ -382,3 +382,4 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+frontend/package-lock.json
