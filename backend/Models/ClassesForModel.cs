@@ -4,19 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace backend.ClassesForModel {
+namespace backend.Models {
 
         public class Product
     {
         public int Id { get; set; }
-        [StringLength(100)]
         public string Name { get; set; }
+        [StringLength(100)]
         public string Description { get; set; }
         public string Color { get; set; }
         public decimal Price { get; set; }
         public int ProductSizeId { get; set; }   //Done // F1
         public ProductSize ProductSize { get; set; }  //Many to One
         public int Amount { get; set; }
+        public string ImageName {get;set;}
         public Discount Discount {get; set;} //One to One
         public ProductSold ProductSold {get; set;}
         public ICollection<WishListProduct> WishListProducts {get; set;}  //One to Many
@@ -27,7 +28,7 @@ namespace backend.ClassesForModel {
     {
         [Key]
         public int Id { get; set; }
-        public int SizeName {get; set;}
+        public string SizeName {get; set;}
         public ICollection<Product> Products {get;set;} // One To Many
     }
         public class ProductCategory
@@ -126,7 +127,6 @@ namespace backend.ClassesForModel {
         public User User {get; set;}
         [StringLength(10)]
         public string PostalCode {get; set;}
-        [StringLength(100)]
         public string Street {get; set;}
         [StringLength(100)]
         public string City {get; set;}
