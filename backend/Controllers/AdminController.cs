@@ -23,7 +23,7 @@ namespace backend.Controllers
             var result = from m in _context.Products select m;
             return result;
         }
-                // GET api/admin/users/all
+        // GET api/admin/users/all
         [HttpGet("users/all")]
         public IQueryable<User> GetAllUsers()
         {
@@ -41,7 +41,7 @@ namespace backend.Controllers
             }
             return new ObjectResult(product);
         }
-                // GET api/admin/users/id
+         // GET api/admin/users/id
         [HttpGet("users/{id}")]
         public IActionResult GetUserByName(string name)
         {
@@ -52,21 +52,22 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
-        // POST api/admin/products/create
-        [HttpPost("products/create")]
-        public IActionResult Post([FromBody]Product product)
-        {
-            if(product == null){
-                return NoContent();
-            }
-            _context.Products.Add(product);
-            _context.SaveChanges();
-            return Ok();
-        }
+        // // POST api/admin/categories/create
+        // [HttpPost("categories/create")]
+        // public IActionResult PostCategory([FromBody]Category category)
+        // {
+        //     if(category == null){
+        //         return NoContent();
+        //     }
+        //     _context.Categories.Add(category);
+        //     _context.SaveChanges();
+        //     return Ok();
 
-        // PUT api/products/id
+        // }
+
+       // PUT api/admin/products/id
         [HttpPut("products/update/{id}")]
-        public IActionResult Put(int id, [FromBody]Product product_edit)
+        public IActionResult PutProduct(int id, [FromBody]Product product_edit)
         {
             if(product_edit == null){
                 return NoContent();
@@ -78,16 +79,72 @@ namespace backend.Controllers
             product.Description = product_edit.Description;
             product.Color = product_edit.Color;
             product.ProductSizeId = product_edit.ProductSizeId;
+            product.ImageName = product_edit.ImageName;
+            product.Discount = product_edit.Discount;
+            product.ProductSold = product_edit.ProductSold;
+            product.WishListProducts = product_edit.WishListProducts;
+            product.Categories = product_edit.Categories;
 
             var result = _context.Products.Update(product);
             _context.SaveChanges();
 
             return Ok();
         }
+               // PUT api/admin/products/id
+        [HttpPut("users/update/{id}")]
+        public IActionResult PutUser(int id, [FromBody]User user_edit)
+        {
+            if(user_edit == null){
+                return NoContent();
+            }
+            var user = _context.Users.FirstOrDefault (m => m.Id == id);
+            user.Name = user_edit.Name;
+            user.Email = user_edit.Email;
+            user.Password = user_edit.Password;
+            user.Salt = user_edit.Salt;
+            user.Ip = user_edit.Salt;
+            user.Rank = user_edit.Rank;
+            user.ProductsSold = user_edit.ProductsSold;
+            user.Orders = user_edit.Orders;
+            user.WishListProducts = user_edit.WishListProducts;
+            user.Addresses = user_edit.Addresses;
+            var result = _context.Users.Update(user);
+            _context.SaveChanges();
 
-        // DELETE api/products/id
+            return Ok();
+        }
+
+        // DELETE api/admin/products/id
         [HttpDelete("products/delete/{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteProduct(int id)
+        {
+            var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
+            if(result == null){
+                return NotFound();
+            }
+            _context.Products.Remove(result);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        // DELETE api/admin/users/id
+        [HttpDelete("users/delete/{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var result = (from m in _context.Users where m.Id ==  id select m).FirstOrDefault();
+            if(result == null){
+                return NotFound();
+            }
+            _context.Users.Remove(result);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+                // DELETE api/admin/products/all
+        [HttpDelete("users/delete/{id}")]
+        public IActionResult DeleteAllProducts(int id)
         {
             var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
             if(result == null){
