@@ -3,6 +3,7 @@ namespace backend.DTOs
 {
     public class ProductDto    //Wordt gebruikt wanneer je browset naar producten
     {
+        public int Id {get;set;}
         public string Name { get; set; }
         public decimal Price { get; set; }
 

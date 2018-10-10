@@ -1,12 +1,7 @@
 
- function  get (){
-
-
- var canvas = document.getElementById('canvas');
- var ctx = canvas.getContext('2d');
- var image = document.getElementById('source');
-
- ctx.drawImage(image, 33, 71, 104, 124, 21, 20, 87, 104);
-
-}
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.src = document.getElementById('source').src;
+    ctx.drawImage(img, 33, 71);
 

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import * as React from 'react';
+import './ProductList.css';
 
 export default class ProductList extends React.Component< any, any> {
 	
 	constructor(props:any) {
 		super(props);
 		this.state = {
-		products:[], request: null, status: null,  
+		products:[], request: null,  showDiscription: false, status: null, 
         };
         
     }
@@ -20,21 +21,36 @@ export default class ProductList extends React.Component< any, any> {
       })
        
     }
-    public render() {
-        console.log(this.state.status);
-        console.log(this.state.request);     
+
+    public renderAllProducts(product){
+        const derp = () => {
+            this.setState({showDiscription:1})
+        }
+        return ( <ul key={product.name} className="product">             
+        <canvas id="canvas"/>
+            <div>
+            <img id="source" src={product.imageName}
+                width="300" height="300"/>                                   
+         </div>
+         <script src="pd.js"/>
+         
+         <li data-onClick={derp}>{product.name}</li>   
+
+        <li>{product.price}</li> 
+
+        </ul>);
+    }
+
+
+
+    public render() {   
+        var showProducts = this.state.products.map(this.renderAllProducts);
+        if(this.state.showDiscription !== false){
+            showProducts = "show discription for product id :" + this.state.showDiscription;
+        }
         return (
         <div className="container2"> 
-                { this.state.products.map((product: any) => 
-                <div key= {product.name}>
-                <canvas id="canvas"/>
-                    <div>
-                    <img id="source" src={product.imageName}
-                        width="300" height="227"/>                                   
-                 </div>
-                <span>{product.name}</span>  
-                </div>
-                )} 
+                {showProducts } 
         </div>
         );
     }

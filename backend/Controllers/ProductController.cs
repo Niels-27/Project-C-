@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
-using System.Data.SqlClient;
+using System.Web;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 using backend.Models;
 using backend.DTOs;
 using Npgsql;
@@ -20,11 +22,11 @@ namespace backend.Controllers
 
             _context = context;
         }
-
         // Typed lambda expression for Select() method.     ///For turning a Product into a ProductDTO For the Catalogus
         private static readonly Expression<Func<Product, ProductDto>> AsProductDto = 
             x => new ProductDto
             {
+                Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
                 ImageName = x.ImageName,
@@ -136,7 +138,7 @@ namespace backend.Controllers
 
 
         [HttpGet("{id}/details")]
-        public async Task<IActionResult> GetProductDetail(int id)
+        public async Task<IActionResult> GetProductDetail(int id)    ///To get specific information about products
         {
             var product = await (from p in _context.Products
             where p.Id == id
@@ -157,5 +159,15 @@ namespace backend.Controllers
             }
             return Ok(product);
         }
+
+            //     [HttpGet("all/{image}")]
+            // public ActionResult Image(string id)
+            // {
+            //     var dir = Server.MapPath("/Images");
+            //     var path = Path.Combine(dir, id + ".jpg"); //validate the path for security or use other means to generate the path.
+            //     return base.File(path, "image/jpeg");
+            // }
+
+        
     }
 }

@@ -9,10 +9,10 @@ using System;
 
 namespace backend.Models
 {
-public class FashionContext : DbContext
+public class FashionContext : DbContext  //De database
     {
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }  //Alle tabellen in de database
         public DbSet<ProductSize> ProductSizes { get; set; }       
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -25,63 +25,65 @@ public class FashionContext : DbContext
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Country> Countries { get; set; }
 
-        public FashionContext(DbContextOptions<FashionContext> options): base(options)
+        public FashionContext(DbContextOptions<FashionContext> options): base(options) 
         {       
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>()  // Relation Many-To-Many: product to product-category and category to product-category
-            .HasKey(t => new { t.Id });
-            modelBuilder.Entity<ProductCategory>()
+            .HasKey(t => new { t.Id });  //Primary Key
+
+            modelBuilder.Entity<ProductCategory>()   //Van Product naar Productcategory
             .HasOne<Product>(ma => ma.Product)
-            .WithMany(m => m.Categories)
+            .WithMany(m => m.Categories)   //One product has many categories
             .HasForeignKey(ma => ma.ProductId);
-            modelBuilder.Entity<ProductCategory>()
+
+            modelBuilder.Entity<ProductCategory>() //Van Category naar Productcategory
             .HasOne<Category>(ma => ma.Category)
-            .WithMany(m => m.Products)
+            .WithMany(m => m.Products)   //One Category has many Products
             .HasForeignKey(ma => ma.CategoryId);
 
             // Initial Data for Products Tabel (10 products for test)
             modelBuilder.Entity<Product>().HasData(new Product{Id = 1, Name = "Zwarte Sweat Shirt",    //#1
             Description = "Coole zwarte sweatshirt voor heren.", Color = "Zwart", 
-            Price = 39.99M, ProductSizeId = 3, Amount = 20, ImageName="Black-History-Sweat-Shirt.jpg"  });
+            Price = 39.99M, ProductSizeId = 3, Amount = 20, ImageName="https://img.represent.com/uploads/c316464e3c69408be954c6d05edd10a9.jpg?auto=format&w=750"  });
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 2, Name = "Zwarte Schoenen",  //#2
             Description = "Gentleman schoenen voor echte heren", Color = "Zwart", 
-            Price = 19.99M, ProductSizeId = 17, Amount = 20, ImageName="Gentleman-Shoes.jpg"});
+            Price = 19.99M, ProductSizeId = 17, Amount = 20, ImageName="https://assets.adidas.com/images/w_600,f_auto,q_auto/ab12ced1d0a14151b88ea7fa00ee94a1_9366/Superstar_Foundation_Shoes_Black_B27140_01_standard.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 3, Name = "Adidas Swag Shirt",  //#3
             Description = "Super coole Adidas swag shirt.", Color = "Zwart", 
-            Price = 24.99M, ProductSizeId = 3, Amount = 20, ImageName="Cool-Black-Tshirt.jpg"});
+            Price = 24.99M, ProductSizeId = 3, Amount = 20, ImageName="https://kickz.akamaized.net/en/media/images/p/600/adidas-CLFN_T_Shirt-BLACK_MEDIUM_GREY_HEATHER_WHITE-1.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 4, Name = "Koreaanse Jeans",  //#4
             Description = "Stoere Koreaanse Jeans van denim voor heren.", Color = "Blauw", 
-            Price = 49.99M, ProductSizeId = 3, Amount = 20, ImageName="Korean-Jeans.jpg"});
+            Price = 49.99M, ProductSizeId = 3, Amount = 20, ImageName="https://www.local-outerwear.eu/wp-content/uploads/2015/11/W16-902BJ-Dawn_Front.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 5, Name = "Zwarte Vest",   //#5
             Description = "Super coole zwarte vest voor echte swaggers.", Color = "Black", 
-            Price = 79.99M, ProductSizeId = 4, Amount = 20, ImageName="Grafische-Sweat-Shirt.jpg"});
+            Price = 79.99M, ProductSizeId = 4, Amount = 20, ImageName="https://images.esellerpro.com/2294/I/111/28/lrgscaleNH45BLACK_NEW.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 6, Name = "Sexy Vrouwen Jeans",   //#6
             Description = "Sexy strakke jeans voor vrouwen met scheuren.", Color = "Blauw", 
-            Price = 29.99M, ProductSizeId = 2, Amount = 20, ImageName="Sexy-Woman-Jeans-Denim-Blue.jpg"});
+            Price = 29.99M, ProductSizeId = 2, Amount = 20, ImageName="https://images-na.ssl-images-amazon.com/images/I/71lO9goTlGL._UY445_.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 7, Name = "Rode Swag Hoodie",  //#7
             Description = "Thug Life rode swag hoodie voor jongens. Word een beest in deze hoodie!", Color = "Rood", 
-            Price = 45.99M, ProductSizeId = 5, Amount = 20, ImageName="Swag-Hoodie-Red.jpg"});
+            Price = 45.99M, ProductSizeId = 5, Amount = 20, ImageName="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmSJ2f1znHd7v7lL18PLNS3A7dL_UQeuqU6NmiyscbY1NFRqpvJA"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 8, Name = "Witte Adidas Schoen",  //#8
             Description = "Witte Swag Adidas schoenen voor heren. Boost je Imago en wordt de baddest" +
             " boy in je omgeving met deze schoenen. ", Color = "Wit", 
-            Price = 17.99M, ProductSizeId = 19, Amount = 20, ImageName="White-Shoe-Adidas.jpg"});
+            Price = 17.99M, ProductSizeId = 19, Amount = 20, ImageName="https://dtpmhvbsmffsz.cloudfront.net/posts/2017/09/13/59b958a17f0a053a7b03e25f/m_59b958b8713fde7bfd03fda2.jpg"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 9, Name = "Zwarte Swag Boots",  //#9
             Description = "Swag Boots voor stoere vrouwen. Word de baddest chick in town.", Color = "Zwart", 
-            Price = 39.99M, ProductSizeId = 10, Amount = 20, ImageName="Swag-Boot-Black-Shoes.jpg"});
+            Price = 39.99M, ProductSizeId = 10, Amount = 20, ImageName="https://images.timberland.com/is/image/timberland/10073009-HERO?$PDP-FULL-IMAGE$"});
 
             modelBuilder.Entity<Product>().HasData(new Product{Id = 10, Name = "Geel Shirt",  //#10
             Description = "Geel shirt voor heren. Opvallende kleur zodat iedereen je ziet staan.", Color = "Geel", 
-            Price = 14.99M, ProductSizeId = 2, Amount = 20, ImageName="Yellow-shirt.jpg"});
+            Price = 14.99M, ProductSizeId = 2, Amount = 20, ImageName="https://scene7.zumiez.com/is/image/zumiez/pdp_hero/DOPE-Global-Yellow-T-Shirt-_297867-front-US.jpg"});
 
             modelBuilder.Entity<ProductCategory>().HasData(
                 new {Id = 1, ProductId = 1, CategoryId = 2},
