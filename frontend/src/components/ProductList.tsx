@@ -22,10 +22,14 @@ export default class ProductList extends React.Component< any, any> {
        
     }
 
+
     public renderAllProducts(product){
-        const derp = () => {
-            this.setState({showDiscription:1})
-        }
+
+        const deleteUser = () => {
+            console.log(product.id );
+            //// navigate to new product page with link
+        };
+
         return ( <ul key={product.name} className="product">             
         <canvas id="canvas"/>
             <div>
@@ -34,9 +38,9 @@ export default class ProductList extends React.Component< any, any> {
          </div>
          <script src="pd.js"/>
          
-         <li data-onClick={derp}>{product.name}</li>   
+            <li onClick={deleteUser}>{product.name}</li>   
 
-        <li>{product.price}</li> 
+            <li>{product.price}</li> 
 
         </ul>);
     }
@@ -44,13 +48,9 @@ export default class ProductList extends React.Component< any, any> {
 
 
     public render() {   
-        var showProducts = this.state.products.map(this.renderAllProducts);
-        if(this.state.showDiscription !== false){
-            showProducts = "show discription for product id :" + this.state.showDiscription;
-        }
         return (
         <div className="container2"> 
-                {showProducts } 
+                {this.state.products.map(this.renderAllProducts.bind(this)) } 
         </div>
         );
     }
