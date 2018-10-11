@@ -25,7 +25,7 @@ export default class ProductList extends React.Component< any, any> {
 
     public renderAllProducts(product){
 
-        const deleteUser = () => {
+        const onClickProduct = () => {
             console.log(product.id );
             //// navigate to new product page with link
         };
@@ -38,7 +38,7 @@ export default class ProductList extends React.Component< any, any> {
          </div>
          <script src="pd.js"/>
          
-            <li onClick={deleteUser}>{product.name}</li>   
+            <li onClick={onClickProduct}>{product.name}</li>   
 
             <li>{product.price}</li> 
 
