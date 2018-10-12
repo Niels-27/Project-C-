@@ -1,18 +1,9 @@
 import './App.css';
 import * as React from 'react';
+
+// import components here
 import Home from './pages/home';
-
-
-
- // mport Navbar from './components/NavBar';
- // import ProductList from './components/ProductList';
-import { 
-  Route,
-
-  HashRouter as Router,
-
-  Switch
-} from 'react-router-dom';
+import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
 
 class App extends React.Component {
   public render() {
@@ -21,7 +12,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
-
+            
           </Switch>
         </Router>      
       </div>
@@ -30,5 +21,5 @@ class App extends React.Component {
 }
 
 
-
+// <Route path="/login" component={Login} />
 export default App;
