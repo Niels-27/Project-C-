@@ -42,6 +42,15 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("all/{searchterm=string}")]
+        public IQueryable<Product> GetProductsBySearchterm(string searchterm)  // for Catalogus NOT paged
+        {
+            var result = from p in _context.Products where p.Name.Contains(searchterm)
+            select p;
+  
+            return result;
+        }
+
         // GET api/Books/5
         [HttpGet("{id=int}")]
         public async Task<IActionResult> GetProduct(int id)   // For Catalogus by id Not Paged

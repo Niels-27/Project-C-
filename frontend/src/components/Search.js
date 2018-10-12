@@ -165,3 +165,30 @@ export default Search;
 //     {children}
 //     </button>
 //     </form>
+
+    
+
+
+  // constructor(props){
+  //   super(props)
+  //   this.state = {}
+  //   this.PerformSearch()}
+  
+
+  
+  //   public PerformSearch()
+  //   {
+  //     console.log("test search")
+  //     const UrlString = "http://localhost:5000/api/categories/heren";
+  //     $.ajax({
+  //       url : UrlString,
+  //       success : (searchResults) => {
+  //         (console.log("Fetched data successfully"))
+  //       },
+  //       error : (xhr, status, err) => {
+  //         (console.error("Failed to fetch data"))
+  //       }
+
+
+  //     })
+  //   }

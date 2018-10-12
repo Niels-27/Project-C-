@@ -1,25 +1,49 @@
 import axios from 'axios';
 import * as React from 'react';
 import './ProductList.css';
+import { Search } from './Search';
+import { any } from 'prop-types';
+
+const DEFAULT_QUERY = '';
+
+const URL = 'http://localhost:5000/api/product/all/';
 
 export default class ProductList extends React.Component< any, any> {
-	
+    
+    
+    
 	constructor(props:any) {
+        searchTerm:any
 		super(props);
 		this.state = {
-		products:[], request: null,  showDiscription: false, status: null, 
+		products:[], request: null,  showDiscription: false, status: null, searchTerm : DEFAULT_QUERY
         };
-        
+        this.fetchProducts = this.fetchProducts.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this);       
     }
+    onSearchChange(event){
+		this.setState({searchTerm: event.target.value});
+    }
+    public onSearchSubmit(event) {
+                    const { searchTerm } = this.state;
+                    this.fetchProducts(searchTerm);
+                    event.preventDefault();
+                    }            
+
+    public fetchProducts(searchTerm){
+        axios.get(`{URL}${searchTerm}`)
+        .then(res => {
+          const products = res.data;
+          const status = res.status;
+          const request = res.request;
+          this.setState({ products, request, status  });
+        })       
+    }
+
      public componentDidMount(): void{
-        axios.get('http://localhost:5000/api/product/all')
-      .then(res => {
-        const products = res.data;
-        const status = res.status;
-        const request = res.request;
-        this.setState({ products, request, status  });
-      })
-       
+        const { searchTerm } = this.state;
+        this.fetchProducts(searchTerm);
     }
 
     public renderAllProducts(product){
@@ -41,17 +65,25 @@ export default class ProductList extends React.Component< any, any> {
         </ul>);
     }
 
-
-
     public render() {   
         var showProducts = this.state.products.map(this.renderAllProducts);
         if(this.state.showDiscription !== false){
             showProducts = "show discription for product id :" + this.state.showDiscription;
         }
+        const {searchTerm} = this.state
         return (
         <div className="container2"> 
+        <Search                   
+            value = {searchTerm}
+            onChange = {this.onSearchChange}
+            onSubmit = {this.onSearchSubmit}
+            >
+            Search
+         </Search>
                 {showProducts } 
         </div>
+
+        
         );
     }
 }
