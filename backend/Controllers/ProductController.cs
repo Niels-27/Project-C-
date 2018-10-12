@@ -34,7 +34,7 @@ namespace backend.Controllers
             };
 
              // GET api/product/all
-        [HttpGet("all")]
+        [HttpGet()]
         public IQueryable<ProductDto> GetProducts()  // for Catalogus NOT paged
         {
             return _context.Products
@@ -42,21 +42,30 @@ namespace backend.Controllers
 
         }
 
-        // GET api/Books/5
-        [HttpGet("{id=int}")]
-        public async Task<IActionResult> GetProduct(int id)   // For Catalogus by id Not Paged
+        [HttpGet("search/{searchterm=string}")]
+        public IQueryable<ProductDto> GetProductsBySearchterm(string searchterm)  // for Catalogus NOT paged
         {
-            ProductDto product = await _context.Products
-                .Where(b => b.Id == id)
-                .Select(AsProductDto)
-                .FirstOrDefaultAsync();
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(product);
+            var lowercased_searchterm = searchterm.ToLower();
+            var result = _context.Products.Where(p => p.Name.ToLower().Contains(lowercased_searchterm)).Select(AsProductDto);
+  
+            return result;
         }
+
+        // // GET api/Books/5
+        // [HttpGet("{id=int}")]
+        // public async Task<IActionResult> GetProduct(int id)   // For Catalogus by id Not Paged
+        // {
+        //     ProductDto product = await _context.Products
+        //         .Where(b => b.Id == id)
+        //         .Select(AsProductDto)
+        //         .FirstOrDefaultAsync();
+        //     if (product == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return Ok(product);
+        // }
         [HttpGet("~/api/categories/{category=string}")]
         public IQueryable GetProductByCategory(string category)  /// Get products by category Heren | Dames
         {
