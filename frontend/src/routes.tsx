@@ -4,7 +4,7 @@ import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
 // import components here
 import Home from './pages/home';
 
-class App extends React.Component {
+class Routes extends React.Component {
   public render() {
     return (
         <Router>
@@ -17,6 +17,6 @@ class App extends React.Component {
   }
 }
 
-
+// below a example to add a new page.
 // <Route path="/login" component={Login} />
-export default App;
+export default Routes;
