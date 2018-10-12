@@ -1,7 +1,8 @@
 import './App.css';
 import * as React from 'react';
-import Home from './pages/home';
 
+import Home from './pages/home';
+import Product from './pages/product';
 
 
  // mport Navbar from './components/NavBar';
@@ -21,6 +22,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/product" component={Product} />
 
           </Switch>
         </Router>      
