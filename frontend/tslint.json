@@ -14,7 +14,7 @@
     false
   ]},
     "jsRules": {
-      "variable-declaration": false, "no-var-keyword": false, "no-console": false}, 
+      "variable-declaration": false,"object-literal-sort-keys": false, "no-var-keyword": false, "no-console": false}, 
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

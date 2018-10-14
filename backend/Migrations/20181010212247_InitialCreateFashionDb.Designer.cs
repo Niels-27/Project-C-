@@ -10,8 +10,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(FashionContext))]
-    [Migration("20181007212138_ThirdTrial")]
-    partial class ThirdTrial
+    [Migration("20181010212247_InitialCreateFashionDb")]
+    partial class InitialCreateFashionDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,16 +156,16 @@ namespace backend.Migrations
                     b.ToTable("Products");
 
                     b.HasData(
-                        new { Id = 1, Amount = 20, Color = "Zwart", Description = "Coole zwarte sweatshirt voor heren.", ImageName = "Black-History-Sweat-Shirt.jpg", Name = "Zwarte Sweat Shirt", Price = 39.99m, ProductSizeId = 3 },
-                        new { Id = 2, Amount = 20, Color = "Zwart", Description = "Gentleman schoenen voor echte heren", ImageName = "Gentleman-Shoes.jpg", Name = "Zwarte Schoenen", Price = 19.99m, ProductSizeId = 17 },
-                        new { Id = 3, Amount = 20, Color = "Zwart", Description = "Super coole Adidas swag shirt.", ImageName = "Cool-Black-Tshirt.jpg", Name = "Adidas Swag Shirt", Price = 24.99m, ProductSizeId = 3 },
-                        new { Id = 4, Amount = 20, Color = "Blauw", Description = "Stoere Koreaanse Jeans van denim voor heren.", ImageName = "Korean-Jeans.jpg", Name = "Koreaanse Jeans", Price = 49.99m, ProductSizeId = 3 },
-                        new { Id = 5, Amount = 20, Color = "Black", Description = "Super coole zwarte vest voor echte swaggers.", ImageName = "Grafische-Sweat-Shirt.jpg", Name = "Zwarte Vest", Price = 79.99m, ProductSizeId = 4 },
-                        new { Id = 6, Amount = 20, Color = "Blauw", Description = "Sexy strakke jeans voor vrouwen met scheuren.", ImageName = "Sexy-Woman-Jeans-Denim-Blue.jpg", Name = "Sexy Vrouwen Jeans", Price = 29.99m, ProductSizeId = 2 },
-                        new { Id = 7, Amount = 20, Color = "Rood", Description = "Thug Life rode swag hoodie voor jongens. Word een beest in deze hoodie!", ImageName = "Swag-Hoodie-Red.jpg", Name = "Rode Swag Hoodie", Price = 45.99m, ProductSizeId = 5 },
-                        new { Id = 8, Amount = 20, Color = "Wit", Description = "Witte Swag Adidas schoenen voor heren. Boost je Imago en wordt de baddest boy in je omgeving met deze schoenen. ", ImageName = "White-Shoe-Adidas.jpg", Name = "Witte Adidas Schoen", Price = 17.99m, ProductSizeId = 19 },
-                        new { Id = 9, Amount = 20, Color = "Zwart", Description = "Swag Boots voor stoere vrouwen. Word de baddest chick in town.", ImageName = "Swag-Boot-Black-Shoes.jpg", Name = "Zwarte Swag Boots", Price = 39.99m, ProductSizeId = 10 },
-                        new { Id = 10, Amount = 20, Color = "Geel", Description = "Geel shirt voor heren. Opvallende kleur zodat iedereen je ziet staan.", ImageName = "Yellow-shirt.jpg", Name = "Geel Shirt", Price = 14.99m, ProductSizeId = 2 }
+                        new { Id = 1, Amount = 20, Color = "Zwart", Description = "Coole zwarte sweatshirt voor heren.", ImageName = "https://img.represent.com/uploads/c316464e3c69408be954c6d05edd10a9.jpg?auto=format&w=750", Name = "Zwarte Sweat Shirt", Price = 39.99m, ProductSizeId = 3 },
+                        new { Id = 2, Amount = 20, Color = "Zwart", Description = "Gentleman schoenen voor echte heren", ImageName = "https://assets.adidas.com/images/w_600,f_auto,q_auto/ab12ced1d0a14151b88ea7fa00ee94a1_9366/Superstar_Foundation_Shoes_Black_B27140_01_standard.jpg", Name = "Zwarte Schoenen", Price = 19.99m, ProductSizeId = 17 },
+                        new { Id = 3, Amount = 20, Color = "Zwart", Description = "Super coole Adidas swag shirt.", ImageName = "https://kickz.akamaized.net/en/media/images/p/600/adidas-CLFN_T_Shirt-BLACK_MEDIUM_GREY_HEATHER_WHITE-1.jpg", Name = "Adidas Swag Shirt", Price = 24.99m, ProductSizeId = 3 },
+                        new { Id = 4, Amount = 20, Color = "Blauw", Description = "Stoere Koreaanse Jeans van denim voor heren.", ImageName = "https://www.local-outerwear.eu/wp-content/uploads/2015/11/W16-902BJ-Dawn_Front.jpg", Name = "Koreaanse Jeans", Price = 49.99m, ProductSizeId = 3 },
+                        new { Id = 5, Amount = 20, Color = "Black", Description = "Super coole zwarte vest voor echte swaggers.", ImageName = "https://images.esellerpro.com/2294/I/111/28/lrgscaleNH45BLACK_NEW.jpg", Name = "Zwarte Vest", Price = 79.99m, ProductSizeId = 4 },
+                        new { Id = 6, Amount = 20, Color = "Blauw", Description = "Sexy strakke jeans voor vrouwen met scheuren.", ImageName = "https://images-na.ssl-images-amazon.com/images/I/71lO9goTlGL._UY445_.jpg", Name = "Sexy Vrouwen Jeans", Price = 29.99m, ProductSizeId = 2 },
+                        new { Id = 7, Amount = 20, Color = "Rood", Description = "Thug Life rode swag hoodie voor jongens. Word een beest in deze hoodie!", ImageName = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmSJ2f1znHd7v7lL18PLNS3A7dL_UQeuqU6NmiyscbY1NFRqpvJA", Name = "Rode Swag Hoodie", Price = 45.99m, ProductSizeId = 5 },
+                        new { Id = 8, Amount = 20, Color = "Wit", Description = "Witte Swag Adidas schoenen voor heren. Boost je Imago en wordt de baddest boy in je omgeving met deze schoenen. ", ImageName = "https://dtpmhvbsmffsz.cloudfront.net/posts/2017/09/13/59b958a17f0a053a7b03e25f/m_59b958b8713fde7bfd03fda2.jpg", Name = "Witte Adidas Schoen", Price = 17.99m, ProductSizeId = 19 },
+                        new { Id = 9, Amount = 20, Color = "Zwart", Description = "Swag Boots voor stoere vrouwen. Word de baddest chick in town.", ImageName = "https://images.timberland.com/is/image/timberland/10073009-HERO?$PDP-FULL-IMAGE$", Name = "Zwarte Swag Boots", Price = 39.99m, ProductSizeId = 10 },
+                        new { Id = 10, Amount = 20, Color = "Geel", Description = "Geel shirt voor heren. Opvallende kleur zodat iedereen je ziet staan.", ImageName = "https://scene7.zumiez.com/is/image/zumiez/pdp_hero/DOPE-Global-Yellow-T-Shirt-_297867-front-US.jpg", Name = "Geel Shirt", Price = 14.99m, ProductSizeId = 2 }
                     );
                 });
 
