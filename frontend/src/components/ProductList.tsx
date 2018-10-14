@@ -3,7 +3,7 @@ import * as React from 'react';
 import './ProductList.css';
 
 import {
-    Card, CardImg, CardBody,
+    Card, CardBody,
     CardTitle, CardSubtitle
 } from 'reactstrap';
 
@@ -78,7 +78,7 @@ const DEFAULT_SEARCH_KW = '';
         return (         
             <div className="col-md-3 col-sm-6" style={{marginTop:'20px'}}>
                 <Card key={product.id + "_key_Product"}>
-                    <CardImg onClick={onClickProduct} top width="100%" src={product.imageName} style={{maxHeight:'23vw'}}alt="Card image cap" />
+                    <div className="imageHeightFix" style={{ backgroundImage: 'url(' + product.imageName + ')' }} onClick={onClickProduct}/>
                     <CardBody>
                         <CardTitle onClick={onClickProduct}>{product.name}</CardTitle>
                         <CardSubtitle>{product.price}</CardSubtitle>
@@ -105,7 +105,7 @@ const DEFAULT_SEARCH_KW = '';
             showResults= <div>Geen resultaten gevonden.</div>
         }
         else{
-            showResults= <div className="row">{this.state.products.map(this.renderAllProducts) } </div>
+            showResults= <div className="container"><div className="row">{this.state.products.map(this.renderAllProducts) } </div></div>
         }   
         return (
         <div className="container2"> 
