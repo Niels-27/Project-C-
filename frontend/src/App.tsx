@@ -1,36 +1,26 @@
-import './App.css';
 import * as React from 'react';
 
-import Home from './pages/home';
-import Product from './pages/product';
+
+// import components here
+import Routes from './Routes';
 
 
- // mport Navbar from './components/NavBar';
- // import ProductList from './components/ProductList';
-import { 
-  Route,
 
-  HashRouter as Router,
-
-  Switch
-} from 'react-router-dom';
+import Navbar from './components/all_pages/NavBar';
+import MenuBar from './components/all_pages/menu';
 
 class App extends React.Component {
-  public render() {
-    return (
-      <div>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/product" component={Product} />
-
-          </Switch>
-        </Router>      
-      </div>
-    );
-  }
+    public render() {
+        return (
+            <div>
+                <Navbar />
+                <MenuBar />
+                <Routes />
+            </div>
+        );
+    }
 }
 
-
-
+// below a example to add a new page.
+// <Route path="/login" component={Login} />
 export default App;

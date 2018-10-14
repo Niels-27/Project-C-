@@ -1,3 +1,18 @@
 .product {
     list-style-type:none  
 }
+
+
+.imageHeightFix:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+
+.imageHeightFix{
+	position: relative;
+    width: 100%;		/* desired width */
+        background-repeat:no-repeat;
+    background-size:contain;
+    background-position: center;
+}
