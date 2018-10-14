@@ -2,7 +2,7 @@ import * as React from 'react';
 
 
 // import components here
-import Routes from './Routes1';
+import Routes from './Routes';
 
 
 
