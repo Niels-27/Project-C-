@@ -3,6 +3,9 @@ import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
 
 // import components here
 import Home from './pages/home';
+import Product from './pages/product';
+
+import pageNotFound from './pages/404';
 
 class Routes extends React.Component {
   public render() {
@@ -10,7 +13,9 @@ class Routes extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
-            
+            <Route path="/product/:id" component={Product} />
+
+            <Route component={pageNotFound} />
           </Switch>
         </Router>      
     );

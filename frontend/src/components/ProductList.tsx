@@ -1,6 +1,15 @@
 import axios from 'axios';
 import * as React from 'react';
 import './ProductList.css';
+
+import {
+    Card, CardImg, CardBody,
+    CardTitle, CardSubtitle
+} from 'reactstrap';
+
+import {
+    withRouter
+} from "react-router-dom";
 // import { Search } from './Search';
 // import { any } from 'prop-types';
 
@@ -10,7 +19,7 @@ const PATH_BASE = 'http://localhost:5000/api/product';
 
 const DEFAULT_SEARCH_KW = '';
 
-export default class ProductList extends React.Component< any, any> {
+ class ProductList extends React.Component< any, any> {
     
 	constructor(props:any) {
 		super(props);
@@ -62,24 +71,30 @@ export default class ProductList extends React.Component< any, any> {
     public renderAllProducts(product){
 
         const onClickProduct = () => {
-            console.log(product.id );
-            //// navigate to new product page with link
+            this.props.history.push("/product/" + product.id);
+    
         };
 
-        return ( 
-        <ul key={product.name} className="product">             
-        <canvas id="canvas"/>
-            <div>
-            <img id="source" src={product.imageName}
-                width="300" height="300" />                                   
-         </div>     
-            <li onClick={onClickProduct}>{product.name}</li>   
+        return (         
+            <div className="col-md-3 col-sm-6" style={{marginTop:'20px'}}>
+                <Card key={product.id + "_key_Product"}>
+                    <CardImg onClick={onClickProduct} top width="100%" src={product.imageName} style={{maxHeight:'23vw'}}alt="Card image cap" />
+                    <CardBody>
+                        <CardTitle onClick={onClickProduct}>{product.name}</CardTitle>
+                        <CardSubtitle>{product.price}</CardSubtitle>
+                    </CardBody>
+                </Card>
+            </div>);
 
-            <li>{product.price}</li> 
-        </ul>);
+
+
     }
 
     public render() {  
+
+
+
+
         const {searchTerm, noResult, request, status, products} = this.state
         console.log(products);
         console.log(request);
@@ -90,7 +105,7 @@ export default class ProductList extends React.Component< any, any> {
             showResults= <div>Geen resultaten gevonden.</div>
         }
         else{
-            showResults= <div>{this.state.products.map(this.renderAllProducts) } </div>
+            showResults= <div className="row">{this.state.products.map(this.renderAllProducts) } </div>
         }   
         return (
         <div className="container2"> 
@@ -122,3 +137,4 @@ export default class ProductList extends React.Component< any, any> {
             </button>
             </form>
 
+export default withRouter(ProductList);
