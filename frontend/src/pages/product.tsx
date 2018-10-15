@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import axios from 'axios';
 import { Link} from 'react-router-dom';
+import ApiCall from '../logic/apiCall';
 // import { Row, Col } from 'reactstrap';
 interface IProps {
     match:{
@@ -19,7 +19,9 @@ class App extends React.Component<IProps,any> {
     }
 
     public componentDidMount(){
-       this.getProductInfo(this.props.match.params.id);
+        const call:ApiCall = new ApiCall();
+        call.setURL('details',this.props.match.params.id.toString());
+        this.setState({product: call.result()});
     }
 
     public render() {
@@ -88,13 +90,6 @@ class App extends React.Component<IProps,any> {
         );
     }
 
-    private getProductInfo(id){
-        axios.get(`http://localhost:5000/api/product/${id}/details`)
-            .then(res => {
-                const product = res.data;
-                this.setState({ product});
-            })       
-    }
 }
 
 
