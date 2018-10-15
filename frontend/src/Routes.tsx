@@ -7,12 +7,24 @@ import Product from './pages/product';
 
 import pageNotFound from './pages/404';
 
-class Routes extends React.Component {
+class Routes extends React.Component<any,any> {
+  constructor(props) {
+    super(props);
+    this.state = { searchString:""};
+  }
+
+  public componentWillReceiveProps(nextProps) {
+    this.setState({ searchString: nextProps.searchString });
+  }
+
+  public renderHome = () =>{
+    return <Home searchString={this.state.searchString} />;
+  }
   public render() {
     return (
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" render={this.renderHome}/>
             <Route path="/product/:id" component={Product} />
 
             <Route component={pageNotFound} />

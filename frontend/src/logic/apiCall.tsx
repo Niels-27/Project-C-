@@ -23,7 +23,7 @@ class ApiCall {
                 break;
 
             case "search":
-                this.link = "/product/search/${first}";
+                this.link = "/product/search/" + first;
                 break;
 
             default:

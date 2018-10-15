@@ -3,7 +3,14 @@ import * as React from 'react';
 import { Nav } from 'reactstrap';
 
 
-class MenuBar extends React.Component {
+class MenuBar extends React.Component<any,any> {
+    constructor(props) {
+        super(props);
+        this.state ={
+            searchString:''
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
 
     public render() {
         return (
@@ -40,15 +47,22 @@ class MenuBar extends React.Component {
 
      
                     </ul>
-                        <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.searchString} onChange={this.handleChange}/>
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.handeClick}>Search</button>
                 </div>
             </Nav>
             </div>
         );
     }
+    public handleChange(event) {
+        this.setState({ searchString: event.target.value });
+    }
+
+    public handeClick = () =>{
+        this.props.changeSearch(this.state.searchString);
+    }
+
+
 }
 
 export default MenuBar;

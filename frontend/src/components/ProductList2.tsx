@@ -16,7 +16,13 @@ class ProductList extends React.Component<any, any> {
 
     constructor(props) {
         super(props);
+        this.state = { products: this.props.products}
     }
+
+    public componentWillReceiveProps(nextProps) {
+        this.setState({ products: nextProps.products });
+    }
+
 
     public renderAllProducts = (product) => {
 
@@ -43,7 +49,7 @@ class ProductList extends React.Component<any, any> {
     public render() {
         var showResults = <div>loading... </div>;
         if (this.props.products){
-            showResults = <div className="container"><div className="row">{this.props.products.map(this.renderAllProducts)} </div></div>;
+            showResults = <div className="container"><div className="row">{this.state.products.map(this.renderAllProducts)} </div></div>;
         }
 
 

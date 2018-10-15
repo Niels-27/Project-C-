@@ -6,14 +6,26 @@ class App extends React.Component<any,any>{
 
 constructor(props:any){
     super(props);
-    this.state={products:null};
+    this.state = { product: null,searchString: ""};
 }
-    public async componentDidMount() {
-        const call: ApiCall = new ApiCall();
-        call.setURL('allProducts');
-        this.setState({ product: await call.result() });
+    public componentWillReceiveProps(nextProps) {
+        this.refresh(nextProps.searchString);
     }
 
+    public async componentDidMount() {
+        this.refresh();
+    }
+
+    public async refresh(str = ""){
+        const call: ApiCall = new ApiCall();
+        if (str !== "") {
+            call.setURL("search", str);
+        } else {
+            call.setURL('allProducts');
+        }
+
+        await this.setState({ product: await call.result() });
+    }
 
     public render() {
         const test = this.state.product;
