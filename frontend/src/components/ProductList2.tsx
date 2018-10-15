@@ -17,6 +17,7 @@ class ProductList extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = { products: this.props.products}
+
     }
 
     public componentWillReceiveProps(nextProps) {
@@ -49,7 +50,13 @@ class ProductList extends React.Component<any, any> {
     public render() {
         var showResults = <div>loading... </div>;
         if (this.props.products){
-            showResults = <div className="container"><div className="row">{this.state.products.map(this.renderAllProducts)} </div></div>;
+            if (this.props.maxItems){
+                const tempArr = this.state.products.slice(0, this.props.maxItems);
+                showResults = <div className="container"><div className="row">{tempArr.map(this.renderAllProducts)} </div></div>;
+            }else{
+                showResults = <div className="container"><div className="row">{this.state.products.map(this.renderAllProducts)} </div></div>;
+            }
+            
         }
 
 
