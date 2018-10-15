@@ -4,6 +4,8 @@ import { Nav } from 'reactstrap';
 
 
 class MenuBar extends React.Component<any,any> {
+    public timeoutID: any;
+    
     constructor(props) {
         super(props);
         this.state ={
@@ -48,7 +50,7 @@ class MenuBar extends React.Component<any,any> {
      
                     </ul>
                             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.searchString} onChange={this.handleChange}/>
-                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.handeClick}>Search</button>
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
                 </div>
             </Nav>
             </div>
@@ -56,9 +58,23 @@ class MenuBar extends React.Component<any,any> {
     }
     public handleChange(event) {
         this.setState({ searchString: event.target.value });
+        this.delayedSearch();
     }
 
-    public handeClick = () =>{
+
+
+    public delayedSearch = () => {
+        this.clearSearchDelay();
+        this.timeoutID = setTimeout(this.performSearch, 800);
+    }
+
+    public clearSearchDelay = () => {
+        if (this.timeoutID) {
+            clearTimeout(this.timeoutID);
+        }
+    }
+
+    public performSearch = () =>{
         this.props.changeSearch(this.state.searchString);
     }
 
