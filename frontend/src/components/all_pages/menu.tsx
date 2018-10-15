@@ -5,7 +5,7 @@ import { Nav } from 'reactstrap';
 
 class MenuBar extends React.Component<any,any> {
     public timeoutID: any;
-    
+
     constructor(props) {
         super(props);
         this.state ={
@@ -49,7 +49,7 @@ class MenuBar extends React.Component<any,any> {
 
      
                     </ul>
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={this.state.searchString} onChange={this.handleChange}/>
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
                 </div>
             </Nav>
