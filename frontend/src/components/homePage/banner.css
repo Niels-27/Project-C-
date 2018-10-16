@@ -1,0 +1,9 @@
+	.bannerHome{
+        position: relative;
+    width: 100%;		/* desired width */
+        background-repeat:no-repeat;
+    background-size:cover;
+    background-position: center;
+    height: 350px;
+     background-Image:url(https://wallpapercave.com/wp/9kwN2RA.jpg);
+    }

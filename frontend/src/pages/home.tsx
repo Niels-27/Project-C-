@@ -1,6 +1,10 @@
 import * as React from 'react';
-import ProductList from '../components/ProductList';
+
 import ApiCall from '../logic/apiCall';
+
+// components 
+import ProductList from '../components/ProductList';
+import Banner from '../components/homePage/banner';
 class Home extends React.Component<any,any>{
 
     constructor(props: any) {
@@ -16,10 +20,13 @@ class Home extends React.Component<any,any>{
 
     public render() {
         return (
-            <div style={{ textAlign: 'center', marginTop: '5%' }} className="container">
-
+            <div>
+                <Banner />
+            <div style={{ textAlign: 'center', marginTop: '15px' }} className="container">
+                <span>Populaire Producten</span>
                 <ProductList products={this.state.product} maxItems={4}/>
 
+            </div>
             </div>
         );
     }

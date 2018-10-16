@@ -33,7 +33,7 @@ class ProductList extends React.Component<any, any> {
         };
 
         return (
-            <div className="col-md-3 col-sm-6" style={{ marginTop: '20px' }}>
+            <div className="col-md-3 col-sm-6" style={{ marginTop: '10px' }}>
                 <Card key={product.id + "_key_Product"}>
                     <div className="imageHeightFix" style={{ backgroundImage: 'url(' + product.imageName + ')' }} onClick={onClickProduct} />
                     <CardBody>
