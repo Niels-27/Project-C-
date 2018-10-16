@@ -3,7 +3,16 @@ import * as React from 'react';
 import { Nav } from 'reactstrap';
 
 
-class MenuBar extends React.Component {
+class MenuBar extends React.Component<any,any> {
+    public timeoutID: any;
+
+    constructor(props) {
+        super(props);
+        this.state ={
+            searchString:''
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
 
     public render() {
         return (
@@ -13,7 +22,7 @@ class MenuBar extends React.Component {
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav">
+                        <ul className="navbar-nav mr-auto">
                     
                        <li className="nav-item">
                             <a className="nav-link" href="#">Inspiratie</a>
@@ -36,12 +45,40 @@ class MenuBar extends React.Component {
                         <li className="nav-item">
                             <a className="nav-link" href="#">Merken</a>
                         </li>
+
+
+     
                     </ul>
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
                 </div>
             </Nav>
             </div>
         );
     }
+    public handleChange(event) {
+        this.setState({ searchString: event.target.value });
+        this.delayedSearch();
+    }
+
+
+
+    public delayedSearch = () => {
+        this.clearSearchDelay();
+        this.timeoutID = setTimeout(this.performSearch, 800);
+    }
+
+    public clearSearchDelay = () => {
+        if (this.timeoutID) {
+            clearTimeout(this.timeoutID);
+        }
+    }
+
+    public performSearch = () =>{
+        this.props.changeSearch(this.state.searchString);
+    }
+
+
 }
 
 export default MenuBar;
