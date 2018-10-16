@@ -52,9 +52,9 @@ class ProductList extends React.Component<any, any> {
         if (this.props.products){
             if (this.props.maxItems){
                 const tempArr = this.state.products.slice(0, this.props.maxItems);
-                showResults = <div className="container"><div className="row">{tempArr.map(this.renderAllProducts)} </div></div>;
+                showResults = <div className="row">{tempArr.map(this.renderAllProducts)} </div>;
             }else{
-                showResults = <div className="container"><div className="row">{this.state.products.map(this.renderAllProducts)} </div></div>;
+                showResults = <div className="row">{this.state.products.map(this.renderAllProducts)} </div>;
             }
             
         }

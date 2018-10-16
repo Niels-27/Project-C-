@@ -1,42 +1,28 @@
 import * as React from 'react';
-// import Navbar from '../components/all_pages/NavBar';
 import ProductList from '../components/ProductList';
 import ApiCall from '../logic/apiCall';
-class App extends React.Component<any,any>{
+class Home extends React.Component<any,any>{
 
-constructor(props:any){
-    super(props);
-    this.state = { product: null,searchString: ""};
-}
-    public componentWillReceiveProps(nextProps) {
-        this.refresh(nextProps.searchString);
+    constructor(props: any) {
+        super(props);
+        this.state = { product: null};
     }
 
     public async componentDidMount() {
-        this.refresh();
-    }
-
-    public async refresh(str = ""){
         const call: ApiCall = new ApiCall();
-        if (str !== "") {
-            call.setURL("search", str);
-        } else {
-            call.setURL('allProducts');
-        }
-
+        call.setURL('allProducts');
         await this.setState({ product: await call.result() });
     }
 
     public render() {
-        const test = this.state.product;
         return (
-            <div>
-                <ProductList products={test}/>
+            <div style={{ textAlign: 'center', marginTop: '5%' }} className="container">
+
+                <ProductList products={this.state.product} maxItems={4}/>
+
             </div>
         );
     }
 }
 
-
-
-export default App;
+export default Home;
