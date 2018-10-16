@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import Navbar from '../components/all_pages/NavBar';
-import ProductList from '../components/ProductList2';
+import ProductList from '../components/ProductList';
 import ApiCall from '../logic/apiCall';
 class App extends React.Component<any,any>{
 
