@@ -21,8 +21,9 @@ class Home extends React.Component<any,any>{
     public render() {
         return (
             <div>
-                <Banner />
+                
             <div style={{ textAlign: 'center', marginTop: '15px' }} className="container">
+                    <Banner />
                 <span>Populaire Producten</span>
                 <ProductList products={this.state.product} maxItems={4}/>
 
