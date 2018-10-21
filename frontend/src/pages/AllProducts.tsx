@@ -43,18 +43,13 @@ constructor(props:any){
 
         await this.setState({ product: await call.result() });
     }
-public handleClickFix(){
-    var inputValue = (document.getElementById("Search_bar_input") as HTMLInputElement).value;
-    console.log(inputValue);
-    inputValue = "";
-    console.log(inputValue);
-    }
+
 
     public render() {
         const test = this.state.product;
         return (
             <div className="container" style={{marginTop: '15px' }}>
-                <Link to='/' onClick={this.handleClickFix}>Home </Link> > {this.state.URL}
+                <Link to='/' o>Home </Link> > {this.state.URL}
                 <ProductList products={test}/>
             </div>
         );
