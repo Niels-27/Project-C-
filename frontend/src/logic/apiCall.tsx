@@ -17,6 +17,9 @@ class ApiCall {
             case "allProducts":
                 this.link = "/product";
                 break;
+            case "cattegorie":
+                this.link = "/categories/" + first;
+                break;
 
             case "details":
                 this.link = "/product/" + first + "/details";
@@ -30,6 +33,7 @@ class ApiCall {
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";
         }
+        console.log(this.link);
         return "Path defined. used path for ${link}";
     }
 

@@ -24,25 +24,25 @@ class MenuBar extends React.Component<any,any> {
                 <div className="collapse navbar-collapse" id="navbarNav">
 
                         <ul className="navbar-nav mr-auto">
-
+                            <li className="nav-item">
+                                <Link to="/AllProducts/all" className="nav-link">Alle producten</Link>
+                            </li>
                        <li className="nav-item">
-                            <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
+                                <Link to="/AllProducts/Shirts" className="nav-link">Shirts</Link>
                         </li>
                         <li className="nav-item">
                                 <Link to="/AllProducts/Schoenen" className="nav-link">Schoenen</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Sneakers" className="nav-link">Sneakers</Link>
+                                <Link to="/AllProducts/Jeans" className="nav-link">Jeans</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
+                                <Link to="/AllProducts/Hoodies" className="nav-link">Hoodies</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
+                                <Link to="/AllProducts/Vesten" className="nav-link">Vesten</Link>
                         </li>
-                        <li className="nav-item">
-                                <Link to="/AllProducts/Shirts" className="nav-link">Shirts</Link>
-                        </li>
+
 
 
 
@@ -77,7 +77,7 @@ class MenuBar extends React.Component<any,any> {
         if (this.props.location.pathname.includes("/AllProducts/") && (this.props.location.pathname.split("/").length - 1)  === 2){
             this.props.history.push(this.props.location.pathname + "/search/" + this.state.searchString);
         }else{
-           this.props.history.push("/AllProducts/All/search/" + this.state.searchString); 
+           this.props.history.push("/AllProducts/all/search/" + this.state.searchString); 
         }
         
     }

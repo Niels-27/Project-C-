@@ -14,7 +14,7 @@ constructor(props:any){
 
 
         this.setCattegory(this.props.match.params.category);
-        this.refresh(this.props.match.params.search);
+        this.refresh(this.props.match.params.search, this.props.match.params.category);
 
         
     }
@@ -29,15 +29,18 @@ constructor(props:any){
 
     public componentWillReceiveProps(props){
         this.setCattegory(props.match.params.category);
-        this.refresh(props.match.params.search);
+        this.refresh(props.match.params.search, props.match.params.category);
 
     }
 
-    public async refresh(str = ""){
+    public async refresh(str = "",cat=""){
+        console.log(str);
         const call: ApiCall = new ApiCall();
         if (str !== "" && str) {
             call.setURL("search", str);
-        } else {
+        } else if (cat !== "all" && cat) {
+            call.setURL('cattegorie', cat);
+        }else{
             call.setURL('allProducts');
         }
 
