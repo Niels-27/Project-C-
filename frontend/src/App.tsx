@@ -5,10 +5,6 @@ import * as React from 'react';
 import Routes from './Routes';
 
 
-
-import Navbar from './components/all_pages/NavBar';
-import MenuBar from './components/all_pages/menu';
-
 class App extends React.Component<any,any> {
     constructor(props){
         super(props);
@@ -25,8 +21,7 @@ class App extends React.Component<any,any> {
     public render() {
         return (
             <div>
-                <Navbar />
-                <MenuBar changeSearch={this.changeSearchString}/>
+
                 <Routes searchString={this.state.searchString}/>
             </div>
         );

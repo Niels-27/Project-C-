@@ -8,25 +8,31 @@ class App extends React.Component<any,any>{
 
 constructor(props:any){
     super(props);
-    this.state = { product: null, searchString: this.props.searchString,URL:null};
-    console.log();
+    this.state = { product: null, searchString: "",URL:null};
+    console.log(this.props);
 }
-    public componentWillReceiveProps(nextProps) {
-        this.refresh(nextProps.searchString);
-    }
-
     public async componentDidMount() {
         if (this.props.match.params.category){
             this.setState({URL: this.props.match.params.category});
         }else{
             this.setState({ URL: "Alle producten" });
         }
-        this.refresh(this.state.searchString);
+
+
+            this.refresh(this.props.match.params.search);
+
+        
+    }
+
+    public componentWillReceiveProps(props){
+
+            this.refresh(props.match.params.search);
+
     }
 
     public async refresh(str = ""){
         const call: ApiCall = new ApiCall();
-        if (str !== "") {
+        if (str !== "" && str) {
             call.setURL("search", str);
         } else {
             call.setURL('allProducts');

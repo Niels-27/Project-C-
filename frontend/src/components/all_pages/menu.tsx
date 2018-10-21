@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import { MdFavorite, MdPerson, MdShoppingCart } from "react-icons/md"; // Hiermee Importeer je de Icons
 import { Nav } from 'reactstrap';
+import { withRouter,Link} from 'react-router-dom';
 
 class MenuBar extends React.Component<any,any> {
     public timeoutID: any;
@@ -25,22 +26,22 @@ class MenuBar extends React.Component<any,any> {
                         <ul className="navbar-nav mr-auto">
 
                        <li className="nav-item">
-                            <a href="../AllProducts/Inspiratie" className="nav-link">Inspiratie</a>
+                            <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
                         </li>
                         <li className="nav-item">
-                                <a href="../AllProducts/Schoenen" className="nav-link">Schoenen</a>
+                                <Link to="/AllProducts/Schoenen" className="nav-link">Schoenen</Link>
                         </li>
                         <li className="nav-item">
-                                <a href="../AllProducts/Sneakers" className="nav-link">Sneakers</a>
+                                <Link to="/AllProducts/Sneakers" className="nav-link">Sneakers</Link>
                         </li>
                         <li className="nav-item">
-                                <a href="../AllProducts/Inspiratie" className="nav-link">Inspiratie</a>
+                                <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
                         </li>
                         <li className="nav-item">
-                            <a href="../AllProducts/Inspiratie" className="nav-link">Inspiratie</a>
+                                <Link to="/AllProducts/Inspiratie" className="nav-link">Inspiratie</Link>
                         </li>
                         <li className="nav-item">
-                            <a href="../AllProducts/Shirts" className="nav-link">Shirts</a>
+                                <Link to="/AllProducts/Shirts" className="nav-link">Shirts</Link>
                         </li>
 
 
@@ -73,10 +74,15 @@ class MenuBar extends React.Component<any,any> {
     }
 
     public performSearch = () =>{
-        this.props.changeSearch(this.state.searchString);
+        if (this.props.location.pathname.includes("/AllProducts/") && (this.props.location.pathname.split("/").length - 1)  === 2){
+            this.props.history.push(this.props.location.pathname + "/search/" + this.state.searchString);
+        }else{
+           this.props.history.push("/AllProducts/All/search/" + this.state.searchString); 
+        }
+        
     }
 
 
 }
 
-export default MenuBar;
+export default withRouter(MenuBar);

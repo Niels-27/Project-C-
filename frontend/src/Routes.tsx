@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
 
+
+// normal page coompinents.
+import Navbar from './components/all_pages/NavBar';
+import MenuBar from './components/all_pages/menu';
+
 // import page components here
 import AllProducts from './pages/AllProducts';
 import Home from './pages/home';
@@ -8,37 +13,24 @@ import Product from './pages/product';
 import pageNotFound from './pages/404';
 
 class Routes extends React.Component<any,any> {
-  constructor(props) {
-    super(props);
-    this.state = { searchString:""};
-  }
-
-  public componentWillReceiveProps(nextProps) {
-    this.setState({ searchString: nextProps.searchString });
-  }
-
-  public renderAllProducts = () =>{
-    return <AllProducts searchString={this.state.searchString} />;
-  }
-
-  public renderHome = () => {
-    if (this.state.searchString !== ""){
-      return <AllProducts searchString={this.state.searchString} />;
-    }
-    return  <Home />;
-  }
 
 
   public render() {
     return (
         <Router>
+          <div>
+          <Navbar />
+          <MenuBar />
           <Switch>
-          <Route exact path="/" render={this.renderHome} />
-          <Route path="/AllProducts/:category" render={this.renderAllProducts}/>
+            
+            <Route exact path="/" component={Home} />
+            <Route path="/AllProducts/:category/search/:search" component={AllProducts} />
+            <Route path="/AllProducts/:category" component={AllProducts} />
             <Route path="/product/:id" component={Product} />
 
             <Route component={pageNotFound} />
           </Switch>
+          </div>
         </Router>      
     );
   }
