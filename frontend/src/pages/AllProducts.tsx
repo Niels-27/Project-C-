@@ -9,24 +9,27 @@ class App extends React.Component<any,any>{
 constructor(props:any){
     super(props);
     this.state = { product: null, searchString: "",URL:null};
-    console.log(this.props);
 }
     public async componentDidMount() {
-        if (this.props.match.params.category){
-            this.setState({URL: this.props.match.params.category});
-        }else{
-            this.setState({ URL: "Alle producten" });
-        }
 
 
-            this.refresh(this.props.match.params.search);
+        this.setCattegory(this.props.match.params.category);
+        this.refresh(this.props.match.params.search);
 
         
     }
 
-    public componentWillReceiveProps(props){
+    public setCattegory(URL){
+        if (URL) {
+            this.setState({ URL });
+        } else {
+            this.setState({ URL: "Alle producten" });
+        }
+    }
 
-            this.refresh(props.match.params.search);
+    public componentWillReceiveProps(props){
+        this.setCattegory(props.match.params.category);
+        this.refresh(props.match.params.search);
 
     }
 
