@@ -5,6 +5,8 @@ import ApiCall from '../logic/apiCall';
 // components 
 import ProductList from '../components/ProductList';
 import Banner from '../components/homePage/banner';
+import BrandGrid from '../components/homePage/brands';
+
 class Home extends React.Component<any,any>{
 
     constructor(props: any) {
@@ -26,6 +28,7 @@ class Home extends React.Component<any,any>{
                     <Banner />
                 <span>Populaire Producten</span>
                 <ProductList products={this.state.product} maxItems={4}/>
+                <BrandGrid/>
 
             </div>
             </div>

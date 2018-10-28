@@ -21,7 +21,7 @@ constructor(props:any){
 
     public setCattegory(URL){
         if (URL) {
-            this.setState({ URL });
+            this.setState({ URL });  // Jeans..Hoodies... Shirts..
         } else {
             this.setState({ URL: "Alle producten" });
         }
@@ -37,9 +37,9 @@ constructor(props:any){
         console.log(str);
         const call: ApiCall = new ApiCall();
         if (str !== "" && str) {
-            call.setURL("search", str);
+            call.setURL("search", str, cat);
         } else if (cat !== "all" && cat) {
-            call.setURL('cattegorie', cat);
+            call.setURL('categorie', cat);
         }else{
             call.setURL('allProducts');
         }

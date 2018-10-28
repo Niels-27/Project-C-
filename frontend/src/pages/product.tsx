@@ -43,7 +43,7 @@ class App extends React.Component<IProps, any> {
 
                                     <div className="carousel-inner text-center text-md-left" role="listbox">
                                         <div className="carousel-item active">
-                                            <img src={this.state.product.imageName} alt="First slide" className="img-fluid" />
+                                            <img src={this.state.product.imageName} alt="First slide" className="img-fluid img-thumbnail" />
                                         </div>
 
 

@@ -42,10 +42,6 @@ class MenuBar extends React.Component<any,any> {
                         <li className="nav-item">
                                 <Link to="/AllProducts/Vesten" className="nav-link">Vesten</Link>
                         </li>
-
-
-
-
                     </ul>
 
                             <input id="Search_bar_input" className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
@@ -60,8 +56,6 @@ class MenuBar extends React.Component<any,any> {
         this.delayedSearch();
     }
 
-
-
     public delayedSearch = () => {
         this.clearSearchDelay();
         this.timeoutID = setTimeout(this.performSearch, 800);
@@ -75,14 +69,17 @@ class MenuBar extends React.Component<any,any> {
 
     public performSearch = () =>{
         if (this.props.location.pathname.includes("/AllProducts/") && (this.props.location.pathname.split("/").length - 1)  === 2){
-            this.props.history.push(this.props.location.pathname + "/search/" + this.state.searchString);
-        }else{
-           this.props.history.push("/AllProducts/all/search/" + this.state.searchString); 
+            this.props.history.push(this.props.location.pathname + "/search/" + this.state.searchString);  // EERSTE KEER
+        }
+        // else if(!this.state.searchString){
+        //     this.props.history.push("/AllProducts/all/search/" + this.state.searchString); 
+        // }
+        else{
+           const locationArray = this.props.location.pathname.split("/")[2];
+           this.props.history.push("/AllProducts/" + (locationArray) + "/search/" + this.state.searchString); 
         }
         
     }
-
-
 }
 
 export default withRouter(MenuBar);

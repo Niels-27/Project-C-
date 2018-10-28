@@ -12,12 +12,12 @@ class ApiCall {
         return this.MakePostCall(post);
     }
 
-    public setURL(link: string, first: string = "", seccend: string = "") {
+    public setURL(link: string, first: string = "", second: string = "") {
         switch (link) {
             case "allProducts":
                 this.link = "/product";
                 break;
-            case "cattegorie":
+            case "categorie":
                 this.link = "/categories/" + first;
                 break;
 
@@ -25,10 +25,15 @@ class ApiCall {
                 this.link = "/product/" + first + "/details";
                 break;
 
-            case "search":
-                this.link = "/product/search/" + first;
-                break;
-
+            case "search":{
+                if(second !== "" && second){
+                    this.link = "/categories/" + second + "/" + first;
+                }
+                else{
+                    this.link = "/product/search/" + first;
+                }
+                break;            
+            }
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";
