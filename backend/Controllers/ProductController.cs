@@ -51,21 +51,6 @@ namespace backend.Controllers
             return result;
         }
 
-        // // GET api/Books/5
-        // [HttpGet("{id=int}")]
-        // public async Task<IActionResult> GetProduct(int id)   // For Catalogus by id Not Paged
-        // {
-        //     ProductDto product = await _context.Products
-        //         .Where(b => b.Id == id)
-        //         .Select(AsProductDto)
-        //         .FirstOrDefaultAsync();
-        //     if (product == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return Ok(product);
-        // }
         [HttpGet("~/api/categories/{category=string}")]
         public IQueryable GetProductByCategory(string category)  /// Get products by category Heren | Dames
         {
@@ -88,6 +73,7 @@ namespace backend.Controllers
 
                     select new 
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     ImageName = p.ImageName,
                     Price = p.Price,
@@ -120,6 +106,7 @@ namespace backend.Controllers
 
                     select new 
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     ImageName = p.ImageName,
                     Price = p.Price,
@@ -200,16 +187,6 @@ namespace backend.Controllers
                 return NotFound();
             }
             return Ok(product);
-        }
-
-            //     [HttpGet("all/{image}")]
-            // public ActionResult Image(string id)
-            // {
-            //     var dir = Server.MapPath("/Images");
-            //     var path = Path.Combine(dir, id + ".jpg"); //validate the path for security or use other means to generate the path.
-            //     return base.File(path, "image/jpeg");
-            // }
-
-        
+        }  
     }
 }
