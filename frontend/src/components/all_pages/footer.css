@@ -7,6 +7,11 @@
     flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
     padding: 20px;
    } 
-   a{
-       color:#FFF;;}
-
+  .footer .nav-item a{
+       color:#FFF; 
+    
+    }
+ .footer   .nav-item a:hover {
+        color: greenyellow !important;
+        cursor: pointer;
+    }
