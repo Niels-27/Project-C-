@@ -5,7 +5,7 @@ import ApiCall from '../logic/apiCall';
 // components 
 import ProductList from '../components/ProductList';
 import Banner from '../components/homePage/banner';
-import BrandGrid from '../components/homePage/brands';
+import BrandGrid from '../components/homePage/brandbar';
 
 class Home extends React.Component<any,any>{
 
@@ -25,10 +25,11 @@ class Home extends React.Component<any,any>{
             <div>
                 
             <div style={{ textAlign: 'center', marginTop: '15px' }} className="container">
-                    <Banner />
-                <span>Populaire Producten</span>
-                <ProductList products={this.state.product} maxItems={4}/>
+                <Banner />
                 <BrandGrid/>
+                <span><strong>Populaire Producten</strong></span>
+                <ProductList products={this.state.product} maxItems={4}/>
+                
 
             </div>
             </div>

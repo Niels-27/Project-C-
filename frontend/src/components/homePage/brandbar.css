@@ -1,0 +1,8 @@
+
+img.BrandImg{
+    opacity: 0.5;
+}
+
+img.BrandImg:hover{
+    opacity: 1;
+}

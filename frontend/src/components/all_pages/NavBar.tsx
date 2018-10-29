@@ -8,8 +8,8 @@ class NavBar extends React.Component<any, any> {
 
 public render() {
     return (
-    <div>
-        <Nav className="navbar navbar-dark navbar-expand-sm bg-success justify-content-between">
+    <div><body style={{paddingTop: 60}}>
+        <Nav className="navbar navbar-dark navbar-expand-sm bg-success justify-content-between fixed-top ">
             <div className="container-fluid">
                 <div className="navbar-collapse collapse dual-nav w-50 order-1 order-sm-0">
                     <ul className="navbar-nav">
@@ -34,6 +34,7 @@ public render() {
                 </div>
             </div>
         </Nav>
+        </body>
     </div>
     );
 }

@@ -2,7 +2,7 @@
 
 namespace backend.Migrations
 {
-    public partial class WithBrandsMig : Migration
+    public partial class MigWithBrands : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,10 @@ namespace backend.Migrations
                     { 8, "Adidas" },
                     { 9, "Nike" },
                     { 10, "HRFashion" },
-                    { 11, "CykaBlyat" },
-                    { 12, "Gucci" }
+                    { 11, "Puma" },
+                    { 12, "Timberland" },
+                    { 13, "Reebok" },
+                    { 14, "Vans" }
                 });
 
             migrationBuilder.UpdateData(
@@ -120,7 +122,7 @@ namespace backend.Migrations
                 keyColumn: "Id",
                 keyValue: 3,
                 columns: new[] { "CategoryId", "ProductId" },
-                values: new object[] { 11, 1 });
+                values: new object[] { 10, 1 });
 
             migrationBuilder.UpdateData(
                 table: "ProductCategory",
@@ -180,6 +182,16 @@ namespace backend.Migrations
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 14);
 
             migrationBuilder.DeleteData(
                 table: "ProductCategory",

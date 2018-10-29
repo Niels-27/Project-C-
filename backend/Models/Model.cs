@@ -88,7 +88,7 @@ public class FashionContext : DbContext  //De database
             modelBuilder.Entity<ProductCategory>().HasData(
                 new {Id = 1, ProductId = 1, CategoryId = 2},
                 new {Id = 2, ProductId = 1, CategoryId = 4},
-                new {Id = 3, ProductId = 1, CategoryId = 11},
+                new {Id = 3, ProductId = 1, CategoryId = 10},
 
                 new {Id = 4, ProductId = 2, CategoryId = 2},
                 new {Id = 5, ProductId = 2, CategoryId = 3},
@@ -162,8 +162,10 @@ public class FashionContext : DbContext  //De database
                 new{Id = 8, Name = "Adidas"},
                 new{Id = 9, Name = "Nike"},
                 new{Id = 10, Name = "HRFashion"},
-                new{Id = 11, Name = "CykaBlyat"},
-                new{Id = 12, Name = "Gucci"}
+                new{Id = 11, Name = "Puma"},
+                new{Id = 12, Name = "Timberland"},
+                new{Id = 13, Name = "Reebok"},
+                new{Id = 14, Name = "Vans"}
             );
 
             modelBuilder.Entity<Country>().HasData(new{Id = 1, Name = "Nederland"});  // Initial Data for Country Tabel

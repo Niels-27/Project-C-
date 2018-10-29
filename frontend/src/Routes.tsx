@@ -10,6 +10,7 @@ import MenuBar from './components/all_pages/menu';
 import AllProducts from './pages/AllProducts';
 import Home from './pages/home';
 import Product from './pages/product';
+import Footer from './components/all_pages/footer';
 import pageNotFound from './pages/404';
 
 class Routes extends React.Component<any,any> {
@@ -30,6 +31,7 @@ class Routes extends React.Component<any,any> {
 
             <Route component={pageNotFound} />
           </Switch>
+          <Footer/>
           </div>
         </Router>      
     );

@@ -10,8 +10,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(FashionContext))]
-    [Migration("20181029112545_WithBrandsMig")]
-    partial class WithBrandsMig
+    [Migration("20181029141853_MigWithBrands")]
+    partial class MigWithBrands
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,8 +70,10 @@ namespace backend.Migrations
                         new { Id = 8, Name = "Adidas" },
                         new { Id = 9, Name = "Nike" },
                         new { Id = 10, Name = "HRFashion" },
-                        new { Id = 11, Name = "CykaBlyat" },
-                        new { Id = 12, Name = "Gucci" }
+                        new { Id = 11, Name = "Puma" },
+                        new { Id = 12, Name = "Timberland" },
+                        new { Id = 13, Name = "Reebok" },
+                        new { Id = 14, Name = "Vans" }
                     );
                 });
 
@@ -194,7 +196,7 @@ namespace backend.Migrations
                     b.HasData(
                         new { Id = 1, CategoryId = 2, ProductId = 1 },
                         new { Id = 2, CategoryId = 4, ProductId = 1 },
-                        new { Id = 3, CategoryId = 11, ProductId = 1 },
+                        new { Id = 3, CategoryId = 10, ProductId = 1 },
                         new { Id = 4, CategoryId = 2, ProductId = 2 },
                         new { Id = 5, CategoryId = 3, ProductId = 2 },
                         new { Id = 6, CategoryId = 10, ProductId = 2 },
