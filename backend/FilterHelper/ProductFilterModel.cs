@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System;
+using backend.Models;
+
 namespace backend.FilterHelper
 
 {
@@ -9,7 +13,5 @@ namespace backend.FilterHelper
         public decimal? PriceFrom {get;set;}
         public decimal? PriceTo { get; set; }
         public string Color {get;set;}
-
     }
-
 }

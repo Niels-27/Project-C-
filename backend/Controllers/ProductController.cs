@@ -50,6 +50,21 @@ namespace backend.Controllers
   
             return result;
         }
+         [HttpGet("~/api/filter/{categories}")]
+         public IQueryable GetProductByCategoryCol(ICollection<string> categories){
+
+             ICollection<string> list_cat_param = categories;
+             var result =  _context.Products.Select(m=>m);
+             if(list_cat_param.Count == 1){
+                 
+             }else if(list_cat_param.Count >= 1){
+                //  foreach(string cat in list_cat_param){
+                //      result = _context.Products.Intersect()
+                //  }
+             }
+
+             return result;
+         }
 
         [HttpGet("~/api/categories/{category=string}")]
         public IQueryable GetProductByCategory(string category)  /// Get products by category Heren | Dames
@@ -83,7 +98,7 @@ namespace backend.Controllers
 
             return Result;   
         }
-                [HttpGet("~/api/categories/{category=string}/{searchterm=string}")]
+        [HttpGet("~/api/categories/{category=string}/{searchterm=string}")]
         public IQueryable GetProductByCategoryAndID(string category, string searchterm)  /// Get products by category Heren | Dames
         {
             var lowercased_searchterm = searchterm.ToLower();
@@ -117,6 +132,8 @@ namespace backend.Controllers
 
             return result2;   
         }
+
+
 
         // [HttpGet("~/api/categories/{category}/{category2}")]
         // public IQueryable GetProductByCategories(string category, string category2)  /// Get products by category Heren | Dames
@@ -164,8 +181,6 @@ namespace backend.Controllers
             _context.Dispose();
             base.Dispose(disposing);
         }
-
-
         [HttpGet("{id}/details")]
         public async Task<IActionResult> GetProductDetail(int id)    ///To get specific information about products
         {

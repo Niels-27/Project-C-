@@ -30,7 +30,8 @@ namespace backend
             //Add this line to your method
             services.AddDbContext<FashionContext> (
                  opt => opt.UseNpgsql(@text));
-            services.AddMvc();
+            services.AddMvc(options=> {}
+            ).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddCors(options => options.AddPolicy("AllowAll", builder =>
             {

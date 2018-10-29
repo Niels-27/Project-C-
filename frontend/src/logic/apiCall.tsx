@@ -26,7 +26,7 @@ class ApiCall {
                 break;
 
             case "search":{
-                if(second !== "" && second){
+                if(second !== "all" && second){
                     this.link = "/categories/" + second + "/" + first;
                 }
                 else{

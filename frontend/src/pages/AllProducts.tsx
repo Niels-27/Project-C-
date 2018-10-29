@@ -21,7 +21,7 @@ constructor(props:any){
 
     public setCattegory(URL){
         if (URL) {
-            this.setState({ URL });  // Jeans..Hoodies... Shirts..
+            this.setState({ URL });  // Jeans..Hoodies... Shirts.. all gefilterd
         } else {
             this.setState({ URL: "Alle producten" });
         }

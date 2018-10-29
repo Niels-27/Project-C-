@@ -74,9 +74,12 @@ class MenuBar extends React.Component<any,any> {
         // else if(!this.state.searchString){
         //     this.props.history.push("/AllProducts/all/search/" + this.state.searchString); 
         // }
-        else{
+        else if(this.props.location.pathname.includes("/AllProducts/")){
            const locationArray = this.props.location.pathname.split("/")[2];
            this.props.history.push("/AllProducts/" + (locationArray) + "/search/" + this.state.searchString); 
+        }
+        else{
+            this.props.history.push("/AllProducts/all/search/" + this.state.searchString); 
         }
         
     }

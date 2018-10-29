@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { MdFavorite, MdPerson, MdShoppingCart } from "react-icons/md"; // Hiermee Importeer je de Icons
 import { Nav } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 
-export default class NavBar extends React.Component<any, any> {
+class NavBar extends React.Component<any, any> {
 
 public render() {
     return (
@@ -13,13 +14,13 @@ public render() {
                 <div className="navbar-collapse collapse dual-nav w-50 order-1 order-sm-0">
                     <ul className="navbar-nav">
                         <li className="nav-item active">
-                            <a className="nav-link pl-0" href="#">Dames <span className="sr-only">Dames</span></a>
+                            <Link to="/AllProducts/Dames" className="nav-link pl-0">Dames <span className="sr-only">Dames</span></Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link pl-0" >| <span className="sr-only">|</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link pl-0" href="#">Heren <span className="sr-only">Heren</span></a>
+                            <Link to="/AllProducts/Heren" className="nav-link pl-0">Heren <span className="sr-only">Heren</span></Link>
                         </li>
                     </ul>
                 </div>
@@ -37,3 +38,5 @@ public render() {
     );
 }
 }
+
+export default NavBar;

@@ -57,8 +57,6 @@ class App extends React.Component<IProps, any> {
                             </h2>
 
 
-
-
                             <h3 className="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
                                 <span className="grey-text">
                                     <small>€{this.state.product.price}</small>
@@ -68,20 +66,27 @@ class App extends React.Component<IProps, any> {
                             <p className="ml-xl-0 ml-4">{this.state.product.description}
                             </p>
 
-
-
                             <p className="ml-xl-0 ml-4">
-                                <strong>Availability: </strong>{this.state.product.amount}</p>
-                            <section className="color">
+                                <strong>Kleur: </strong>{this.state.product.color}</p>
+
+                            
+                            <strong>Dit product is beschikbaar in de volgende maat: </strong>
+                            
+                            <h3 className="h3-responsive text-center text-md-left mt-2 mb-5 ml-xl-0 ml-4">       
+                                {this.state.product.sizeName} 
+                            
+                            </h3>
+
+                            <button type="button" className="btn btn-success btn-lg w-100">Koop nu</button>
+
+                            <section className="Beschikbaarheid">
                                 <div className="mt-5">
-                                    <p className="grey-text">Pick a size</p>
-                                    <div className="row text-center text-md-left">
-                                        .
-                                </div>
-
-
+                                    <p className="grey-text">
+                                    <strong>Beschikbaarheid: </strong>{this.state.product.amount}</p>
                                 </div>
                             </section>
+
+
                         </div>
                     </div>
                 </div>

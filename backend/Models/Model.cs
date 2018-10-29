@@ -88,33 +88,43 @@ public class FashionContext : DbContext  //De database
             modelBuilder.Entity<ProductCategory>().HasData(
                 new {Id = 1, ProductId = 1, CategoryId = 2},
                 new {Id = 2, ProductId = 1, CategoryId = 4},
+                new {Id = 3, ProductId = 1, CategoryId = 11},
 
-                new {Id = 3, ProductId = 2, CategoryId = 2},
-                new {Id = 4, ProductId = 2, CategoryId = 3},
+                new {Id = 4, ProductId = 2, CategoryId = 2},
+                new {Id = 5, ProductId = 2, CategoryId = 3},
+                new {Id = 6, ProductId = 2, CategoryId = 10},
 
-                new {Id = 5, ProductId = 3, CategoryId = 2},
-                new {Id = 6, ProductId = 3, CategoryId = 4},
+                new {Id = 7, ProductId = 3, CategoryId = 2},
+                new {Id = 8, ProductId = 3, CategoryId = 4},
+                new {Id = 9, ProductId = 3, CategoryId = 8},
 
-                new {Id = 7, ProductId = 4, CategoryId = 2},
-                new {Id = 8, ProductId = 4, CategoryId = 5},
+                new {Id = 10, ProductId = 4, CategoryId = 2},
+                new {Id = 11, ProductId = 4, CategoryId = 5},
+                new {Id = 12, ProductId = 4, CategoryId = 10},
 
-                new {Id = 9, ProductId = 5, CategoryId = 2},
-                new {Id = 10, ProductId = 5, CategoryId = 7},
+                new {Id = 13, ProductId = 5, CategoryId = 2},
+                new {Id = 14, ProductId = 5, CategoryId = 7},
+                new {Id = 15, ProductId = 5, CategoryId = 10},
 
-                new {Id = 11, ProductId = 6, CategoryId = 1},  //dames   
-                new {Id = 12, ProductId = 6, CategoryId = 5},  //jeans
+                new {Id = 16, ProductId = 6, CategoryId = 1},  //dames   
+                new {Id = 17, ProductId = 6, CategoryId = 5},  //jeans
+                new {Id = 18, ProductId = 6, CategoryId = 10}, 
 
-                new {Id = 13, ProductId = 7, CategoryId = 2},
-                new {Id = 14, ProductId = 7, CategoryId = 6},
+                new {Id = 19, ProductId = 7, CategoryId = 2},
+                new {Id = 20, ProductId = 7, CategoryId = 6},
+                new {Id = 21, ProductId = 7, CategoryId = 9},
 
-                new {Id = 15, ProductId = 8, CategoryId = 2},
-                new {Id = 16, ProductId = 8, CategoryId = 3},
+                new {Id = 22, ProductId = 8, CategoryId = 2},
+                new {Id = 23, ProductId = 8, CategoryId = 3},
+                new {Id = 24, ProductId = 8, CategoryId = 8},
 
-                new {Id = 17, ProductId = 9, CategoryId = 1},
-                new {Id = 18, ProductId = 9, CategoryId = 3},
+                new {Id = 25, ProductId = 9, CategoryId = 1},
+                new {Id = 26, ProductId = 9, CategoryId = 3},
+                new {Id = 27, ProductId = 9, CategoryId = 10},
 
-                new {Id = 19, ProductId = 10, CategoryId = 2},
-                new {Id = 20, ProductId = 10, CategoryId = 4}
+                new {Id = 28, ProductId = 10, CategoryId = 2},
+                new {Id = 29, ProductId = 10, CategoryId = 4},
+                new {Id = 30, ProductId = 10, CategoryId = 10}
                 );
 
             modelBuilder.Entity<ProductSize>().HasData(    // Initial Data for ProductSizes Tabel
@@ -146,9 +156,14 @@ public class FashionContext : DbContext  //De database
                 new{Id = 2, Name = "Heren"},
                 new{Id = 3, Name = "Schoenen"},
                 new{Id = 4, Name = "Shirts"},
-                new {Id = 5, Name = "Jeans"},
+                new{Id = 5, Name = "Jeans"},
                 new{Id = 6, Name = "Hoodies"},
-                new{Id = 7, Name = "Vesten"}
+                new{Id = 7, Name = "Vesten"},
+                new{Id = 8, Name = "Adidas"},
+                new{Id = 9, Name = "Nike"},
+                new{Id = 10, Name = "HRFashion"},
+                new{Id = 11, Name = "CykaBlyat"},
+                new{Id = 12, Name = "Gucci"}
             );
 
             modelBuilder.Entity<Country>().HasData(new{Id = 1, Name = "Nederland"});  // Initial Data for Country Tabel

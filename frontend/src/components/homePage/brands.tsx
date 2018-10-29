@@ -8,26 +8,27 @@ class BrandGrid extends React.Component {
         return (
             <div className="brandsHomepage">
                 <div className = "container-fluid">
-                    <div className="row mt-5  ">
-                        <div className="col-2 w-4 bg-dark text-white p-5 ml-5  mb-5 mr-2">
-                            Adidas
+                    <div id="brandRow"className="row mt-5  justify-content-center">
+                        <a className="col-2 bg-dark nav-link text-white p-5 mb-5 mr-2 text-center" href="/AllProducts/Adidas">                    
+                            <h6 className="h6-responsive">Adidas<span className="sr-only">Adidas</span>        </h6>                            
+                        </a>
 
-                        </div>
-                        <div className="col-2 bg-dark text-white p-5 ml-2  mb-5 mr-2">
-                            Nike
+                        <a className="col-2 bg-dark nav-link text-white p-5 mb-5 mr-2 text-center" href="/AllProducts/Nike">
+                            <h6 className="h6-responsive"> Nike<span className="sr-only">Nike</span> </h6>
+                        </a>
 
-                        </div>
-                        <div className="col-2 bg-dark text-white p-5 ml-2  mb-5 mr-2">
-                            HR Fashion
+                        <a className="col-2 bg-dark nav-link text-white p-5 mb-5 mr-2 text-center" href="/AllProducts/HRFashion">
+                             <h6 className="h6-responsive">HR Fashion<span className="sr-only">HR Fashion</span> </h6>
+                        </a> 
+    
+                        <a className="col-2 bg-dark nav-link text-white p-5 mb-5 mr-2 text-center" href="/AllProducts/CykaBlyat">
+                            <h6 className="h6-responsive"> Cyka Blyat<span className="sr-only">Cyka Blyat</span> </h6>
+                        </a>  
 
-                        </div>
-                        <div className="col-2 bg-dark text-white p-5 ml-2  mb-5 mr-2">
-                            Cyka Blyat
+                        <a className="col-2 bg-dark nav-link text-white p-5 mb-5 text-center" href="/AllProducts/Gucci">
+                         <h6 className="h6-responsive"> Gucci<span className="sr-only">Gucci</span> </h6>
+                        </a>
 
-                        </div>
-                        <div className="col-2 bg-dark text-white p-5 ml-2 mb-5 mr-2">
-                            Gucci
-                        </div>
                     </div> 
                 </div>
          </div>
