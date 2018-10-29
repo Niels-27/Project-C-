@@ -1,18 +1,19 @@
 import * as React from 'react';
-import {Col, Nav, NavItem } from 'reactstrap';
+import {Col, Nav, NavItem, Row } from 'reactstrap';
 import './footer.css' ;
 
 
  function Footer(/*props*/) {
   return (
-    <footer className= "footer">
-      <Col className="d-block">
+    <footer className= "footer w-100 mt-5  ">
+    <Row className="">
+      <Col className="">
         <Nav justified className="">
         <NavItem
             eventKey={1}>
             Customer Service
             <li className="nav-item ">
-                            <a className="nav-link text-white" href="#">Contact us</a>
+                            <a className="nav-link " href="#">Contact us</a>
                 </li>
                 <li className="nav-item">
                             <a className="nav-link" href="#">Shipping & Delivery</a>
@@ -60,11 +61,12 @@ import './footer.css' ;
           
                
         </Nav>
-         <div className="text-center small copyright">
+         <div className="text-right  copyright">
           © HR 2018
         </div>
 
       </Col>
+      </Row>
     </footer>
   );
 }
