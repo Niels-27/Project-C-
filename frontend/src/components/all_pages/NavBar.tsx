@@ -8,7 +8,7 @@ class NavBar extends React.Component<any, any> {
 
 public render() {
     return (
-    <div><body style={{paddingTop: 60}}>
+    <div style={{paddingTop: 60}}>
         <Nav className="navbar navbar-dark navbar-expand-sm bg-success justify-content-between fixed-top ">
             <div className="container-fluid">
                 <div className="navbar-collapse collapse dual-nav w-50 order-1 order-sm-0">
@@ -24,7 +24,7 @@ public render() {
                         </li>
                     </ul>
                 </div>
-                <a href="/" className="navbar-brand mx-auto d-block text-center order-0 order-sm-1 w-25">HR Fashion</a>
+                <a href="/" className="navbar-brand mx-auto d-block text-center order-0 order-sm-1 w-25"><img src="https://i.imgur.com/yxLWWml.png" />  HR Fashion</a>
                 <div className="navbar-collapse collapse dual-nav w-50 order-2">
                     <ul className="nav navbar-nav ml-auto">
                         <li className="nav-item"><span className="nav-link"><a href="#"><MdPerson size={32} style={{color: 'white'}}/></a></span></li>
@@ -34,7 +34,7 @@ public render() {
                 </div>
             </div>
         </Nav>
-        </body>
+        
     </div>
     );
 }
