@@ -1,0 +1,27 @@
+.ShoppingCard-Holder{
+background-color:white;
+-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.17);
+-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.17);
+box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.17);
+position:fixed;
+min-width: 250px;
+min-height:250px;
+right: 10px;
+}
+
+.ShoppingCard-titleHolder{
+background-color:green;
+padding:2px 10px 2px 10px;
+color:white;
+}
+
+.ShoppingCard-container{
+min-height:20px;
+max-width:100%;
+padding:10px;
+overflow-y: scroll;
+}
+
+.span-grey{
+    color:grey;
+}
