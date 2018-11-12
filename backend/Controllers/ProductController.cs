@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -134,6 +137,44 @@ namespace backend.Controllers
         }
 
 
+        private string RequestBody;
+        [HttpPost]
+        [Route("~/api/products-by/array")]
+
+        public async Task<IQueryable> ReadStringDataManual()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic productIds = JValue.Parse(this.RequestBody);
+
+            //System.Console.WriteLine(derp);
+            //return productIds.items[0];
+
+            return this.handleBodyPost(productIds.items);
+        }
+
+        private IQueryable handleBodyPost(dynamic array)
+        {
+            List<string> ItemsList = new List<string>();
+            foreach (var item in array)
+            {
+                ItemsList.Add(item.ToString());
+            }
+
+            var result = (from p in _context.Products
+                          where ItemsList.Contains(Convert.ToString(p.Id))
+                          select new
+                          {
+                              Id = p.Id,
+                              Name = p.Name,
+                              ImageName = p.ImageName,
+                              Price = p.Price,
+                          });
+            return (result);
+
+        }
 
         // [HttpGet("~/api/categories/{category}/{category2}")]
         // public IQueryable GetProductByCategories(string category, string category2)  /// Get products by category Heren | Dames
@@ -147,7 +188,7 @@ namespace backend.Controllers
         //     subset2[0] = Char.ToUpper(subset2[0]);
         //     string cat2 = new string(subset2);
         //     System.Console.WriteLine(cat2 + " subcategory");  // Even de string testen
-            
+
         //      var Result = 
         //             from p in _context.Products select p;
         //     var Result = (
