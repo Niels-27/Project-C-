@@ -6,6 +6,7 @@ class ApiCall {
     private PATH_BASE: string = 'http://localhost:5000/api';
 
     public async result(post: object = {}) {
+
         if (this.checkObjectEmpty(post)) {
             return await this.MakeGetCall();
         }
@@ -25,6 +26,10 @@ class ApiCall {
                 this.link = "/product/" + first + "/details";
                 break;
 
+            case "array-id":
+                this.link = "/products-by/array";
+                break;
+                
             case "search":{
                 if(second !== "all" && second){
                     this.link = "/categories/" + second + "/" + first;
@@ -55,13 +60,15 @@ class ApiCall {
 
 
     private MakePostCall(post) {
-        return axios.post(this.PATH_BASE + this.link, {
-            post
-        })
+        console.log(post);
+        return axios.post(this.PATH_BASE + this.link, 
+            JSON.stringify(post)
+        )
             .then(res => {
-                return res;
+                return res.data;
             })
             .catch(err => {
+                console.log(post);
                 console.log(err);
                 return err;
             });

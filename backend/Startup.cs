@@ -33,23 +33,6 @@ namespace backend
             services.AddMvc(options=> {}
             ).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
-            {
-            builder.AllowAnyOrigin();
-            builder.AllowAnyHeader();
-            builder.AllowAnyMethod();
-            builder.AllowCredentials();
-            })
-                        );
-            services.AddCors(options => options.AddPolicy("AllowCredentials",
-                builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000")
-                        .AllowCredentials();
-                    }
-                        ));
-
-                    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,9 +43,7 @@ namespace backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options => options.WithOrigins("http://localhost:3000")
-            .WithHeaders("Access-Control-Allow-Origin")
-            .WithMethods());
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseMvc();
         }
