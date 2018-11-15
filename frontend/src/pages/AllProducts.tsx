@@ -52,7 +52,7 @@ constructor(props:any){
         const test = this.state.product;
         return (
             <div className="container" style={{marginTop: '15px' }}>
-                <Link to='/' o>Home </Link> > {this.state.URL}
+                <Link to='/'>Home </Link> > {this.state.URL}
                 <ProductList products={test}/>
             </div>
         );

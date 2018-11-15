@@ -34,6 +34,10 @@ class ApiCall {
                 }
                 break;            
             }
+            case "country":
+                this.link = "/user/country";
+                break;
+            
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";

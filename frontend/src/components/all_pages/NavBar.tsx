@@ -27,7 +27,7 @@ public render() {
                 <a href="/" className="navbar-brand mx-auto d-block text-center order-0 order-sm-1 w-25"><img src="https://i.imgur.com/yxLWWml.png" />  HR Fashion</a>
                 <div className="navbar-collapse collapse dual-nav w-50 order-2">
                     <ul className="nav navbar-nav ml-auto">
-                        <li className="nav-item"><span className="nav-link"><a href="#"><MdPerson size={32} style={{color: 'white'}}/></a></span></li>
+                        <li className="nav-item"><span className="nav-link"><a href="/signup"><MdPerson size={32} style={{color: 'white'}}/></a></span></li>
                         <li className="nav-item"><span className="nav-link"><a href="#"><MdFavorite size={32} style={{color: 'white'}}/></a></span></li>
                         <li className="nav-item"><span className="nav-link"><a href="#"><MdShoppingCart size={32} style={{color: 'white'}}/></a></span></li>
                     </ul>

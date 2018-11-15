@@ -10,7 +10,6 @@ namespace backend.DTOs
         public string ImageName {get;set;}
         //public float DiscountPercentage {get; set;}
         public int Amount { get; set; }
-
     }
     public class ProductDetailDto{ ///Wordt gebruikt wanneer je een product klikt
         public string Name { get; set; }

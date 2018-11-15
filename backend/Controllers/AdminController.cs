@@ -52,18 +52,19 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
-        // // POST api/admin/categories/create
-        // [HttpPost("categories/create")]
-        // public IActionResult PostCategory([FromBody]Category category)
-        // {
-        //     if(category == null){
-        //         return NoContent();
-        //     }
-        //     _context.Categories.Add(category);
-        //     _context.SaveChanges();
-        //     return Ok();
+        // POST api/admin/categories/create
+        [HttpPost("users/create")]
+        public IActionResult PostCategory([FromBody]User user)
+        {
+            if(user == null){
+                return NoContent();
+            }
+            _context.Users.Add(user);
+            // _context.Addresses.Add(user_address)
+            _context.SaveChanges();
+            return Ok();
 
-        // }
+        }
 
        // PUT api/admin/products/id
         [HttpPut("products/update/{id}")]
