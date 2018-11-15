@@ -25,6 +25,10 @@ class ApiCall {
                 this.link = "/product/" + first + "/details";
                 break;
 
+            case "pageNation":
+                this.link = "/product/paged/"+ first + "/" + second;
+
+                break;
             case "search":{
                 if(second !== "all" && second){
                     this.link = "/categories/" + second + "/" + first;
@@ -32,7 +36,7 @@ class ApiCall {
                 else{
                     this.link = "/product/search/" + first;
                 }
-                break;            
+                break;  
             }
             default:
                 this.link = "/product";

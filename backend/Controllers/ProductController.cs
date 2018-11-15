@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using backend.Models;
 using backend.DTOs;
 using Npgsql;
+using backend.Pagination;
 
 namespace backend.Controllers
 {
@@ -203,5 +204,14 @@ namespace backend.Controllers
             }
             return Ok(product);
         }  
+
+         //Products/paged/0/3
+        [HttpGet ("paged/{index_page}/{page_size}")]
+
+        public IActionResult GetProductsPaged(int index_page,int page_size)
+        {
+            var result = _context.Products.GetPages(index_page,page_size,m => m.Id);
+            return new OkObjectResult(result);
+        }
     }
 }
