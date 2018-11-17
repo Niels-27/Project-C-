@@ -1,7 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules":{
-    "variable-declaration": false, "no-var-keyword": false, "no-console": false,
+    "variable-declaration": false, "no-var-keyword": false, "no-console": false, "no-empty" : false,
   "jsx-boolean-value": [
     true,
     "never"
@@ -10,11 +10,12 @@
   "ordered-imports": [
     false
   ],
+  
   "object-literal-sort-keys": [
     false
   ]},
     "jsRules": {
-      "variable-declaration": false,"object-literal-sort-keys": false, "no-var-keyword": false, "no-console": false}, 
+      "variable-declaration": false,"object-literal-sort-keys": false, "no-var-keyword": false, "no-console": false, "no-empty" : false}, 
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

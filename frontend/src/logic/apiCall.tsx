@@ -34,10 +34,9 @@ class ApiCall {
                 }
                 break;            
             }
-            case "country":
-                this.link = "/user/country";
+            case "testuser":
+                this.link = "/user/testuser";
                 break;
-            
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";
@@ -59,13 +58,15 @@ class ApiCall {
 
 
     private MakePostCall(post) {
-        return axios.post(this.PATH_BASE + this.link, {
-            post
-        })
+        console.log(post);
+        return axios.post(this.PATH_BASE + this.link, 
+            JSON.stringify(post)
+        )
             .then(res => {
-                return res;
+                return res.data;
             })
             .catch(err => {
+                console.log(post);
                 console.log(err);
                 return err;
             });

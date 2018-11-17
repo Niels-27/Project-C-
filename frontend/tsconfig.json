@@ -19,7 +19,7 @@
     "noUnusedLocals": true,
     "noImplicitUseStrict": true,
     "strictFunctionTypes" : false,
-    "strict": false,
+    "strict": false
   },
   
   "exclude": [

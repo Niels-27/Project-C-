@@ -1,4 +1,6 @@
-   public class RegisterUserDto{ // De vorm waarin een geregistreerde user wordt opgeslagen en vervolgens naar User type wordt omgezet 
+namespace backend.DTOs {
+   public class RegisterUserDto{ // De vorm waarin een geregistreerde user wordt opgeslagen en vervolgens naar User type wordt omgezet
+    
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email {get;set;}
@@ -11,3 +13,4 @@
         public string City {get;set;}
         public string Country {get;set;}
     }
+}

@@ -121,7 +121,7 @@ namespace backend.Controllers
         {
             var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
             if(result == null){
-                return NotFound();
+                return NoContent();
             }
             _context.Products.Remove(result);
             _context.SaveChanges();
@@ -135,7 +135,7 @@ namespace backend.Controllers
         {
             var result = (from m in _context.Users where m.Id ==  id select m).FirstOrDefault();
             if(result == null){
-                return NotFound();
+                return NoContent();
             }
             _context.Users.Remove(result);
             _context.SaveChanges();
@@ -144,14 +144,17 @@ namespace backend.Controllers
         }
 
                 // DELETE api/admin/products/all
-        [HttpDelete("users/delete/{id}")]
-        public IActionResult DeleteAllProducts(int id)
+        [HttpDelete("users/delete/all")]
+        public IActionResult DeleteAllProducts()
         {
-            var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
+            var result = (from m in _context.Products select m).ToList();
             if(result == null){
-                return NotFound();
+                return NoContent();
             }
-            _context.Products.Remove(result);
+            foreach(var product in result){
+                _context.Products.Remove(product);
+            }
+            
             _context.SaveChanges();
 
             return Ok();

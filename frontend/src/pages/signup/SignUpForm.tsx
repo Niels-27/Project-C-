@@ -1,166 +1,128 @@
 import * as React from 'react';
-import map from 'lodash/map';
+// import map from 'lodash/map';
+import * as PropTypes from 'prop-types';
+import validateInput from '../../validations/signup'
+import {ErrorMessage, Field, Form, Formik, FormikProps} from "formik";
+import * as Yup from 'yup';
+// import ApiCall from '../../logic/apiCall' 
+/* tslint:disable:no-empty */
+
+interface IFormikValues {
+    firstname: string;
+    lastname: string;
+    email: string;
+  }
+const initialValues: IFormikValues = {
+    firstname: "",
+    lastname: "",
+    email: ""
+  };
+
+  const SignUpSchema = Yup.object().shape({
+
+    firstname: Yup.string()
+      .min(2, 'Must be longer than 2 characters')
+      .max(20, 'Nice try, nobody has a first name that long')
+      .required('Required'),
+    lastname: Yup.string()
+      .min(2, 'Must be longer than 2 characters')
+      .max(20, 'Nice try, nobody has a last name that long')
+      .required('Required'),
+      email: Yup.string()
+      .email('Invalid email address')
+      .required('Required'),
+  });
+
 
 class SignUpForm extends React.Component<any,any>{
-
+    public static propTypes = {userSignUpRequest: PropTypes.func.isRequired};
     constructor(props: any) {
         super(props);
         this.state = {
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            passwordConfirmation: '',
-            street: '',
-            streetNumber: '',
-            zipCode: '',
-            city: '',
-            country: '',
-            timezone: '',
-            opt: this.props.countryOps
+            errors: {}
         };
-        this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    public componentWillReceiveProps(nextProps) {
-        this.setState({ opt: nextProps.countryOps });
-        console.log(nextProps.countryOps);
-    }
+    public isValid() {
+        const { errors, isValid } = validateInput(this.state);
+    
+        if (!isValid) {
+          this.setState({ errors });
+        }
+    
+        return isValid;
+      }
+    public async onSubmit(values){
+       
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+            }, 500);
+          
+        // if (this.isValid()) {
 
-    public onChange(e){
-        this.setState({[e.target.name]: e.target.value})
-    }
-    public onSubmit(e){
-        e.preventDefault();
-        console.log(this.state);
+        //     this.setState({ errors: {}, isLoading: true });
+        //     this.props.userSignUpRequest(this.state).then(
+        //       () => {},
+        //       ({data}) => this.setState({ errors: data, isLoading: false })
+        //     );
+        //   }
+        // const call: ApiCall = new ApiCall();
+        // call.setURL("testuser");
+        // await this.setState({ countryOpt: await call.result(this.state)});
     }
     public render() {
-        const options = map(this.state.opt, ('name'));
         return (
-           <form onSubmit={this.onSubmit}>
-           <div className="row mt-md-5 mb-md-3">
-            <div className="col col-md-6">
-               <h1 className="h1-responsive text-center text-md-left "><strong>Meld je nu aan!</strong></h1>
-               </div>
-            </div>
-               <div className="row">
-                <div className="col col-md-6" >
-                    <div className="form-group">
-                            <label className="control-label">Voornaam</label>
-                            <input 
-                                value={this.state.firstname}
-                                onChange={this.onChange}
-                                type="text"
-                                name="firstname"
-                                className="form-control"
-                                />
-                    </div>
-                    <div className="form-group">
-                            <label className="control-label">Achternaam</label>
-                            <input 
-                                value={this.state.lastname}
-                                onChange={this.onChange}
-                                type="text"
-                                name="lastname"
-                                className="form-control"
-                                />
-                    </div>
-                    <div className="form-group">
-                            <label className="control-label">Email</label>
-                            <input 
-                                value={this.state.email}
-                                onChange={this.onChange}
-                                type="text"
-                                name="email"
-                                className="form-control"
-                                />
-                    </div>
-                    <div className="form-group">
-                            <label className="control-label">Wachtwoord</label>
-                            <input 
-                                value={this.state.password}
-                                onChange={this.onChange}
-                                type="password"
-                                name="password"
-                                className="form-control"
-                                />
-                    </div>
-                    <div className="form-group">
-                            <label className="control-label">Herhaal wachtwoord</label>
-                            <input 
-                                value={this.state.passwordConfirmation}
-                                onChange={this.onChange}
-                                type="password"
-                                name="passwordConfirmation"
-                                className="form-control"
-                                />
-                    </div>
+            <Formik
+            initialValues={initialValues}
+            validationSchema={SignUpSchema}
+            onSubmit={this.onSubmit}
+            render={this.renderFormik}
+        /> );
+    }
+    private renderFormik = (formik: FormikProps<IFormikValues>) => {
+        return (
+            <Form>
+                <div className="form-group">
+                <div className="mb-5 mt-5">
+                    <label htmlFor="firstname">First Name</label>
+                    <Field className="form-control" name="firstname" placeholder="Jane" type="text" />
+                    <ErrorMessage
+                    name="firstname"
+                    component="div"
+                    className="field-error"
+                    />
                 </div>
-                <div className="col col-md-6 ml-auto" >
-                    <div className="form-group">
-                            <label className="control-label">Straatnaam</label>
-                            <input 
-                                value={this.state.street}
-                                onChange={this.onChange}
-                                type="text"
-                                name="street"
-                                className="form-control"
-                                />
+                <div className="mb-5">
+                    <label htmlFor="lastname">Last Name</label>
+                    <Field className="form-control" name="lastname" placeholder="Doe" type="text" />
+                    <ErrorMessage
+                    name="lastname"
+                    component="div"
+                    className="field-error"
+                    />
                     </div>
-                        <div className="form-group">
-                            <label className="control-label">Huisnummer</label>
-                            <input 
-                                value={this.state.streetNumber}
-                                onChange={this.onChange}
-                                type="text"
-                                name="streetNumber"
-                                className="form-control"
-                                />
+                    <div className="mb-5">
+                    <label htmlFor="email">Email</label>
+                    <Field className="form-control"name="email" placeholder="jane@acme.com" type="email" />
+                    <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="field-error"
+                    />
                     </div>
-                    <div className="form-group">
-                            <label className="control-label">Postcode</label>
-                            <input 
-                                value={this.state.zipCode}
-                                onChange={this.onChange}
-                                type="text"
-                                name="zipCode"
-                                className="form-control"
-                                />
-                    </div> 
-                    <div className="form-group">
-                            <label className="control-label">Stad</label>
-                            <input 
-                                value={this.state.city}
-                                onChange={this.onChange}
-                                type="text"
-                                name="city"
-                                className="form-control"
-                                />
-                    </div>
-                    <div className="form-group">
-                            <label className="control-label">Land</label>
-                            <select 
-                                value={this.state.country}
-                                onChange={this.onChange}
-                                name="country"
-                                className="form-control"
-                                >
-                                <option value="" disabled>Kies een land</option>
-                                <option>{options}</option>
-                            </select>
-                    </div>
-
-                    </div>
-                </div>
-  
-                <div className="form-group mt-md-5">
-                   <button type="button" className="btn btn-success btn-lg ">
+        
+                    
+                <div className="form-group">
+                   <button type="submit" className="btn btn-success btn-lg "
+                    disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
+                    onClick={formik.submitForm}>
                         <strong>Aanmelden</strong>
                     </button>
                 </div>      
-           </form>
+            </div>
+          </Form>
         );
-    }
+    };   
 }
 
 export default SignUpForm;
