@@ -101,7 +101,6 @@ namespace backend.Controllers
             var user = _context.Users.FirstOrDefault (m => m.Id == id);
             user.Name = user_edit.Name;
             user.Email = user_edit.Email;
-            user.Password = user_edit.Password;
             user.Salt = user_edit.Salt;
             user.Ip = user_edit.Salt;
             user.Rank = user_edit.Rank;
@@ -143,21 +142,28 @@ namespace backend.Controllers
             return Ok();
         }
 
-                // DELETE api/admin/products/all
+                
         [HttpDelete("users/delete/all")]
-        public IActionResult DeleteAllProducts()
+        public IActionResult DeleteAllUsersAndAddresses()
         {
-            var result = (from m in _context.Products select m).ToList();
-            if(result == null){
+            var users = (from u in _context.Users select u).ToList();
+            var addresses  = (from a in _context.Addresses select a).ToList();
+            if(users == null){
                 return NoContent();
             }
-            foreach(var product in result){
-                _context.Products.Remove(product);
+            if(addresses == null){
+                return NoContent();
             }
-            
+            foreach(var user in users){
+                _context.Users.Remove(user);
+            }
+             foreach(var address in addresses){
+                _context.Addresses.Remove(address);
+            }        
             _context.SaveChanges();
 
             return Ok();
         }
+            
     }
 }

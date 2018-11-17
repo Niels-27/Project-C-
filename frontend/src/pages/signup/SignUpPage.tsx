@@ -15,7 +15,8 @@ class SignUpPage extends React.Component<any,any>{
         const {userSignUpRequest} = this.props;
         return (
             <div className="container">                                     
-                    <SignUpForm userSignUpRequest={userSignUpRequest}/>  
+                    <SignUpForm userSignUpRequest={userSignUpRequest}
+                    />  
             </div>
         );
     }

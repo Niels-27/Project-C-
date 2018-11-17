@@ -1,74 +1,88 @@
 import * as React from 'react';
-// import map from 'lodash/map';
 import * as PropTypes from 'prop-types';
-import validateInput from '../../validations/signup'
 import {ErrorMessage, Field, Form, Formik, FormikProps} from "formik";
 import * as Yup from 'yup';
-// import ApiCall from '../../logic/apiCall' 
+import {
+    withRouter
+} from "react-router-dom";
 /* tslint:disable:no-empty */
 
 interface IFormikValues {
     firstname: string;
     lastname: string;
     email: string;
-  }
+    password: string;
+    passwordConfirmation: string;
+    street: string;
+    streetnumber: string;
+    zipcode: string;
+    city: string;
+    country: string;
+    createdon: Date;
+    ip: Promise<string|Response>;
+    }
+const GetIp = async () => {
+    const res = await fetch('https://api.ipify.org').then(data => data).catch(error => "error")
+    return await res;
+};
+
 const initialValues: IFormikValues = {
     firstname: "",
     lastname: "",
-    email: ""
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    street: "",
+    streetnumber: "",
+    zipcode: "",
+    city: "",
+    country: "",
+    createdon: new Date('1900-1-1T00:00:00'),
+    ip: GetIp(),
   };
 
   const SignUpSchema = Yup.object().shape({
 
     firstname: Yup.string()
-      .min(2, 'Must be longer than 2 characters')
-      .max(20, 'Nice try, nobody has a first name that long')
-      .required('Required'),
+      .min(2, 'Moet langer zijn dan 2 karakters')
+      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
+      .required('Vereist'),
     lastname: Yup.string()
-      .min(2, 'Must be longer than 2 characters')
-      .max(20, 'Nice try, nobody has a last name that long')
-      .required('Required'),
+      .min(2, 'Moet langer zijn dan 2 karakters')
+      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
+      .required('Vereist'),
       email: Yup.string()
-      .email('Invalid email address')
-      .required('Required'),
+      .email('Ongeldig emailadres')
+      .required('Vereist'),
+      password: Yup.string()
+      .min(6, 'Het wachtwoord moet langer zijn dan 6 karakters')
+      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
+      .required('Vereist'),
+      passwordConfirmation: Yup.string()
+      .oneOf([Yup.ref('password'), null], "Het wachtwoord komt niet overeen met de bovenste")                                
+      .required('Vereist'),
+      street: Yup.string()      
+      .required('Vereist'),
+      streetnumber: Yup.string()
+      .required('Vereist'),
+      zipcode: Yup.string()
+      .required('Vereist'),
+      city: Yup.string()
+      .required('Vereist'),
+      country: Yup.string()
+      .required('Vereist'),
   });
 
-
 class SignUpForm extends React.Component<any,any>{
-    public static propTypes = {userSignUpRequest: PropTypes.func.isRequired};
+    public static propTypes = 
+    {userSignUpRequest: PropTypes.func.isRequired}
     constructor(props: any) {
         super(props);
         this.state = {
             errors: {}
         };
         this.onSubmit = this.onSubmit.bind(this);
-    }
-    public isValid() {
-        const { errors, isValid } = validateInput(this.state);
-    
-        if (!isValid) {
-          this.setState({ errors });
-        }
-    
-        return isValid;
-      }
-    public async onSubmit(values){
-       
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-            }, 500);
-          
-        // if (this.isValid()) {
-
-        //     this.setState({ errors: {}, isLoading: true });
-        //     this.props.userSignUpRequest(this.state).then(
-        //       () => {},
-        //       ({data}) => this.setState({ errors: data, isLoading: false })
-        //     );
-        //   }
-        // const call: ApiCall = new ApiCall();
-        // call.setURL("testuser");
-        // await this.setState({ countryOpt: await call.result(this.state)});
+        // this.checkUserExists = this.checkUserExists.bind(this);
     }
     public render() {
         return (
@@ -79,50 +93,163 @@ class SignUpForm extends React.Component<any,any>{
             render={this.renderFormik}
         /> );
     }
+    private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
+            // setTimeout(() => {
+            //   alert(JSON.stringify(values, null, 2));
+            // }, 500);
+        formik.setSubmitting(true);
+        formik.setStatus(undefined);
+        setTimeout(() => {
+            // setting API errors
+            formik.setStatus({
+            email: 'Deze email bestaat al.',
+            password: 'Het wachtwoord is incorrect',
+            });
+        }, 500);
+
+        this.setState({ errors: {}});
+        this.props.userSignUpRequest(values).then(
+            () => {
+                alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
+                this.props.history.push("/");
+            },
+            ({data}) => this.setState({ errors: data})
+        );
+
+    }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
         return (
             <Form>
-                <div className="form-group">
-                <div className="mb-5 mt-5">
-                    <label htmlFor="firstname">First Name</label>
-                    <Field className="form-control" name="firstname" placeholder="Jane" type="text" />
-                    <ErrorMessage
-                    name="firstname"
-                    component="div"
-                    className="field-error"
-                    />
+                <div className="row mt-md-5 mb-md-3 justify-content-center">
+                    <div className="col col-10">
+                    <h1 className="h1-responsive text-start"><strong>Meld je nu aan!</strong></h1>
+                    </div>
                 </div>
-                <div className="mb-5">
-                    <label htmlFor="lastname">Last Name</label>
-                    <Field className="form-control" name="lastname" placeholder="Doe" type="text" />
-                    <ErrorMessage
-                    name="lastname"
-                    component="div"
-                    className="field-error"
-                    />
-                    </div>
-                    <div className="mb-5">
-                    <label htmlFor="email">Email</label>
-                    <Field className="form-control"name="email" placeholder="jane@acme.com" type="email" />
-                    <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="field-error"
-                    />
-                    </div>
-        
-                    
                 <div className="form-group">
-                   <button type="submit" className="btn btn-success btn-lg "
-                    disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
-                    onClick={formik.submitForm}>
-                        <strong>Aanmelden</strong>
-                    </button>
-                </div>      
+                 <div className="row justify-content-around">
+                    <div className="col col-6 col-md-4" >
+                        <div className="mb-5">
+                            <label htmlFor="firstname">Voornaam</label>
+                            <Field className="form-control" name="firstname" placeholder="Nofit" type="text" />
+                            <ErrorMessage
+                            name="firstname"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="lastname">Achternaam</label>
+                            <Field className="form-control" name="lastname" placeholder="Kartoredjo" type="text" />
+                            <ErrorMessage
+                            name="lastname"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="email">Email</label>
+                            <Field className="form-control"name="email" placeholder="nofit64@gmail.com" type="email" />
+                            <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>   
+                        <div className="mb-5">
+                            <label htmlFor="password">Wachtwoord</label>
+                            <Field className="form-control"name="password" type="password" />
+                            <ErrorMessage
+                            name="password"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>   
+                        <div className="mb-5">
+                            <label htmlFor="passwordConfirmation">Herhaal wachtwoord</label>
+                            <Field className="form-control"name="passwordConfirmation"  type="password" />
+                            <ErrorMessage
+                            name="passwordConfirmation"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>   
+                    </div>
+                    <div className="col col-6 col-md-4" >
+                        <div className="mb-5">
+                            <label htmlFor="street">Straatnaam</label>
+                            <Field className="form-control"name="street" placeholder="Jan Pieterstraat" type="text" />
+                            <ErrorMessage
+                            name="street"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>   
+                    
+                        <div className="mb-5">
+                            <label htmlFor="streetnumber">Huisnummer</label>
+                            <Field className="form-control"name="streetnumber" placeholder="61" type="text" />
+                            <ErrorMessage
+                            name="streetnumber"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>   
+                        <div className="mb-5">
+                            <label htmlFor="zipcode">Postcode</label>
+                            <Field className="form-control"name="zipcode" placeholder="1234AB" type="text" />
+                            <ErrorMessage
+                            name="zipcode"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div> 
+                        <div className="mb-5">
+                            <label htmlFor="city">Stad</label>
+                            <Field className="form-control"name="city" placeholder="Rotterdam" type="text" />
+                            <ErrorMessage
+                            name="city"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="country">Land</label>
+                            <Field component="select"className="form-control"name="country" type="text">
+                            <option value="" disabled>Kies een land</option>
+                                <option>Nederland</option>
+                            </Field>
+                            <ErrorMessage
+                            name="country"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>    
+                        <div className="form-group">
+                        <button type="submit" className="btn btn-success btn-lg "
+                            disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
+                            >
+                                <strong>Aanmelden</strong>
+                            </button>
+                        </div> 
+
+                        
+           {status && formik.status.email ? (
+            <div>Error: {formik.status.email}</div>
+          ) : (
+            formik.errors.email && <div>Error: {formik.errors.email}</div>
+          )}
+
+          {status && formik.status.password ? (
+            <div>Error: {formik.status.password}</div>
+          ) : (
+            formik.errors.password && <div>Error: {formik.errors.password}</div>
+          )}           
+                    </div>
+                </div>
             </div>
           </Form>
         );
     };   
 }
 
-export default SignUpForm;
+export default withRouter(SignUpForm);
