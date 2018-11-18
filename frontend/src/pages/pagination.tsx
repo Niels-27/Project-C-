@@ -3,6 +3,7 @@ import { Component} from 'react';
 import Pagination from 'react-js-pagination';
 import ApiCall from '../logic/apiCall';
 import ProductList from "../components/ProductList";
+import './pagination.css';
 
 
 // import { number, any } from 'prop-types';
@@ -26,15 +27,15 @@ class Paging extends Component<any , any> {
 
   public async MakeApiCall(pgn){
     const call: ApiCall = new ApiCall();
-    call.setURL('pageNation',pgn,'4');    
+    call.setURL('pageNation',pgn,'3');    
     await this.setState({ product: await call.result() });
     console.log(this.state.product.items);
   }
 
   public handlePageChange(pageNumber) {
     console.log(`active page is ${pageNumber}`);
-    this.MakeApiCall(pageNumber -1);
-    this.setState({currentPage: pageNumber - 1});
+    this.MakeApiCall(pageNumber);
+    this.setState({currentPage: pageNumber});
   }
  
   public renderProducts(products){
@@ -44,7 +45,7 @@ class Paging extends Component<any , any> {
     return null;
   }
   public render() {
-    console.log(this.state.produ);
+    console.log(this.state.product);
     return (
       <div>
       {this.renderProducts(this.state.product.items)}
