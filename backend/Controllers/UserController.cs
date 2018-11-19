@@ -39,22 +39,14 @@ namespace backend.Controllers
             }     
             return dbList;
         }
-        // private static readonly Expression<Func<RegisterUserDto, User>> AsUser = 
-        //     x => new User
-        //     { 
-        //         Id = x.Id,
-        //         Name = x.Firstname + " " + x.Lastname,
-        //         Email = x.Email,
-        //         Password = x.Password,
-        //         Salt = x.Salt,
-        //         Ip = x.Ip,
-        //         Street = x.Street,
-        //         Password = x.Password,
-        //         ZipCode = x.ZipCode,
-        //         City = x.City,
-        //         Country = x.Country
-        //     };
-                private string RequestBody;
+        [HttpGet]
+        [Route("testuser/{email=string}")]
+        public User ScanEmail(string email)
+        {
+           var user = _context.Users.Where(u => u.Email == email).Select(u=> u).FirstOrDefault();
+           return user;
+        }      
+        private string RequestBody;
         [HttpPost]
         [Route("testuser")]
         public async Task<User> ReadStringDataManual()
@@ -62,7 +54,9 @@ namespace backend.Controllers
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 this.RequestBody = await reader.ReadToEndAsync();
+                 Console.WriteLine(this.RequestBody);
             }
+           
             dynamic userData = JValue.Parse(this.RequestBody);
             //System.Console.WriteLine(derp);
             //return productIds.items[0];
@@ -70,13 +64,16 @@ namespace backend.Controllers
         }
 
         private User handleBodyPost(dynamic user)
-        {     
+        {    
+            Console.WriteLine(user.ip);
+            string ip = user.ip;
+            
             DateTime createDate = DateTime.UtcNow;
             User new_user = new User(){
                 Name = user.firstname + " " + user.lastname,
                 Email = user.email,
-                Rank = 3,
-                Ip = user.ip,
+                Rank = 1,
+                Ip = ip,
                 CreateOn = createDate                     
             };
             string country = user.country;

@@ -19,12 +19,14 @@ interface IFormikValues {
     city: string;
     country: string;
     createdon: Date;
-    ip: Promise<string|Response>;
+    ip: string;
     }
-const GetIp = async () => {
-    const res = await fetch('https://api.ipify.org').then(data => data).catch(error => "error")
-    return await res;
-};
+// const GetIp = async () => {
+//     const res = await fetch('https://api.ipify.org', {method: 'get', credentials: "include", headers:{'content-type': 'application/json'}})
+//     .then(response =>{ response.text()}, ()=> "error");
+//     console.log(res);
+//     return res;
+// };
 
 const initialValues: IFormikValues = {
     firstname: "",
@@ -38,7 +40,7 @@ const initialValues: IFormikValues = {
     city: "",
     country: "",
     createdon: new Date('1900-1-1T00:00:00'),
-    ip: GetIp(),
+    ip: "fakeIp"
   };
 
   const SignUpSchema = Yup.object().shape({
@@ -51,7 +53,7 @@ const initialValues: IFormikValues = {
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
       .required('Vereist'),
-      email: Yup.string()
+    email: Yup.string()
       .email('Ongeldig emailadres')
       .required('Vereist'),
       password: Yup.string()
@@ -73,16 +75,21 @@ const initialValues: IFormikValues = {
       .required('Vereist'),
   });
 
+//   .test("test-name", "Email is al in gebruik.", 
+//   function(value) {
+//       return value? this.props.isUserExists(value).then(() => "Email is al in gebruik.", () => "") : "" ;
+//   })
+
 class SignUpForm extends React.Component<any,any>{
     public static propTypes = 
-    {userSignUpRequest: PropTypes.func.isRequired}
+    {userSignUpRequest: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
     constructor(props: any) {
         super(props);
         this.state = {
-            errors: {}
+            errors: {}, invalid: false, user: null
         };
         this.onSubmit = this.onSubmit.bind(this);
-        // this.checkUserExists = this.checkUserExists.bind(this);
+        this.checkUserExists = this.checkUserExists.bind(this);
     }
     public render() {
         return (
@@ -93,6 +100,17 @@ class SignUpForm extends React.Component<any,any>{
             render={this.renderFormik}
         /> );
     }
+    private checkUserExists(e) {
+        this.setState({user: null});
+        const val = e.target.value;
+        if (val !== '') {           
+          this.props.isUserExists(val).then((res) => { 
+              console.log(res); 
+             if(res){ this.setState({user: res.data}); }
+            }, () => { console.log("Something Wrong.. With This")})
+        }
+    }
+
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
             // setTimeout(() => {
             //   alert(JSON.stringify(values, null, 2));
@@ -148,12 +166,13 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control"name="email" placeholder="nofit64@gmail.com" type="email" />
-                            <ErrorMessage
-                            name="email"
-                            component="div"
-                            className="field-error text-danger"
-                            />
+                            <Field className="form-control" onBlur={this.checkUserExists} name="email" placeholder="nofit64@gmail.com" type="email" />
+                            {formik.errors.email ?(<div className="text-danger" >Error: {formik.errors.email}</div>
+                            ) : this.state.user!== null && !formik.errors.email ? (
+                                <div className="text-danger">User Already exists..</div>
+                            ) : this.state.user=== null && !formik.errors.email && formik.values.email ? <div className="text-success">Deze email is beschikbaar</div>
+                            : null
+                                } 
                         </div>   
                         <div className="mb-5">
                             <label htmlFor="password">Wachtwoord</label>
@@ -226,24 +245,11 @@ class SignUpForm extends React.Component<any,any>{
                         </div>    
                         <div className="form-group">
                         <button type="submit" className="btn btn-success btn-lg "
-                            disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
+                            disabled={!formik.isValid || formik.isSubmitting || formik.isValidating || this.state.user!==null}
                             >
                                 <strong>Aanmelden</strong>
                             </button>
                         </div> 
-
-                        
-           {status && formik.status.email ? (
-            <div>Error: {formik.status.email}</div>
-          ) : (
-            formik.errors.email && <div>Error: {formik.errors.email}</div>
-          )}
-
-          {status && formik.status.password ? (
-            <div>Error: {formik.status.password}</div>
-          ) : (
-            formik.errors.password && <div>Error: {formik.errors.password}</div>
-          )}           
                     </div>
                 </div>
             </div>

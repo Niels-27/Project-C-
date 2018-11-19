@@ -35,8 +35,9 @@ class ApiCall {
                 break;            
             }
             case "testuser":
-                this.link = "/user/testuser";
+                this.link = "/user/testuser/" + first;
                 break;
+                
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";

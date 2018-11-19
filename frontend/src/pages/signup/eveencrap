@@ -121,3 +121,20 @@
                     </button>
                 </div>      
            </form>
+
+
+
+
+          {status && formik.status.password ? (
+            <div>Error: {formik.status.password}</div>
+          ) : (
+            formik.errors.password && <div>Error: {formik.errors.password}</div>
+          )}           
+               
+
+               {formik.errors.email ?(<div className="text-danger" >{formik.errors.email}</div>
+                            ) : this.state.user!== null && !formik.errors.email ? (
+                                <div className="text-danger">User Already exists..</div>
+                            ) : this.state.user=== null && !formik.errors.email && formik.values.email ? <div className="text-success">Deze email is beschikbaar</div>
+                            : null
+                                } 
