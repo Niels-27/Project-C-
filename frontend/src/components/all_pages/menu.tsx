@@ -16,8 +16,8 @@ class MenuBar extends React.Component<any,any> {
 
     public render() {
         return (
-            <div>
-                <Nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div style={{backgroundColor:"#ebebeb" }}>
+                <Nav className="navbar navbar-expand-lg navbar-dark">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"/>
                 </button>
@@ -25,27 +25,27 @@ class MenuBar extends React.Component<any,any> {
 
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Link to="/AllProducts/all" className="nav-link">Alle producten</Link>
+                                <Link to="/AllProducts/all" className="nav-link" style={{color:"black"}>Alle producten</Link>
                             </li>
                        <li className="nav-item">
-                                <Link to="/AllProducts/Shirts" className="nav-link">Shirts</Link>
+                                <Link to="/AllProducts/Shirts" className="nav-link" style={{color:"black"}>Shirts</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Schoenen" className="nav-link">Schoenen</Link>
+                                <Link to="/AllProducts/Schoenen" className="nav-link" style={{color:"black"}>Schoenen</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Jeans" className="nav-link">Jeans</Link>
+                                <Link to="/AllProducts/Jeans" className="nav-link" style={{color:"black"}>Jeans</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Hoodies" className="nav-link">Hoodies</Link>
+                                <Link to="/AllProducts/Hoodies" className="nav-link" style={{color:"black"}>Hoodies</Link>
                         </li>
                         <li className="nav-item">
-                                <Link to="/AllProducts/Vesten" className="nav-link">Vesten</Link>
+                                <Link to="/AllProducts/Vesten" className="nav-link" style={{color:"black"}>Vesten</Link>
                         </li>
                     </ul>
 
-                            <input id="Search_bar_input" className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
+                            <input id="Search_bar_input" className="form-control-danger mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
+                        <button className="btn btn-outline-danger my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
                 </div>
             </Nav>
             </div>
