@@ -44,7 +44,7 @@ class MenuBar extends React.Component<any,any> {
                         </li>
                     </ul>
 
-                            <input id="Search_bar_input" className="form-control-danger mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
+                            <input id="Search_bar_input" className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{maxWidth:'250px'}}value={this.state.searchString} onChange={this.handleChange}/>
                         <button className="btn btn-outline-danger my-2 my-sm-0" type="submit" onClick={this.performSearch}>Search</button>
                 </div>
             </Nav>

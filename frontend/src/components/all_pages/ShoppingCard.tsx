@@ -77,7 +77,7 @@ class ShoppingCard extends React.Component<any, any> {
     public render() {
         return (
             <div>
-                <li className="nav-item"><span className="nav-link"><a className="Shopping-card-icon" onMouseEnter={this.RefreshShoppingCard} onMouseLeave={this.RefreshShoppingCard}><MdShoppingCart size={32} style={{ color: 'white' }} /></a></span></li>
+                <li className="nav-item"><span className="nav-link"><a className="Shopping-card-icon" onMouseEnter={this.RefreshShoppingCard} onMouseLeave={this.RefreshShoppingCard}><MdShoppingCart size={32} style={{ color: 'black' }} /></a></span></li>
             
                 {this.renderShoppingCard()}
 
