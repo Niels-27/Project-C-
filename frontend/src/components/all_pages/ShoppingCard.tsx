@@ -14,11 +14,16 @@ class ShoppingCard extends React.Component<any, any> {
         this.state = { items: this.cookie.get('ShoppingCard') || undefined, showShoppingCard:false,products:null}
     }
 
-    public async UpdateItems(){
+    public async UpdateItems(obj:string = ""){
         const call: ApiCall = new ApiCall();
         call.setURL('array-id');
         if (this.state.items !== undefined){
-           this.setState({ products: await call.result(JSON.parse(this.state.items)) }); 
+            if(obj !== ""){
+                this.setState({ products: await call.result(JSON.parse(obj)) }); 
+            }else{
+                this.setState({ products: await call.result(JSON.parse(this.state.items)) }); 
+            }
+           
         }
     }
 
@@ -26,10 +31,23 @@ class ShoppingCard extends React.Component<any, any> {
         this.UpdateItems();
     }
 
-    public returnItemsMap(items){
+    public returnItemsMap = (items) =>{
+        const arr = JSON.parse(this.state.items).items;
+        const map = arr.reduce((prev, cur) => {
+            prev[cur] = (prev[cur] || 0) + 1;
+            return prev;
+        }, {});
+
+             // Object.keys(map) all the items
+             // const d = JSON.stringify(map)
         return(
-            <div>
-            <p>{items.name}</p>
+            <div style={{ width: '100%' }}>
+                <div className="Shoppingcard-ItemsImageHolder" style={{ backgroundImage: 'url(' + items.imageName + ')' }} />
+                <div className="Shoppingcard-ItemsTextHolder">
+                {items.name}
+                    <div style={{ float: 'right',color:'grey'}}>{map[items.id]}</div>
+                </div>
+                <div className="clear" />
                 </div>
         );
     }
@@ -59,7 +77,7 @@ class ShoppingCard extends React.Component<any, any> {
     public render() {
         return (
             <div>
-                <li className="nav-item"><span className="nav-link"><a onClick={this.handleOnClick}><MdShoppingCart size={32} style={{ color: 'white' }} /></a></span></li>
+                <li className="nav-item"><span className="nav-link"><a className="Shopping-card-icon" onMouseEnter={this.RefreshShoppingCard} onMouseLeave={this.RefreshShoppingCard}><MdShoppingCart size={32} style={{ color: 'white' }} /></a></span></li>
             
                 {this.renderShoppingCard()}
 
@@ -67,14 +85,17 @@ class ShoppingCard extends React.Component<any, any> {
         );
     }
 
-    private handleOnClick = () =>{
+    private RefreshShoppingCard = () =>{
         const cookieInfo = this.cookie.get('ShoppingCard');
+        
         if (this.state.items !== cookieInfo){
+
             this.setState({ showShoppingCard: !this.state.showShoppingCard, items: cookieInfo || undefined });
-            this.UpdateItems();
+            this.UpdateItems(cookieInfo);
         }else{
             this.setState({ showShoppingCard: !this.state.showShoppingCard});
         }
+
         
     }
 }
