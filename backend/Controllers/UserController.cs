@@ -45,7 +45,7 @@ namespace backend.Controllers
         {
            var user = _context.Users.Where(u => u.Email == email).Select(u=> u).FirstOrDefault();
            return user;
-        }      
+        }       
         private string RequestBody;
         [HttpPost]
         [Route("testuser")]
@@ -61,8 +61,7 @@ namespace backend.Controllers
             //System.Console.WriteLine(derp);
             //return productIds.items[0];
             return handleBodyPost(userData);
-        }
-
+        }        
         private User handleBodyPost(dynamic user)
         {    
             Console.WriteLine(user.ip);
@@ -111,5 +110,33 @@ namespace backend.Controllers
             }
             return user;
         }
+          private string AuthenticateUser(string email, dynamic password){
+            string encodedSalt, encodedKey;
+            encodedSalt = _context.Users.Where(u => u.Email == email).Select(u => u.Salt).FirstOrDefault();
+            encodedKey = _context.Users.Where(u => u.Email == email).Select(u => u.Key).FirstOrDefault();
+            if(encodedKey == null || encodedSalt == null ){return "Er is een error.";}
+            // load encodedSalt and encodedKey from database for the given username
+            byte[] salt = Convert.FromBase64String(encodedSalt);
+            byte[] key = Convert.FromBase64String(encodedKey);
+
+            using (var deriveBytes = new Rfc2898DeriveBytes(password, salt))
+            {
+                byte[] testKey = deriveBytes.GetBytes(20); // 20-byte key
+                if (!testKey.SequenceEqual(key))
+                 return "Het wachtwoord klopt niet.";
+                else
+                return "";
+            }
+        }
+        [HttpGet]
+        [Route("testuser/{email=string}/{password=string}")]
+        public string CheckUser(string email, string password)
+        {
+           var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+           if(!user.Any()){
+               return "Het emailadres bestaat niet.";
+           }
+            return AuthenticateUser(email, password);
+        }          
     }
 }

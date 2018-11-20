@@ -11,7 +11,7 @@ async function PostUser(userData) {
     return call.result(userData); // hpoi
 }
 
-export function IsUserExists(email:string) {
+export function IsEmailExists(email:string) {
     return dispatch => {
       return CheckEmail(email);
     }

@@ -138,3 +138,20 @@
                             ) : this.state.user=== null && !formik.errors.email && formik.values.email ? <div className="text-success">Deze email is beschikbaar</div>
                             : null
                                 } 
+
+                                        // setTimeout(() => {
+        //     // setting API errors
+        //     formik.setStatus({
+        //     email: 'Deze email bestaat al.',
+        //     password: 'Het wachtwoord is incorrect',
+        //     });
+        // }, 500);
+
+        //   .test("test-name", "Email is al in gebruik.", 
+//   function(value) {
+//       return value? this.props.isUserExists(value).then(() => "Email is al in gebruik.", () => "") : "" ;
+//   })
+
+           // setTimeout(() => {
+            //   alert(JSON.stringify(values, null, 2));
+            // }, 500);

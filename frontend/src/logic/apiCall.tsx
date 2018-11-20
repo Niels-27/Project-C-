@@ -35,7 +35,7 @@ class ApiCall {
                 break;            
             }
             case "testuser":
-                this.link = "/user/testuser/" + first;
+                this.link = "/user/testuser/" + first + "/" + second;
                 break;
                 
             default:

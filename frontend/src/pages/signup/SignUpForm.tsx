@@ -75,21 +75,16 @@ const initialValues: IFormikValues = {
       .required('Vereist'),
   });
 
-//   .test("test-name", "Email is al in gebruik.", 
-//   function(value) {
-//       return value? this.props.isUserExists(value).then(() => "Email is al in gebruik.", () => "") : "" ;
-//   })
-
 class SignUpForm extends React.Component<any,any>{
     public static propTypes = 
-    {userSignUpRequest: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
+    {userSignUpRequest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired}
     constructor(props: any) {
         super(props);
         this.state = {
             errors: {}, invalid: false, user: null
         };
         this.onSubmit = this.onSubmit.bind(this);
-        this.checkUserExists = this.checkUserExists.bind(this);
+        this.checkEmailExists = this.checkEmailExists.bind(this);
     }
     public render() {
         return (
@@ -99,41 +94,25 @@ class SignUpForm extends React.Component<any,any>{
             onSubmit={this.onSubmit}
             render={this.renderFormik}
         /> );
-    }
-    private checkUserExists(e) {
+    }  
+    private checkEmailExists(e) {
         this.setState({user: null});
         const val = e.target.value;
         if (val !== '') {           
-          this.props.isUserExists(val).then((res) => { 
+          this.props.isEmailExists(val).then((res) => { 
               console.log(res); 
-             if(res){ this.setState({user: res.data}); }
+              this.setState({user: res.data}); 
             }, () => { console.log("Something Wrong.. With This")})
         }
     }
-
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
-            // setTimeout(() => {
-            //   alert(JSON.stringify(values, null, 2));
-            // }, 500);
         formik.setSubmitting(true);
-        formik.setStatus(undefined);
-        setTimeout(() => {
-            // setting API errors
-            formik.setStatus({
-            email: 'Deze email bestaat al.',
-            password: 'Het wachtwoord is incorrect',
-            });
-        }, 500);
-
         this.setState({ errors: {}});
         this.props.userSignUpRequest(values).then(
             () => {
                 alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                 this.props.history.push("/");
-            },
-            ({data}) => this.setState({ errors: data})
-        );
-
+            }, ({data}) => this.setState({ errors: data}));
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
         return (
@@ -166,7 +145,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control" onBlur={this.checkUserExists} name="email" placeholder="nofit64@gmail.com" type="email" />
+                            <Field className="form-control" onBlur={this.checkEmailExists} name="email" placeholder="@gmail.com" type="email" />
                             {formik.errors.email ?(<div className="text-danger" >Error: {formik.errors.email}</div>
                             ) : this.state.user!== null && !formik.errors.email ? (
                                 <div className="text-danger">User Already exists..</div>
