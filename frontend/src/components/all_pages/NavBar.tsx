@@ -16,13 +16,13 @@ class NavBar extends React.Component<any, any> {
                         <div className="navbar-collapse collapse dual-nav w-50 order-1 order-sm-0">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link to="/AllProducts/Dames" className="nav-link pl-0 style={{color:"black"}}">Dames <span className="sr-only">Dames</span></Link>
+                                    <Link to="/AllProducts/Dames" className="nav-link pl-0" style={{color:"black"}}>Dames <span className="sr-only">Dames</span></Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link menu pl-0 style={{color:"black"}}" >| <span className="sr-only">|</span></a>
+                                    <a className="nav-link menu pl-0" style={{color:"black"}} >| <span className="sr-only">|</span></a>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/AllProducts/Heren" className="nav-link pl-0 style={{color:"black"}}">Heren <span className="sr-only">Heren</span></Link>
+                                    <Link to="/AllProducts/Heren" className="nav-link pl-0" style={{color:"black"}}>Heren <span className="sr-only">Heren</span></Link>
                                 </li>
                             </ul>
                         </div>
