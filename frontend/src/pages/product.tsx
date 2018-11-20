@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 import ApiCall from '../logic/apiCall';
+
+import Cookie from '../logic/cookie';
+
 // import { Row, Col } from 'reactstrap';
 interface IProps {
     match: {
@@ -13,14 +16,18 @@ interface IProps {
 
 class App extends React.Component<IProps, any> {
 
+    public cookie: Cookie = new Cookie();
+
     constructor(props: IProps) {
         super(props);
-        this.state = { product: {
-            name:"",
-            imageName:"",
-            price:"",
-            discription:"",
-        } };
+        this.state = {
+            product: {
+                name: "",
+                imageName: "",
+                price: "",
+                discription: "",
+            }
+        };
     }
 
     public async componentDidMount() {
@@ -69,20 +76,20 @@ class App extends React.Component<IProps, any> {
                             <p className="ml-xl-0 ml-4">
                                 <strong>Kleur: </strong>{this.state.product.color}</p>
 
-                            
+
                             <strong>Dit product is beschikbaar in de volgende maat: </strong>
-                            
-                            <h3 className="h3-responsive text-center text-md-left mt-2 mb-5 ml-xl-0 ml-4">       
-                                {this.state.product.sizeName} 
-                            
+
+                            <h3 className="h3-responsive text-center text-md-left mt-2 mb-5 ml-xl-0 ml-4">
+                                {this.state.product.sizeName}
+
                             </h3>
 
-                            <button type="button" className="btn btn-success btn-lg w-100">Koop nu</button>
+                            <button type="button" className="btn btn-success btn-lg w-100" onClick={this.addProductToShoppiongCard}>Koop nu</button>
 
                             <section className="Beschikbaarheid">
                                 <div className="mt-5">
                                     <p className="grey-text">
-                                    <strong>Beschikbaarheid: </strong>{this.state.product.amount}</p>
+                                        <strong>Beschikbaarheid: </strong>{this.state.product.amount}</p>
                                 </div>
                             </section>
 
@@ -98,6 +105,19 @@ class App extends React.Component<IProps, any> {
                 {renderItem}
             </div>
         );
+    }
+
+    private addProductToShoppiongCard = () => {
+        const c = this.cookie.get('ShoppingCard');
+        if (c) {
+            const d = JSON.parse(c);
+            d.items.push(this.props.match.params.id.toString());
+            this.cookie.set('ShoppingCard', JSON.stringify(d));
+            /// add to cookie
+        } else {
+            const cjson = { items: [this.props.match.params.id.toString()] }
+            this.cookie.set('ShoppingCard', JSON.stringify(cjson));
+        }
     }
 
 }
