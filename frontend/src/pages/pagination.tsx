@@ -27,7 +27,7 @@ class Paging extends Component<any , any> {
 
   public async MakeApiCall(pgn){
     const call: ApiCall = new ApiCall();
-    call.setURL('pageNation',pgn,'3');    
+    call.setURL('pageNation',pgn,'4');    
     await this.setState({ product: await call.result() });
     console.log(this.state.product.items);
   }
@@ -49,6 +49,7 @@ class Paging extends Component<any , any> {
     return (
       <div>
       {this.renderProducts(this.state.product.items)}
+      <div className="row justify-content-center mt-3">
         <Pagination
         Products= {this.state.productList}
           activePage={this.state.currentPage}
@@ -57,6 +58,7 @@ class Paging extends Component<any , any> {
           pageRangeDisplayed={7}
           onChange={this.handlePageChange}
         />
+        </div>
       </div>
     );
   }
