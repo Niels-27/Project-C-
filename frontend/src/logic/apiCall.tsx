@@ -6,6 +6,7 @@ class ApiCall {
     private PATH_BASE: string = 'http://localhost:5000/api';
 
     public async result(post: object = {}) {
+
         if (this.checkObjectEmpty(post)) {
             return await this.MakeGetCall();
         }
@@ -25,6 +26,10 @@ class ApiCall {
                 this.link = "/product/" + first + "/details";
                 break;
 
+            case "array-id":
+                this.link = "/products-by/array";
+                break;
+                
             case "search":{
                 if(second !== "all" && second){
                     this.link = "/categories/" + second + "/" + first;
