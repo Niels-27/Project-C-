@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {  MdShoppingCart } from "react-icons/md"; // Hiermee Importeer je de Icons
-import Cookie  from '../../logic/cookie';
-import './ShoppingCard.css';
-import ApiCall from '../../logic/apiCall';
+import Cookie from '../logic/cookie';
+import ApiCall from '../logic/apiCall';
 
 class ShoppingCard extends React.Component<any, any> {
 
@@ -11,58 +9,59 @@ class ShoppingCard extends React.Component<any, any> {
     constructor(props) {
         super(props);
         // let getProducts = undefined; // JSON.parse(Cookies.get('products'));
-        this.state = { items: this.cookie.get('ShoppingCard') || undefined, showShoppingCard:false,products:null}
+        this.state = { items: this.cookie.get('ShoppingCard') || undefined, showShoppingCard: false, products: null }
     }
 
-    public async UpdateItems(obj:string = ""){
+    public async UpdateItems(obj: string = "") {
         const call: ApiCall = new ApiCall();
         call.setURL('array-id');
-        if (this.state.items !== undefined){
-            if(obj !== ""){
-                this.setState({ products: await call.result(JSON.parse(obj)) }); 
-            }else{
-                this.setState({ products: await call.result(JSON.parse(this.state.items)) }); 
+        if (this.state.items !== undefined) {
+            if (obj !== "") {
+                this.setState({ products: await call.result(JSON.parse(obj)) });
+            } else {
+                this.setState({ products: await call.result(JSON.parse(this.state.items)) });
             }
-           
+
         }
     }
 
-    public componentDidMount(){
+    public componentDidMount() {
+        this.RefreshShoppingCard();
         this.UpdateItems();
     }
 
-    public returnItemsMap = (items) =>{
+    public returnItemsMap = (items) => {
         const arr = JSON.parse(this.state.items).items;
         const map = arr.reduce((prev, cur) => {
             prev[cur] = (prev[cur] || 0) + 1;
             return prev;
         }, {});
 
-             // Object.keys(map) all the items
-             // const d = JSON.stringify(map)
-        return(
+        // Object.keys(map) all the items
+        // const d = JSON.stringify(map)
+        return (
             <div style={{ width: '100%' }}>
                 <div className="Shoppingcard-ItemsImageHolder" style={{ backgroundImage: 'url(' + items.imageName + ')' }} />
                 <div className="Shoppingcard-ItemsTextHolder">
-                {items.name}
-                    <div style={{ float: 'right',color:'grey'}}>{map[items.id]}</div>
+                    {items.name}
+                    <div style={{ float: 'right', color: 'grey' }}>{map[items.id]}</div>
                 </div>
                 <div className="clear" />
-                </div>
+            </div>
         );
     }
 
-    public renderItems(){
-        if (this.state.items && this.state.items !== undefined && this.state.products){
+    public renderItems() {
+        if (this.state.items && this.state.items !== undefined && this.state.products) {
             return <div>{this.state.products.map(this.returnItemsMap)}</div>;
-        }else{
+        } else {
             return <span className="span-grey">Uw winkelwagen is leeg!</span>;
         }
     }
 
-    public renderShoppingCard(){
-        if (this.state.showShoppingCard){
-            return (<div className="ShoppingCard-Holder" >
+    public renderShoppingCard() {
+        if (this.state.showShoppingCard) {
+            return (<div className="" >
                 <div className="ShoppingCard-titleHolder">
                     Winkelwagen
                 </div>
@@ -71,21 +70,20 @@ class ShoppingCard extends React.Component<any, any> {
                 </div>
             </div>);
         }
-        return ;
+        return;
     }
 
     public render() {
         return (
-            <div>
-                <li className="nav-item"><span className="nav-link"><a className="Shopping-card-icon" href="/ShoppingCard" onMouseEnter={this.RefreshShoppingCard} onMouseLeave={this.RefreshShoppingCard}><MdShoppingCart size={32} style={{ color: 'black' }} /></a></span></li>
-            
+            <div className="container">
+
                 {this.renderShoppingCard()}
 
             </div>
         );
     }
 
-    private RefreshShoppingCard = () =>{
+        private RefreshShoppingCard = () =>{
         const cookieInfo = this.cookie.get('ShoppingCard');
         
         if (this.state.items !== cookieInfo){
@@ -98,6 +96,7 @@ class ShoppingCard extends React.Component<any, any> {
 
         
     }
+
 }
 
 export default (ShoppingCard);

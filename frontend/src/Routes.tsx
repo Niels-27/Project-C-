@@ -14,6 +14,7 @@ import SignUpPage from './pages/signup/SignUpPage';
 import LoginPage from './pages/login/LoginPage';
 import Footer from './components/all_pages/footer';
 import pageNotFound from './pages/404';
+import ShoppingCard from './pages/shoppingCard';
 
 class Routes extends React.Component<any,any> {
 
@@ -30,6 +31,7 @@ class Routes extends React.Component<any,any> {
             <Route path="/AllProducts/:category/search/:search" component={AllProducts} />
             <Route path="/AllProducts/:category" component={AllProducts} />
             <Route path="/product/:id" component={Product} />
+            <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/signup" component={SignUpPage}/>
             <Route path="/login" component={LoginPage}/>
             <Route component={pageNotFound} />
