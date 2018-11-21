@@ -21,7 +21,6 @@ class App extends React.Component<any,any> {
     public render() {
         return (
             <div>
-
                 <Routes searchString={this.state.searchString}/>
             </div>
         );

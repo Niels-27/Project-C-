@@ -52,18 +52,19 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
-        // // POST api/admin/categories/create
-        // [HttpPost("categories/create")]
-        // public IActionResult PostCategory([FromBody]Category category)
-        // {
-        //     if(category == null){
-        //         return NoContent();
-        //     }
-        //     _context.Categories.Add(category);
-        //     _context.SaveChanges();
-        //     return Ok();
+        // POST api/admin/categories/create
+        [HttpPost("users/create")]
+        public IActionResult PostCategory([FromBody]User user)
+        {
+            if(user == null){
+                return NoContent();
+            }
+            _context.Users.Add(user);
+            // _context.Addresses.Add(user_address)
+            _context.SaveChanges();
+            return Ok();
 
-        // }
+        }
 
        // PUT api/admin/products/id
         [HttpPut("products/update/{id}")]
@@ -100,7 +101,6 @@ namespace backend.Controllers
             var user = _context.Users.FirstOrDefault (m => m.Id == id);
             user.Name = user_edit.Name;
             user.Email = user_edit.Email;
-            user.Password = user_edit.Password;
             user.Salt = user_edit.Salt;
             user.Ip = user_edit.Salt;
             user.Rank = user_edit.Rank;
@@ -120,7 +120,7 @@ namespace backend.Controllers
         {
             var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
             if(result == null){
-                return NotFound();
+                return NoContent();
             }
             _context.Products.Remove(result);
             _context.SaveChanges();
@@ -134,7 +134,7 @@ namespace backend.Controllers
         {
             var result = (from m in _context.Users where m.Id ==  id select m).FirstOrDefault();
             if(result == null){
-                return NotFound();
+                return NoContent();
             }
             _context.Users.Remove(result);
             _context.SaveChanges();
@@ -142,18 +142,28 @@ namespace backend.Controllers
             return Ok();
         }
 
-                // DELETE api/admin/products/all
-        [HttpDelete("users/delete/{id}")]
-        public IActionResult DeleteAllProducts(int id)
+                
+        [HttpDelete("users/delete/all")]
+        public IActionResult DeleteAllUsersAndAddresses()
         {
-            var result = (from m in _context.Products where m.Id ==  id select m).FirstOrDefault();
-            if(result == null){
-                return NotFound();
+            var users = (from u in _context.Users select u).ToList();
+            var addresses  = (from a in _context.Addresses select a).ToList();
+            if(users == null){
+                return NoContent();
             }
-            _context.Products.Remove(result);
+            if(addresses == null){
+                return NoContent();
+            }
+            foreach(var user in users){
+                _context.Users.Remove(user);
+            }
+             foreach(var address in addresses){
+                _context.Addresses.Remove(address);
+            }        
             _context.SaveChanges();
 
             return Ok();
         }
+            
     }
 }

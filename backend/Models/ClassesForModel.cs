@@ -90,13 +90,13 @@ namespace backend.Models {
         public string Name { get; set; }
         [StringLength(100)]
         public string Email {get; set;}
-        [StringLength(100)]
-        public string Password {get; set;}
-        [StringLength(10)]
         public string Salt {get; set;}
+        public string Key {get; set;}
         [StringLength(15)]
         public string Ip {get; set;}
+        public DateTime CreateOn{get; set;}
         public int Rank {get; set;}
+        
         public ICollection<ProductSold> ProductsSold{get;set;}
         public ICollection<Order> Orders {get;set;}
         public ICollection<WishListProduct> WishListProducts {get;set;}
