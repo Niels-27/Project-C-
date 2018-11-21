@@ -26,6 +26,10 @@ class ApiCall {
                 this.link = "/product/" + first + "/details";
                 break;
 
+            case "pageNation":
+                this.link = "/product/paged/"+ first + "/" + second;
+
+                break;
             case "array-id":
                 this.link = "/products-by/array";
                 break;
@@ -37,7 +41,7 @@ class ApiCall {
                 else{
                     this.link = "/product/search/" + first;
                 }
-                break;            
+                break;  
             }
             case "testuser":
                 this.link = "/user/testuser/" + first + "/" + second;
