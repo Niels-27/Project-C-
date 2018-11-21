@@ -17,7 +17,7 @@ export default class LoginPopup extends React.Component<any,any> {
   public render() {
     return (
       <div>
-        <a id="PopLogin" onClick={this.toggle}><MdPerson size={32} style={{color: 'white'}}/> </a>
+        <a id="PopLogin" onClick={this.toggle}><MdPerson size={32} style={{color: 'black'}}/> </a>
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target="PopLogin" toggle={this.toggle}>
           <PopoverHeader>Login</PopoverHeader>
           <PopoverBody><LoginPopupForm/></PopoverBody>

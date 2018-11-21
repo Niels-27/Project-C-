@@ -127,7 +127,7 @@ class SignUpForm extends React.Component<any,any>{
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
                             <label htmlFor="firstname">Voornaam</label>
-                            <Field className="form-control" name="firstname" placeholder="Nofit" type="text" />
+                            <Field className="form-control" name="firstname" placeholder="Jan" type="text" />
                             <ErrorMessage
                             name="firstname"
                             component="div"
@@ -136,7 +136,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="lastname">Achternaam</label>
-                            <Field className="form-control" name="lastname" placeholder="Kartoredjo" type="text" />
+                            <Field className="form-control" name="lastname" placeholder="Pietersen" type="text" />
                             <ErrorMessage
                             name="lastname"
                             component="div"
@@ -145,7 +145,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control" onBlur={this.checkEmailExists} name="email" placeholder="@gmail.com" type="email" />
+                            <Field className="form-control" onBlur={this.checkEmailExists} name="email" placeholder="test1234@gmail.com" type="email" />
                             {formik.errors.email ?(<div className="text-danger" >Error: {formik.errors.email}</div>
                             ) : this.state.user!== null && !formik.errors.email ? (
                                 <div className="text-danger">User Already exists..</div>
