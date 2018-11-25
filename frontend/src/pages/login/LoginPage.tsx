@@ -8,18 +8,11 @@ class LoginPage extends React.Component<any,any>{
         this.state = {};
     }
 
-    // public async componentDidMount() {
-
-    // }
-
     public render() {
         return (
             <div>     
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <LoginForm/> 
-                    </div>
-                        
+                <div className="row">              
+                        <LoginForm/>       
                 </div>
             </div>
         );

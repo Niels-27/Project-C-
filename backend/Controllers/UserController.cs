@@ -41,10 +41,13 @@ namespace backend.Controllers
         }
         [HttpGet]
         [Route("testuser/{email=string}")]
-        public User ScanEmail(string email)
+        public string ScanEmail(string email)
         {
-           var user = _context.Users.Where(u => u.Email == email).Select(u=> u).FirstOrDefault();
-           return user;
+           var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+           if(user.Any()){
+               return "Dit emailadres is al in gebruik.";
+           }
+           return "";
         }       
         private string RequestBody;
         [HttpPost]
