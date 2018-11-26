@@ -12,6 +12,17 @@ interface IFormikValues
     firstname: string,
     lastname: string,
 }
+// const GetIp = async () => {
+//     return await fetch('https://api.ipify.org', {method: 'get', credentials: "omit", headers:{'content-type': 'application/json'}})
+//     .then(response => {
+//         console.log(response)
+//         return response.text;
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         return err;
+//     });
+// };
 
   class LoginPopupForm extends React.Component<any,any>{
     

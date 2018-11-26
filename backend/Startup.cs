@@ -32,7 +32,7 @@ namespace backend
                  opt => opt.UseNpgsql(@text));
             services.AddMvc(options=> {}
             ).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,9 +42,9 @@ namespace backend
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
+            app.UseCors(builder => builder
+           .AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());   
+                    
             app.UseMvc();
         }
     }

@@ -67,15 +67,11 @@ namespace backend.Controllers
         }        
         private User handleBodyPost(dynamic user)
         {    
-            Console.WriteLine(user.ip);
-            string ip = user.ip;
-            
             DateTime createDate = DateTime.UtcNow;
             User new_user = new User(){
                 Name = user.firstname + " " + user.lastname,
                 Email = user.email,
                 Rank = 1,
-                Ip = ip,
                 CreateOn = createDate                     
             };
             string country = user.country;

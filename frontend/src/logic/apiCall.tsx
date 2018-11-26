@@ -44,7 +44,10 @@ class ApiCall {
                 break;  
             }
             case "testuser":
-                this.link = "/user/testuser/" + first + "/" + second;
+                if(second!== ''){
+                    this.link = "/user/testuser/" + first + "/" + second;
+                }            
+                else {this.link = "/user/testuser/" + first;}
                 break;
                 
             default:

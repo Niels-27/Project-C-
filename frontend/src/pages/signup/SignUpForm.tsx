@@ -19,14 +19,7 @@ interface IFormikValues {
     city: string;
     country: string;
     createdon: Date;
-    ip: string;
     }
-// const GetIp = async () => {
-//     const res = await fetch('https://api.ipify.org', {method: 'get', credentials: "include", headers:{'content-type': 'application/json'}})
-//     .then(response =>{ response.text()}, ()=> "error");
-//     console.log(res);
-//     return res;
-// };
 
 const initialValues: IFormikValues = {
     firstname: "",
@@ -40,7 +33,6 @@ const initialValues: IFormikValues = {
     city: "",
     country: "",
     createdon: new Date('1900-1-1T00:00:00'),
-    ip: "fakeIp"
   };
 
   const SignUpSchema = Yup.object().shape({
