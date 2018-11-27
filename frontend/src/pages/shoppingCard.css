@@ -1,0 +1,20 @@
+.ItemsIncreaseInput{
+text-align: center; 
+}
+
+.ItemsIncreaseUp{
+padding:0px;
+border-radius:  .25rem .25rem 0px 0px;
+}
+
+
+.ItemsIncreaseDown{
+padding:0px;
+border-radius: 0px 0px .25rem .25rem;
+}
+
+.increaseItem{
+max-width:70px;
+width:70%;
+
+}

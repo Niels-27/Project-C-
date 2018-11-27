@@ -2,6 +2,7 @@ import * as React from 'react';
 import Cookie from '../logic/cookie';
 import ApiCall from '../logic/apiCall';
 
+import "./shoppingCard.css";
 class ShoppingCard extends React.Component<any, any> {
 
     public cookie: Cookie = new Cookie();
@@ -40,11 +41,45 @@ class ShoppingCard extends React.Component<any, any> {
         const renderOnClick = () =>{
             this.removeItemButton(items.id)
         }
+
+        const increaseButton = () => {
+            const c = this.cookie.get('ShoppingCard');
+            if (c) {
+                const d = JSON.parse(c);
+                d.items.push(items.id.toString());
+                this.cookie.set('ShoppingCard', JSON.stringify(d));
+                /// add to cookie
+            } else {
+                const cjson = { items: [items.id.toString()] }
+                this.cookie.set('ShoppingCard', JSON.stringify(cjson));
+            }
+
+            this.RefreshShoppingCard();
+            this.UpdateItems();
+        }
+        
+        const decreseButton = () => {
+            const arrItem = JSON.parse(this.state.items).items;
+            const newArr:string[] = [];
+            var firstone = false;
+            for (const item of arrItem) {
+                if (!firstone && item.toString() === items.id.toString()){
+                    firstone = true;
+                }else{
+                    newArr.push(item.toString());
+                }
+            }
+            this.cookie.set('ShoppingCard', "{\"items\":" + JSON.stringify(newArr) + "}");
+
+            this.RefreshShoppingCard();
+            this.UpdateItems();
+        }
+
         // Object.keys(map) all the items
         // const d = JSON.stringify(map)
         return (
             <tr>
-                <td className="col-md-6">
+                <td className="col-md-5">
                     <div className="media">
                         <a className="thumbnail pull-left" href="#"> <img className="media-object" src={items.imageName} style={{ width: '72px', height: '72px' }} /> </a>
                         <div className="media-body" style={{ marginLeft: '15px' }}>
@@ -54,8 +89,11 @@ class ShoppingCard extends React.Component<any, any> {
                         </div>
                     </div></td>
 
-                <td className="col-md-1" style={{ textAlign: 'center' }}>
-                    {map[items.id]}
+                <td className="col-md-2" style={{ textAlign: 'center' }}>
+                   
+                    <button className="ItemsIncreaseUp increaseItem btn btn-default" onClick={increaseButton}>+</button>
+                    <input className="ItemsIncreaseInput increaseItem" value={map[items.id]} readOnly/>
+                    <button className="ItemsIncreaseDown increaseItem btn btn-default" onClick={decreseButton}>-</button>
                 </td>
                 <td className="col-md-1 text-center"><strong>{items.price}</strong></td>
                 <td className="col-md-1 text-center"><strong>{map[items.id] * items.price}</strong></td>
@@ -112,7 +150,7 @@ class ShoppingCard extends React.Component<any, any> {
                         <td />
                         <td />
                         <td>Subtotal</td>
-                            <td className="text-right" key="93hdnkwo2jm"><strong>{this.returnTotalPrice()}</strong></td>
+                            <td className="text-right" key="93hdnkwo2jm"><strong>{Math.round((this.returnTotalPrice()) * 100) / 100}</strong></td>
                     </tr>
                     <tr>
                         <td />
@@ -126,7 +164,7 @@ class ShoppingCard extends React.Component<any, any> {
                         <td />
                         <td />
                         <td>Total</td>
-                            <td className="text-right" key="3nXNMK3osm2ml"><strong>{this.returnTotalPrice() + 6.95}</strong></td>
+                            <td className="text-right" key="3nXNMK3osm2ml"><strong>{Math.round((this.returnTotalPrice() + 6.95) * 100) / 100}</strong></td>
                     </tr>
                     <tr>
                         <td />
@@ -172,6 +210,9 @@ class ShoppingCard extends React.Component<any, any> {
         }
     }
 
+
+
+
     private returnAvailebility = (amount,stock) =>{
         if (amount <= stock){
             return <span className="text-succes"><strong>Op voordaad</strong></span>;
@@ -196,7 +237,6 @@ class ShoppingCard extends React.Component<any, any> {
             prev[cur] = (prev[cur] || 0) + 1;
             return prev;
         }, {});
-        console.log(map);
 
             for (const item of this.state.products) {
                 count = count + item.price * map[item.id.toString()];  
