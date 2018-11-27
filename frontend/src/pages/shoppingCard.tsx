@@ -49,7 +49,8 @@ class ShoppingCard extends React.Component<any, any> {
                         <a className="thumbnail pull-left" href="#"> <img className="media-object" src={items.imageName} style={{ width: '72px', height: '72px' }} /> </a>
                         <div className="media-body" style={{ marginLeft: '15px' }}>
                             <h5 className="media-heading"><a href="#">{items.name}</a></h5>
-                            <span>Status: </span><span className="text-succes"><strong>In Stock</strong></span>
+                            <span>Status: </span>
+                            {this.returnAvailebility(map[items.id],items.amount)}
                         </div>
                     </div></td>
 
@@ -88,6 +89,7 @@ class ShoppingCard extends React.Component<any, any> {
         }
         return;
     }
+
 
     public render() {
         return (
@@ -168,6 +170,17 @@ class ShoppingCard extends React.Component<any, any> {
             this.RefreshShoppingCard();
             this.UpdateItems();
         }
+    }
+
+    private returnAvailebility = (amount,stock) =>{
+        if (amount <= stock){
+            return <span className="text-succes"><strong>Op voordaad</strong></span>;
+        } else if (stock === 0){
+            return <span className="text-danger"><strong>Niet op vooraad</strong></span>;
+        }else{
+            return <span className="text-warning"><strong>Niet goenoeg op vooraad</strong></span>;
+        }
+        
     }
 
     private returnTotalPrice =() =>{
