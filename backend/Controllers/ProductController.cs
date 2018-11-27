@@ -175,6 +175,7 @@ namespace backend.Controllers
                               Name = p.Name,
                               ImageName = p.ImageName,
                               Price = p.Price,
+                              Amount = p.Amount,
                           });
             return (result);
 
