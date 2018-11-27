@@ -93,7 +93,6 @@ class SignUpForm extends React.Component<any,any>{
     }  
     private async checkEmailExists(email:string) {          
         await this.props.isEmailExists(email).then((res) => { 
-            console.log(res); 
             this.setState({errormessage: res}); 
         }, () => { console.log("Something Wrong.. With This")})   
     }

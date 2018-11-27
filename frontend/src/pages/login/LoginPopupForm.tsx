@@ -3,7 +3,7 @@ import  { connect } from 'react-redux';
 import * as PropTypes from 'prop-types';
 import { Field, Form, Formik, FormikProps, ErrorMessage} from "formik";
 import * as Yup from 'yup';
-import { LoginRequest, UserExists  } from '../../actions/loginActions';
+import { Login, UserExists  } from '../../actions/loginActions';
 
 interface IFormikValues 
 {
@@ -27,7 +27,7 @@ interface IFormikValues
   class LoginPopupForm extends React.Component<any,any>{
     
     public static propTypes = 
-    {userLoginRequest: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
+    {login: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
 
     public initialValues: IFormikValues =  {
         email: "",
@@ -74,12 +74,12 @@ interface IFormikValues
         if(this.state.errormessage ===''){
         this.setState({ errors: {}});
 
-        this.props.userLoginRequest(values).then(  // Deez doet het nog niet..
+        this.props.login(values).then(  // Deez doet het nog niet..
             () => {
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                 this.props.history.push("/");
             },
-            ({data}) => this.setState({ errors: data})
+            ({error}) => this.setState({ errors: error})
         );
         }
         else {formik.setSubmitting(false);}
@@ -99,7 +99,7 @@ interface IFormikValues
                             className="field-error text-danger"
                             />
                         </div>   
-                        <div>
+                        <div className="mt-3">
                             <label htmlFor="password">Wachtwoord</label>
                             <Field className="form-control"name="password" type="password" />
                              <ErrorMessage
@@ -108,7 +108,8 @@ interface IFormikValues
                             className="field-error text-danger"
                             />
                         </div>
-                        { <div className="text-danger mt-md-2 ">{this.state.errormessage}</div>}  
+                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-2 ">{this.state.errormessage}</div>)
+                        : null}  
                         <div>
                            <span className="nav-link">Nog geen account? <a href="/signup">Klik hier</a></span>
                         </div> 
@@ -126,4 +127,4 @@ interface IFormikValues
         );
     }; 
 }
-export default connect(null, {userLoginRequest: LoginRequest, isUserExists: UserExists})(LoginPopupForm);
+export default connect(null, {login : Login, isUserExists: UserExists})(LoginPopupForm);

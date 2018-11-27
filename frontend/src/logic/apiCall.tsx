@@ -33,7 +33,9 @@ class ApiCall {
             case "array-id":
                 this.link = "/products-by/array";
                 break;
-                
+            case "authenticate":
+                this.link = "/user/authenticate";
+                break;
             case "search":{
                 if(second !== "all" && second){
                     this.link = "/categories/" + second + "/" + first;
