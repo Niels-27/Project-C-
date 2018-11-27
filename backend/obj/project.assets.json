@@ -12448,30 +12448,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nofit\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/admin/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
+      "projectUniqueName": "/Users/admin/Desktop/prc/Project-C-/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
-      "packagesPath": "C:\\Users\\Nofit\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\obj\\",
+      "projectPath": "/Users/admin/Desktop/prc/Project-C-/backend/backend.csproj",
+      "packagesPath": "/Users/admin/.nuget/packages/",
+      "outputPath": "/Users/admin/Desktop/prc/Project-C-/backend/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nofit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/admin/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
