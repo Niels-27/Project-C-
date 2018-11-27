@@ -75,8 +75,8 @@ interface IFormikValues
         this.setState({ errors: {}});
 
         this.props.login(values).then(  // Deez doet het nog niet..
-            () => {
-                alert("Je bent met succes ingelogd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
+            (res) => {
+                alert("Je bent met succes ingelogd.\n" + "Welkom, " + res.name + "!");
                 this.props.history.push("/");
             },
             ({error}) => this.setState({ errors: error})
