@@ -5,11 +5,10 @@ import ApiCall from '../logic/apiCall';
 class ShoppingCard extends React.Component<any, any> {
 
     public cookie: Cookie = new Cookie();
-
     constructor(props) {
         super(props);
         // let getProducts = undefined; // JSON.parse(Cookies.get('products'));
-        this.state = { items: this.cookie.get('ShoppingCard') || undefined, showShoppingCard: false, products: null }
+        this.state = { items: this.cookie.get('ShoppingCard') || undefined, products: null, map:null}
     }
 
     public async UpdateItems(obj: string = "") {
@@ -28,6 +27,7 @@ class ShoppingCard extends React.Component<any, any> {
     public componentDidMount() {
         this.RefreshShoppingCard();
         this.UpdateItems();
+        
     }
 
     public returnItemsMap = (items) => {
@@ -37,23 +37,39 @@ class ShoppingCard extends React.Component<any, any> {
             return prev;
         }, {});
 
+        const renderOnClick = () =>{
+            this.removeItemButton(items.id)
+        }
         // Object.keys(map) all the items
         // const d = JSON.stringify(map)
         return (
-            <div style={{ width: '100%' }}>
-                <div className="Shoppingcard-ItemsImageHolder" style={{ backgroundImage: 'url(' + items.imageName + ')' }} />
-                <div className="Shoppingcard-ItemsTextHolder">
-                    {items.name}
-                    <div style={{ float: 'right', color: 'grey' }}>{map[items.id]}</div>
-                </div>
-                <div className="clear" />
-            </div>
+            <tr>
+                <td className="col-md-6">
+                    <div className="media">
+                        <a className="thumbnail pull-left" href="#"> <img className="media-object" src={items.imageName} style={{ width: '72px', height: '72px' }} /> </a>
+                        <div className="media-body" style={{ marginLeft: '15px' }}>
+                            <h5 className="media-heading"><a href="#">{items.name}</a></h5>
+                            <span>Status: </span><span className="text-succes"><strong>In Stock</strong></span>
+                        </div>
+                    </div></td>
+
+                <td className="col-md-1" style={{ textAlign: 'center' }}>
+                    {map[items.id]}
+                </td>
+                <td className="col-md-1 text-center"><strong>{items.price}</strong></td>
+                <td className="col-md-1 text-center"><strong>{map[items.id] * items.price}</strong></td>
+                <td className="col-md-1">
+                    <button type="button" className="btn btn-danger" onClick={renderOnClick}>
+                        <span  className="glyphicon glyphicon-remove" /> Remove
+                        </button></td>
+            </tr>
+
         );
     }
 
     public renderItems() {
         if (this.state.items && this.state.items !== undefined && this.state.products) {
-            return <div>{this.state.products.map(this.returnItemsMap)}</div>;
+              return this.state.products.map(this.returnItemsMap);
         } else {
             return <span className="span-grey">Uw winkelwagen is leeg!</span>;
         }
@@ -76,9 +92,55 @@ class ShoppingCard extends React.Component<any, any> {
     public render() {
         return (
             <div className="container">
+            <table className="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th className="text-center">Price</th>
+                        <th className="text-center">Total</th>
+                        <th/>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.renderItems()}
 
-                {this.renderShoppingCard()}
-
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td>Subtotal</td>
+                            <td className="text-right" key="93hdnkwo2jm"><strong>{this.returnTotalPrice()}</strong></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td>Estimated shipping</td>
+                        <td className="text-right"><strong>6.95</strong></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td>Total</td>
+                            <td className="text-right" key="3nXNMK3osm2ml"><strong>{this.returnTotalPrice() + 6.95}</strong></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td>
+                                            <button type="button" className="btn btn-default">
+                                                <span className="glyphicon glyphicon-shopping-cart"/> Continue Shopping
+                        </button></td>
+                        <td>
+                        <button type="button" className="btn btn-success">
+                            Checkout <span className="glyphicon glyphicon-play"/>
+                        </button></td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
         );
     }
@@ -88,14 +150,50 @@ class ShoppingCard extends React.Component<any, any> {
         
         if (this.state.items !== cookieInfo){
 
-            this.setState({ showShoppingCard: !this.state.showShoppingCard, items: cookieInfo || undefined });
+            this.setState({ items: cookieInfo || undefined });
             this.UpdateItems(cookieInfo);
-        }else{
-            this.setState({ showShoppingCard: !this.state.showShoppingCard});
         }
 
         
     }
+
+    private removeItemButton = (id) =>{
+        const c = this.cookie.get('ShoppingCard');
+        if (c) {
+            var d = JSON.parse(c);
+            
+            d = d.items.filter(item => item !== id.toString());
+            this.cookie.set('ShoppingCard', "{\"items\":" +JSON.stringify(d) + "}");
+            /// add to cookie
+            this.RefreshShoppingCard();
+            this.UpdateItems();
+        }
+    }
+
+    private returnTotalPrice =() =>{
+
+
+
+        let count = 0;
+        
+        if (this.state.products && this.state.items){
+
+        const arr = JSON.parse(this.state.items).items;
+        const map = arr.reduce((prev, cur) => {
+            prev[cur] = (prev[cur] || 0) + 1;
+            return prev;
+        }, {});
+        console.log(map);
+
+            for (const item of this.state.products) {
+                count = count + item.price * map[item.id.toString()];  
+            }
+
+        }
+
+        return count;
+    }
+    
 
 }
 
