@@ -1,5 +1,8 @@
 import * as React from 'react';
 import  { connect } from 'react-redux';
+import {
+    withRouter
+} from "react-router-dom";
 import * as PropTypes from 'prop-types';
 import { Field, Form, Formik, FormikProps, ErrorMessage} from "formik";
 import * as Yup from 'yup';
@@ -67,21 +70,22 @@ interface IFormikValues
             }, () => { console.log("Something Wrong.. With This")});
     }
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
+
         formik.setSubmitting(true);
 
         await this.checkUserExists(values.email, values.password);
 
         if(this.state.errormessage ===''){
-        this.setState({ errors: {}});
-
-        this.props.login(values).then(  // Deez doet het nog niet..
-            (res) => {
-                alert("Je bent met succes ingelogd.\n" + "Welkom, " + res.name + "!");
-                this.props.history.push("/");
-            },
-            ({error}) => this.setState({ errors: error})
-        );
-        }
+            const result = await this.props.login(values).then(userData =>
+            {
+                alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
+                this.props.history.push("/")
+            }, (error) => 
+                {alert(error.text);
+                this.props.history.push("/") ;}
+            );    
+            console.log(result) ;
+        }     
         else {formik.setSubmitting(false);}
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
@@ -127,4 +131,4 @@ interface IFormikValues
         );
     }; 
 }
-export default connect(null, {login : Login, isUserExists: UserExists})(LoginPopupForm);
+export default withRouter(connect(null, {login : Login, isUserExists: UserExists})(LoginPopupForm));

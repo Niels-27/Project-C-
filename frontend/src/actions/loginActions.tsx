@@ -1,6 +1,6 @@
 import ApiCall from '../logic/apiCall';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-// import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import { SET_CURRENT_USER } from './types';
 // import axios from 'axios';
 
@@ -24,20 +24,21 @@ export function logout() {
   }
   
   export function Login(data) {
-    return async dispatch => {
+    return dispatch => {
 
       const call: ApiCall = new ApiCall();
       call.setURL("authenticate");
       console.log("last finish");
-      const res =  await call.result(data);
-      return res;
-      // .then(res => {
-      //   const token = res.data.token;
-      //   console.log(token);
-      //   localStorage.setItem('jwtToken', token);
-      //   setAuthorizationToken(token);
-      //   dispatch(setCurrentUser(jwtDecode(token)));
-      // });
+      const res =  call.result(data).then(response => {
+        const token = response.token;
+        console.log(response.name);
+        console.log(token);
+        localStorage.setItem('jwtToken', token);
+        setAuthorizationToken(token);
+        dispatch(setCurrentUser(jwtDecode(token)));
+        return response;
+      }, (error) => error );
+      return res;  
     }
   }
 export function UserExists(email:string, password:string) {
