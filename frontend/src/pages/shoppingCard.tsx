@@ -96,7 +96,7 @@ class ShoppingCard extends React.Component<any, any> {
                     <button className="ItemsIncreaseDown increaseItem btn btn-default" onClick={decreseButton}>-</button>
                 </td>
                 <td className="col-md-1 text-center"><strong>{items.price}</strong></td>
-                <td className="col-md-1 text-center"><strong>{map[items.id] * items.price}</strong></td>
+                <td className="col-md-1 text-center"><strong>{Math.round((map[items.id] * items.price) * 100) / 100}</strong></td>
                 <td className="col-md-1">
                     <button type="button" className="btn btn-danger" onClick={renderOnClick}>
                         <span  className="glyphicon glyphicon-remove" /> Remove
@@ -130,6 +130,15 @@ class ShoppingCard extends React.Component<any, any> {
 
 
     public render() {
+
+        if(this.state.products === null){
+            return(
+                <div className="container">
+                    Geen items gevonden
+                </div>
+            );
+
+        }else{
         return (
             <div className="container">
             <table className="table table-hover">
@@ -183,6 +192,7 @@ class ShoppingCard extends React.Component<any, any> {
             </table>
             </div>
         );
+    }
     }
 
         private RefreshShoppingCard = () =>{
