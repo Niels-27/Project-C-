@@ -24,7 +24,7 @@ class ShoppingCard extends React.Component<any, any> {
 
         }
     }
-
+ 
     public componentDidMount() {
         this.RefreshShoppingCard();
         this.UpdateItems();
