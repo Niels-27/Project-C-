@@ -386,3 +386,4 @@ frontend/package-lock.json
 
 # Config File in text
 backend/ConnectionStringFile.txt
+*ConnectionStringFile.txt
