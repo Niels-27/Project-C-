@@ -12454,11 +12454,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\Nofit\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\obj\\",
+      "outputPath": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
