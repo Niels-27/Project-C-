@@ -324,13 +324,11 @@ namespace backend.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateOn");
+                    b.Property<DateTime>("CreateOn")
+                        .HasMaxLength(15);
 
                     b.Property<string>("Email")
                         .HasMaxLength(100);
-
-                    b.Property<string>("Ip")
-                        .HasMaxLength(15);
 
                     b.Property<string>("Key");
 

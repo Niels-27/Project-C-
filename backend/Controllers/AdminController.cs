@@ -102,7 +102,6 @@ namespace backend.Controllers
             user.Name = user_edit.Name;
             user.Email = user_edit.Email;
             user.Salt = user_edit.Salt;
-            user.Ip = user_edit.Salt;
             user.Rank = user_edit.Rank;
             user.ProductsSold = user_edit.ProductsSold;
             user.Orders = user_edit.Orders;

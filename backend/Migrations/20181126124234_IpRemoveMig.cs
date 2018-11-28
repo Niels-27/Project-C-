@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class InitialCreateFashionDb : Migration
+    public partial class IpRemoveMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,9 +69,9 @@ namespace backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 100, nullable: true),
                     Email = table.Column<string>(maxLength: 100, nullable: true),
-                    Password = table.Column<string>(maxLength: 100, nullable: true),
-                    Salt = table.Column<string>(maxLength: 10, nullable: true),
-                    Ip = table.Column<string>(maxLength: 15, nullable: true),
+                    Salt = table.Column<string>(nullable: true),
+                    Key = table.Column<string>(nullable: true),
+                    CreateOn = table.Column<DateTime>(maxLength: 15, nullable: false),
                     Rank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -288,11 +288,18 @@ namespace backend.Migrations
                 values: new object[,]
                 {
                     { 1, "Dames" },
-                    { 2, "Heren" },
-                    { 3, "Schoenen" },
-                    { 4, "Shirts" },
-                    { 5, "Jeans" },
+                    { 14, "Vans" },
+                    { 12, "Timberland" },
+                    { 11, "Puma" },
+                    { 10, "HRFashion" },
+                    { 9, "Nike" },
+                    { 8, "Adidas" },
+                    { 13, "Reebok" },
                     { 6, "Hoodies" },
+                    { 5, "Jeans" },
+                    { 4, "Shirts" },
+                    { 3, "Schoenen" },
+                    { 2, "Heren" },
                     { 7, "Vesten" }
                 });
 
@@ -313,21 +320,21 @@ namespace backend.Migrations
                     { 21, "48" },
                     { 19, "46" },
                     { 20, "47" },
-                    { 13, "40" },
                     { 22, "49" },
+                    { 13, "40" },
                     { 18, "45" },
                     { 12, "39" },
-                    { 11, "38" },
+                    { 8, "35" },
                     { 10, "37" },
                     { 1, "XS" },
+                    { 11, "38" },
                     { 3, "M" },
                     { 4, "L" },
-                    { 5, "XL" },
                     { 2, "S" },
+                    { 6, "XXL" },
                     { 7, "34" },
-                    { 8, "35" },
                     { 9, "36" },
-                    { 6, "XXL" }
+                    { 5, "XL" }
                 });
 
             migrationBuilder.InsertData(
@@ -367,26 +374,36 @@ namespace backend.Migrations
                 columns: new[] { "Id", "CategoryId", "ProductId" },
                 values: new object[,]
                 {
-                    { 11, 1, 6 },
-                    { 4, 3, 2 },
-                    { 3, 2, 2 },
-                    { 18, 3, 9 },
-                    { 17, 1, 9 },
-                    { 14, 6, 7 },
-                    { 13, 2, 7 },
-                    { 10, 7, 5 },
-                    { 9, 2, 5 },
-                    { 8, 5, 4 },
-                    { 7, 2, 4 },
-                    { 6, 4, 3 },
-                    { 5, 2, 3 },
+                    { 16, 1, 6 },
+                    { 22, 2, 8 },
+                    { 6, 10, 2 },
+                    { 5, 3, 2 },
+                    { 4, 2, 2 },
+                    { 27, 10, 9 },
+                    { 26, 3, 9 },
+                    { 25, 1, 9 },
+                    { 21, 9, 7 },
+                    { 20, 6, 7 },
+                    { 19, 2, 7 },
+                    { 15, 10, 5 },
+                    { 14, 7, 5 },
+                    { 13, 2, 5 },
+                    { 12, 10, 4 },
+                    { 11, 5, 4 },
+                    { 10, 2, 4 },
+                    { 9, 8, 3 },
+                    { 8, 4, 3 },
+                    { 7, 2, 3 },
+                    { 3, 10, 1 },
                     { 2, 4, 1 },
                     { 1, 2, 1 },
-                    { 20, 4, 10 },
-                    { 19, 2, 10 },
-                    { 12, 5, 6 },
-                    { 15, 2, 8 },
-                    { 16, 3, 8 }
+                    { 30, 10, 10 },
+                    { 29, 4, 10 },
+                    { 28, 2, 10 },
+                    { 18, 10, 6 },
+                    { 17, 5, 6 },
+                    { 23, 3, 8 },
+                    { 24, 8, 8 }
                 });
 
             migrationBuilder.CreateIndex(

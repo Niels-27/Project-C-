@@ -1,28 +1,38 @@
 import * as React from 'react';
 import  { connect } from 'react-redux';
+import {
+    withRouter
+} from "react-router-dom";
 import * as PropTypes from 'prop-types';
-import { Field, Form, Formik, FormikProps} from "formik";
+import { Field, Form, Formik, FormikProps, ErrorMessage} from "formik";
 import * as Yup from 'yup';
-import { LoginRequest, UserExists  } from '../../actions/loginActions';
+import { Login, UserExists  } from '../../actions/loginActions';
 
 interface IFormikValues 
 {
     email: string;
     password: string;
-    firstname: string,
-    lastname: string,
 }
+// const GetIp = async () => {
+//     return await fetch('https://api.ipify.org', {method: 'get', credentials: "omit", headers:{'content-type': 'application/json'}})
+//     .then(response => {
+//         console.log(response)
+//         return response.text;
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         return err;
+//     });
+// };
 
   class LoginPopupForm extends React.Component<any,any>{
     
     public static propTypes = 
-    {userLoginRequest: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
+    {login: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
 
     public initialValues: IFormikValues =  {
         email: "",
         password: "",
-        firstname: "",
-        lastname: "",
     };
     public SignUpSchema = Yup.object({
         email: Yup.string()
@@ -39,7 +49,6 @@ interface IFormikValues
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.checkUserExists = this.checkUserExists.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
    }
 
     public render() {
@@ -51,27 +60,27 @@ interface IFormikValues
             render={this.renderFormik}
         /> );
     }  
-    private handleBlur = (e) => {
-        this.setState({errormessage: ''})
-    }
     private  checkUserExists = async (email, password) => {
         await this.props.isUserExists(email, password).then((res) => { 
-            { this.setState({errormessage: res}); }
+            { this.setState({errormessage: res}); console.log(this.state.errormessage)}
             }, () => { console.log("Something Wrong.. With This")});
     }
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
+
         formik.setSubmitting(true);
+
         await this.checkUserExists(values.email, values.password);
-        if(this.state.errormessage===''){
-        this.setState({ errors: {}});
-        this.props.userLoginRequest(values).then(  // Deez doet het nog niet..
-            () => {
-                alert("Je bent met succes ingelogd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
-                this.props.history.push("/");
-            },
-            ({data}) => this.setState({ errors: data})
-        );
-        }
+
+        if(this.state.errormessage ===''){
+            await this.props.login(values).then(userData =>
+            {
+                alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
+                this.props.history.push("/")
+            }, (error) => 
+                {alert(error.text);
+                this.props.history.push("/") ;}
+            );    
+        }     
         else {formik.setSubmitting(false);}
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
@@ -82,21 +91,24 @@ interface IFormikValues
                     <div className="col" >
                         <div>
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control" name="email" type="email" onBlur={this.handleBlur}/>
-                            {formik.errors.email ?(<div className="text-danger" >{formik.errors.email}</div>
-                            ) : this.state.errormessage!== '' && !formik.errors.email ? (
-                                <div className="text-danger">{this.state.errormessage}</div>
-                            ) :null
-                                } 
+                            <Field className="form-control" name="email" type="email"/>
+                            <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="field-error text-danger"
+                            />
                         </div>   
-                        <div>
+                        <div className="mt-3">
                             <label htmlFor="password">Wachtwoord</label>
-                            <Field className="form-control"name="password" type="password" onBlur={this.handleBlur}  />
-                            {formik.errors.password?(<div className="text-danger" > {formik.errors.password}</div>
-                            ) : this.state.errormessage!== '' && !formik.errors.password ? (
-                                null
-                            ) :null}
-                        </div> 
+                            <Field className="form-control"name="password" type="password" />
+                             <ErrorMessage
+                            name="password"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>
+                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-2 ">{this.state.errormessage}</div>)
+                        : null}  
                         <div>
                            <span className="nav-link">Nog geen account? <a href="/signup">Klik hier</a></span>
                         </div> 
@@ -114,4 +126,4 @@ interface IFormikValues
         );
     }; 
 }
-export default connect(null, {userLoginRequest: LoginRequest, isUserExists: UserExists})(LoginPopupForm);
+export default withRouter(connect(null, {login : Login, isUserExists: UserExists})(LoginPopupForm));

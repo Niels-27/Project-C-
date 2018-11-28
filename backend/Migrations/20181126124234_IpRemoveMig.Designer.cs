@@ -10,8 +10,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(FashionContext))]
-    [Migration("20181117210755_UserAttCHange")]
-    partial class UserAttCHange
+    [Migration("20181126124234_IpRemoveMig")]
+    partial class IpRemoveMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -326,13 +326,11 @@ namespace backend.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateOn");
+                    b.Property<DateTime>("CreateOn")
+                        .HasMaxLength(15);
 
                     b.Property<string>("Email")
                         .HasMaxLength(100);
-
-                    b.Property<string>("Ip")
-                        .HasMaxLength(15);
 
                     b.Property<string>("Key");
 

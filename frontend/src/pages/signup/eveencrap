@@ -155,3 +155,12 @@
            // setTimeout(() => {
             //   alert(JSON.stringify(values, null, 2));
             // }, 500);
+
+
+                 <div className="row mt-md-5 mb-md-3 justify-content-center">
+                    <div className="col col-10">
+                    <span className="text-start">
+                    {formik.touched.email && this.state.errormessage !== '' ? (<div className="text-danger">{this.state.errormessage}</div>)
+                     : null  }</span>
+                    </div>
+                </div>

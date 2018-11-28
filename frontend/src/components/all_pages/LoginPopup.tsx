@@ -25,7 +25,10 @@ export default class LoginPopup extends React.Component<any,any> {
       </div>
     );
   }
+
+  
   private toggle() {
     this.setState({ popoverOpen: !(this.state.popoverOpen)});
   }
+ 
 }

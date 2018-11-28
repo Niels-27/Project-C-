@@ -19,14 +19,7 @@ interface IFormikValues {
     city: string;
     country: string;
     createdon: Date;
-    ip: string;
     }
-// const GetIp = async () => {
-//     const res = await fetch('https://api.ipify.org', {method: 'get', credentials: "include", headers:{'content-type': 'application/json'}})
-//     .then(response =>{ response.text()}, ()=> "error");
-//     console.log(res);
-//     return res;
-// };
 
 const initialValues: IFormikValues = {
     firstname: "",
@@ -40,11 +33,9 @@ const initialValues: IFormikValues = {
     city: "",
     country: "",
     createdon: new Date('1900-1-1T00:00:00'),
-    ip: "fakeIp"
   };
 
   const SignUpSchema = Yup.object().shape({
-
     firstname: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
@@ -56,22 +47,26 @@ const initialValues: IFormikValues = {
     email: Yup.string()
       .email('Ongeldig emailadres')
       .required('Vereist'),
-      password: Yup.string()
+    password: Yup.string()
       .min(6, 'Het wachtwoord moet langer zijn dan 6 karakters')
-      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
+      .max(20, 'Leuk geprobeerd, maar verzin een korter wachtwoord ;-)')
       .required('Vereist'),
-      passwordConfirmation: Yup.string()
-      .oneOf([Yup.ref('password'), null], "Het wachtwoord komt niet overeen met de bovenste")                                
+    passwordConfirmation: Yup.string()
+      .oneOf([Yup.ref('password'), null], "De wachtwoorden komen niet overeen")                                
       .required('Vereist'),
-      street: Yup.string()      
+    street: Yup.string() 
+      .max(50, 'Leuk geprobeerd, maar niemand heeft zo een lange straatnaam ;-)')  
       .required('Vereist'),
-      streetnumber: Yup.string()
+    streetnumber: Yup.string()
+      .max(10, 'Leuk geprobeerd, maar niemand heeft zo een lang straatnummer ;-)')
       .required('Vereist'),
-      zipcode: Yup.string()
+    zipcode: Yup.string()
+      .max(10, 'Leuk geprobeerd, maar niemand heeft zo een lange postcode ;-)')
       .required('Vereist'),
-      city: Yup.string()
+    city: Yup.string()
+      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange stadsnaam ;-)')
       .required('Vereist'),
-      country: Yup.string()
+    country: Yup.string()
       .required('Vereist'),
   });
 
@@ -81,10 +76,11 @@ class SignUpForm extends React.Component<any,any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            errors: {}, invalid: false, user: null
+            errors: {}, invalid: false, user: null, errormessage: ''
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.checkEmailExists = this.checkEmailExists.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
     }
     public render() {
         return (
@@ -95,24 +91,27 @@ class SignUpForm extends React.Component<any,any>{
             render={this.renderFormik}
         /> );
     }  
-    private checkEmailExists(e) {
-        this.setState({user: null});
-        const val = e.target.value;
-        if (val !== '') {           
-          this.props.isEmailExists(val).then((res) => { 
-              console.log(res); 
-              this.setState({user: res.data}); 
-            }, () => { console.log("Something Wrong.. With This")})
-        }
+    private async checkEmailExists(email:string) {          
+        await this.props.isEmailExists(email).then((res) => { 
+            this.setState({errormessage: res}); 
+        }, () => { console.log("Something Wrong.. With This")})   
+    }
+    private handleBlur = (e) => {
+        this.setState({errormessage: ''})
     }
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
         formik.setSubmitting(true);
-        this.setState({ errors: {}});
-        this.props.userSignUpRequest(values).then(
-            () => {
-                alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
-                this.props.history.push("/");
-            }, ({data}) => this.setState({ errors: data}));
+        await this.checkEmailExists(values.email);
+        if(this.state.errormessage === ''){
+            console.log("gelukt!")
+            this.props.userSignUpRequest(values).then(
+                () => {
+                    alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
+                    this.props.history.push("/");
+                }, ({data}) => this.setState({ errors: data}));
+        }
+       
+        else{formik.setSubmitting(false)}
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
         return (
@@ -120,6 +119,13 @@ class SignUpForm extends React.Component<any,any>{
                 <div className="row mt-md-5 mb-md-3 justify-content-center">
                     <div className="col col-10">
                     <h1 className="h1-responsive text-start"><strong>Meld je nu aan!</strong></h1>
+                    </div>
+                </div>
+                <div className="row mt-md-2 mb-md-3 justify-content-center">
+                    <div className="col col-10">
+                    <span className="text-start">
+                    {formik.touched.email && this.state.errormessage !== '' ? (<div className="text-danger">{this.state.errormessage}</div>)
+                     : null  }</span>
                     </div>
                 </div>
                 <div className="form-group">
@@ -145,13 +151,12 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control" onBlur={this.checkEmailExists} name="email" placeholder="test1234@gmail.com" type="email" />
-                            {formik.errors.email ?(<div className="text-danger" >Error: {formik.errors.email}</div>
-                            ) : this.state.user!== null && !formik.errors.email ? (
-                                <div className="text-danger">User Already exists..</div>
-                            ) : this.state.user=== null && !formik.errors.email && formik.values.email ? <div className="text-success">Deze email is beschikbaar</div>
-                            : null
-                                } 
+                            <Field className="form-control" name="email" placeholder="test1234@gmail.com" type="email" />
+                            <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="field-error text-danger"
+                            />
                         </div>   
                         <div className="mb-5">
                             <label htmlFor="password">Wachtwoord</label>
@@ -224,7 +229,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>    
                         <div className="form-group">
                         <button type="submit" className="btn btn-success btn-lg "
-                            disabled={!formik.isValid || formik.isSubmitting || formik.isValidating || this.state.user!==null}
+                            disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                             >
                                 <strong>Aanmelden</strong>
                             </button>

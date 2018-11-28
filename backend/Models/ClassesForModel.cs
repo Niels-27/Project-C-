@@ -93,7 +93,6 @@ namespace backend.Models {
         public string Salt {get; set;}
         public string Key {get; set;}
         [StringLength(15)]
-        public string Ip {get; set;}
         public DateTime CreateOn{get; set;}
         public int Rank {get; set;}
         
