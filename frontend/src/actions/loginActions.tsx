@@ -15,21 +15,13 @@ export function setCurrentUser(user) {
       user
     };
   }
-export function logout() {
-    return dispatch => {
-      localStorage.removeItem('jwtToken');
-      setAuthorizationToken(false);
-      dispatch(setCurrentUser({}));
-    }
-  }
-  
   export function Login(data) {
     return dispatch => {
 
       const call: ApiCall = new ApiCall();
       call.setURL("authenticate");
       console.log("last finish");
-      const res =  call.result(data).then(response => {
+      const res = call.result(data).then(response => {
         const token = response.token;
         console.log(response.name);
         console.log(token);
@@ -39,6 +31,13 @@ export function logout() {
         return response;
       }, (error) => error );
       return res;  
+    }
+  }
+export function Logout() {
+    return dispatch => {
+      localStorage.removeItem('jwtToken');
+      setAuthorizationToken(false);
+      dispatch(setCurrentUser({}));
     }
   }
 export function UserExists(email:string, password:string) {

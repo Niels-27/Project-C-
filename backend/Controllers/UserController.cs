@@ -146,7 +146,6 @@ namespace backend.Controllers
             return AuthenticateUser(email, password);
         } 
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
         public async Task<IActionResult> Authenticate()
