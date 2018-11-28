@@ -26,3 +26,8 @@ C:\Users\Nofit\Documents\GitHub\Project-C-\backend\obj\Debug\netcoreapp2.0\backe
 C:\Users\Nofit\Documents\GitHub\Project-C-\backend\obj\Debug\netcoreapp2.0\backend.AssemblyInfo.cs
 C:\Users\Nofit\Documents\GitHub\Project-C-\backend\obj\Debug\netcoreapp2.0\backend.dll
 C:\Users\Nofit\Documents\GitHub\Project-C-\backend\obj\Debug\netcoreapp2.0\backend.pdb
+C:\Users\Nofit\Documents\GitHub\Project-C-\backend\bin\Debug\netcoreapp2.0\backend.deps.json
+C:\Users\Nofit\Documents\GitHub\Project-C-\backend\bin\Debug\netcoreapp2.0\backend.runtimeconfig.json
+C:\Users\Nofit\Documents\GitHub\Project-C-\backend\bin\Debug\netcoreapp2.0\backend.runtimeconfig.dev.json
+C:\Users\Nofit\Documents\GitHub\Project-C-\backend\bin\Debug\netcoreapp2.0\backend.dll
+C:\Users\Nofit\Documents\GitHub\Project-C-\backend\bin\Debug\netcoreapp2.0\backend.pdb

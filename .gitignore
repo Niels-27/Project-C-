@@ -387,3 +387,10 @@ frontend/package-lock.json
 # Config File in text
 backend/ConnectionStringFile.txt
 *ConnectionStringFile.txt
+backend/ConnectionStringFile.txt
+backend/bin/Debug/netcoreapp2.0/backend.dll
+backend/bin/Debug/netcoreapp2.0/backend.pdb
+backend/bin/Debug/netcoreapp2.0/backend.runtimeconfig.dev.json
+backend/obj/Debug/netcoreapp2.0/backend.csproj.FileListAbsolute.txt
+backend/obj/Debug/netcoreapp2.0/backend.dll
+backend/obj/Debug/netcoreapp2.0/backend.pdb
