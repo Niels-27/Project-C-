@@ -6,7 +6,12 @@ const initialState = {
   user: {}
 };
 
-export default (state = initialState, action) => {
+ interface IAction{
+   type,
+   user,
+
+}
+export default (state = initialState, action:IAction )=> {
   switch(action.type) {
     case SET_CURRENT_USER:
       return {

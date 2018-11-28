@@ -12,8 +12,6 @@ interface IFormikValues
 {
     email: string;
     password: string;
-    firstname: string,
-    lastname: string,
 }
 // const GetIp = async () => {
 //     return await fetch('https://api.ipify.org', {method: 'get', credentials: "omit", headers:{'content-type': 'application/json'}})
@@ -35,8 +33,6 @@ interface IFormikValues
     public initialValues: IFormikValues =  {
         email: "",
         password: "",
-        firstname: "",
-        lastname: "",
     };
     public SignUpSchema = Yup.object({
         email: Yup.string()
@@ -76,7 +72,7 @@ interface IFormikValues
         await this.checkUserExists(values.email, values.password);
 
         if(this.state.errormessage ===''){
-            const result = await this.props.login(values).then(userData =>
+            await this.props.login(values).then(userData =>
             {
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
                 this.props.history.push("/")
@@ -84,7 +80,6 @@ interface IFormikValues
                 {alert(error.text);
                 this.props.history.push("/") ;}
             );    
-            console.log(result) ;
         }     
         else {formik.setSubmitting(false);}
     }
