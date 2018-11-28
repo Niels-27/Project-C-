@@ -31,7 +31,7 @@ class NavBar extends React.Component<any, any> {
                         <div className="navbar-collapse collapse dual-nav w-50 order-2">
                             <ul className="nav navbar-nav ml-auto">
                             <li className="nav-item"><span className="nav-link"><LoginPop/></span></li>
-                                <li className="nav-item"><span className="nav-link"><a href="#"><MdFavorite size={32} style={{ color: 'black' }} /></a></span></li>
+                                <li className="nav-item"><span className="nav-link"><a href="/login"><MdFavorite size={32} style={{ color: 'black' }} /></a></span></li>
                                 <ShoppingCard />
                             </ul>
                         </div>

@@ -40,7 +40,7 @@ class LoginPopup extends React.Component<any,any> {
         <a id="PopLogin" onClick={this.toggle}><MdPerson size={32} style={{color: 'black'}}/> </a>
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target="PopLogin" toggle={this.toggle}>
           <PopoverHeader>Login</PopoverHeader>
-          <PopoverBody>{renderComponent}></PopoverBody>
+          <PopoverBody>{renderComponent}</PopoverBody>
         </Popover>
       </div>
     );
