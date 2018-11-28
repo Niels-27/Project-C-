@@ -99,7 +99,7 @@ class ShoppingCard extends React.Component<any, any> {
                 <td className="col-md-1 text-center"><strong>{Math.round((map[items.id] * items.price) * 100) / 100}</strong></td>
                 <td className="col-md-1">
                     <button type="button" className="btn btn-danger" onClick={renderOnClick}>
-                        <span  className="glyphicon glyphicon-remove" /> Remove
+                        Verwijder
                         </button></td>
             </tr>
 
@@ -144,10 +144,10 @@ class ShoppingCard extends React.Component<any, any> {
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th className="text-center">Price</th>
-                        <th className="text-center">Total</th>
+                            <th>Artikel</th>
+                        <th>Hoeveel</th>
+                        <th className="text-center">Prijs</th>
+                        <th className="text-center">Totaal</th>
                         <th/>
                     </tr>
                 </thead>
@@ -158,34 +158,31 @@ class ShoppingCard extends React.Component<any, any> {
                         <td />
                         <td />
                         <td />
-                        <td>Subtotal</td>
+                            <td>Totaal artikelen</td>
                             <td className="text-right" key="93hdnkwo2jm"><strong>{Math.round((this.returnTotalPrice()) * 100) / 100}</strong></td>
                     </tr>
                     <tr>
                         <td />
                         <td />
                         <td />
-                        <td>Estimated shipping</td>
+                        <td>VerzendKosten</td>
                         <td className="text-right"><strong>6.95</strong></td>
                     </tr>
                     <tr>
                         <td />
                         <td />
                         <td />
-                        <td>Total</td>
+                        <td>Totaal</td>
                             <td className="text-right" key="3nXNMK3osm2ml"><strong>{Math.round((this.returnTotalPrice() + 6.95) * 100) / 100}</strong></td>
                     </tr>
                     <tr>
                         <td />
                         <td />
                         <td />
-                        <td>
-                                            <button type="button" className="btn btn-default">
-                                                <span className="glyphicon glyphicon-shopping-cart"/> Continue Shopping
-                        </button></td>
+                        <td/>
                         <td>
                         <button type="button" className="btn btn-success">
-                            Checkout <span className="glyphicon glyphicon-play"/>
+                            Naar de kassa <span className="glyphicon glyphicon-play"/>
                         </button></td>
                     </tr>
                 </tbody>
