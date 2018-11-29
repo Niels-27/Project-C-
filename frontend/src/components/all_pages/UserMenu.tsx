@@ -14,7 +14,7 @@ class UserMenu extends React.Component<any,any>{
     }
     public async componentDidMount(){
         const {retrieveUserData} = this.props;
-        await retrieveUserData(this.props.user).then(res => {this.setState({user: res})}, (error) => {this.setState({errors: error})});
+        await retrieveUserData(this.props.user).then(res => {this.setState({user: res})}, (error) => {this.setState({user: error})});
     }
     public render() {
         

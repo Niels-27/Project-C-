@@ -72,7 +72,7 @@ const initialValues: IFormikValues = {
 
 class SignUpForm extends React.Component<any,any>{
     public static propTypes = 
-    {userSignUpRequest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired}
+    {userSignUpRequest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired, login: PropTypes.func.isRequired}
     constructor(props: any) {
         super(props);
         this.state = {
@@ -104,10 +104,13 @@ class SignUpForm extends React.Component<any,any>{
         await this.checkEmailExists(values);
         if(this.state.errormessage === ''){
             console.log("gelukt!")
-            this.props.userSignUpRequest(values).then(
-                () => {
+            await this.props.userSignUpRequest(values).then(
+                 async() => {
                     alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
-                    this.props.history.push("/");
+                    await this.props.login(values).then(()=> {
+                        
+                        this.props.history.push("/dashboard");}, () => {this.props.history.push("/")});
+                    
                 }, ({data}) => this.setState({ errors: data}));
         }
        
