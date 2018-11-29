@@ -32,14 +32,16 @@ class LoginPopup extends React.Component<any,any> {
   // }
   public render() {
     var renderComponent = <LoginPopupForm/>;
+    var popheader = <div>Login</div>
     if(this.props.isAuthenticated){
       renderComponent = <UserMenu/>;
+      popheader = <div>Account</div>
     }
     return (
       <div>
         <a id="PopLogin" onClick={this.toggle}><MdPerson size={32} style={{color: 'black'}}/> </a>
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target="PopLogin" toggle={this.toggle}>
-          <PopoverHeader>Login</PopoverHeader>
+          <PopoverHeader>{popheader}</PopoverHeader>
           <PopoverBody>{renderComponent}</PopoverBody>
         </Popover>
       </div>

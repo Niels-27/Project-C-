@@ -48,8 +48,8 @@ interface IFormikValues
             render={this.renderFormik}
         /> );
     }  
-    private  checkUserExists = async (email, password) => {
-        await this.props.isUserExists(email, password).then((res) => { 
+    private  checkUserExists = async (values) => {
+        await this.props.isUserExists(values).then((res) => { 
             { this.setState({errormessage: res}); console.log(this.state.errormessage)}
             }, () => { console.log("Something Wrong.. With This")});
     }
@@ -57,7 +57,7 @@ interface IFormikValues
 
         formik.setSubmitting(true);
 
-        await this.checkUserExists(values.email, values.password);
+        await this.checkUserExists(values);
 
         if(this.state.errormessage ===''){
             await this.props.login(values).then(userData =>

@@ -45,13 +45,18 @@ class ApiCall {
                 }
                 break;  
             }
-            case "testuser":
-                if(second!== ''){
-                    this.link = "/user/testuser/" + first + "/" + second;
-                }            
-                else {this.link = "/user/testuser/" + first;}
+            case "userdata":
+                this.link = "/user/getUserInfo";
                 break;
-                
+            case "checkuser":
+                this.link = "/user/checkuser";
+                break;
+            case "register":
+                this.link = "/user/register";
+                break;  
+            case "checkemail":
+                this.link = "/user/checkemail";
+                break;                    
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";

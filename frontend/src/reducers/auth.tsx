@@ -4,7 +4,7 @@ import { SET_CURRENT_USER } from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: {},
 };
 
 export default (state = initialState, action)=> {
@@ -13,7 +13,7 @@ export default (state = initialState, action)=> {
     
       return {
         isAuthenticated: !checkObjectEmpty(action.user),
-        user: action.user
+        user: action.user,
       };
     default: return state;
   }

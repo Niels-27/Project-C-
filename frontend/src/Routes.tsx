@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
+import requireAuth from './utils/requireAuth';
 
 
 // normal page coompinents.
@@ -12,6 +13,7 @@ import Home from './pages/home';
 import Product from './pages/product';
 import SignUpPage from './pages/signup/SignUpPage';
 import SignLoginPage from './pages/signlogin/SignLoginPage';
+import UserPage from './pages/UserPage';
 import Footer from './components/all_pages/footer';
 import pageNotFound from './pages/404';
 import ShoppingCard from './pages/shoppingCard';
@@ -38,6 +40,7 @@ class Routes extends React.Component<any,any> {
             <Route path="/pagenation" component={Pagination} />
             <Route path="/signup" component={SignUpPage}/>
             <Route path="/login" component={SignLoginPage}/>
+            <Route path="/dashboard" component={requireAuth(UserPage)}/>
             <Route component={pageNotFound} />
           </Switch>
           <Footer/>

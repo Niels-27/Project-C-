@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import {ErrorMessage, Field, Form, Formik, FormikProps} from "formik";
+import {ErrorMessage, Field, Form, Formik, FormikProps, FormikValues} from "formik";
 import * as Yup from 'yup';
 import {
     withRouter
@@ -91,9 +91,9 @@ class SignUpForm extends React.Component<any,any>{
             render={this.renderFormik}
         /> );
     }  
-    private async checkEmailExists(email:string) {          
-        await this.props.isEmailExists(email).then((res) => { 
-            this.setState({errormessage: res}); 
+    private async checkEmailExists(values: FormikValues) {          
+        await this.props.isEmailExists(values).then((res) => { 
+            this.setState({errormessage: res}); console.log(this.state.errormessage); 
         }, () => { console.log("Something Wrong.. With This")})   
     }
     private handleBlur = (e) => {
@@ -101,7 +101,7 @@ class SignUpForm extends React.Component<any,any>{
     }
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
         formik.setSubmitting(true);
-        await this.checkEmailExists(values.email);
+        await this.checkEmailExists(values);
         if(this.state.errormessage === ''){
             console.log("gelukt!")
             this.props.userSignUpRequest(values).then(

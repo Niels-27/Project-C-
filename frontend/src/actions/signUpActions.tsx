@@ -1,23 +1,23 @@
 import ApiCall from '../logic/apiCall';
 
-export function SignUpRequest(userData:object) {   
+export function SignUpRequest(userData:any) {   
     return dispatch => {
         return PostUser(userData);
     }
 }
-async function PostUser(userData) {
+async function PostUser(userData: any) {
     const call: ApiCall = new ApiCall();
-    call.setURL("testuser");
+    call.setURL("register");
     return call.result(userData); // hpoi
 }
 
-export function IsEmailExists(email:string) {
+export function IsEmailExists(userData:any) {
     return dispatch => {
-      return CheckEmail(email);
+      return CheckEmail(userData);
     }
   }
-  async function CheckEmail(email) {
+  async function CheckEmail(userData:any) {
     const call: ApiCall = new ApiCall();
-    call.setURL("testuser", email);
-    return call.result(); // hpoi
+    call.setURL("checkemail");
+    return call.result(userData); // hpoi
 }
