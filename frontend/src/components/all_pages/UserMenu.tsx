@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter} from 'react-router-dom';
 import { Logout } from '../../actions/loginActions';
 import { RetrieveUserData } from '../../actions/userActions';
+
 class UserMenu extends React.Component<any,any>{
     public static propTypes = {logout: PropTypes.func.isRequired, user: PropTypes.object.isRequired, 
        retrieveUserData: PropTypes.func.isRequired};
@@ -22,15 +23,22 @@ class UserMenu extends React.Component<any,any>{
         console.log(user);
         var showresults = <div>Aan het laden..</div>
         if (user){
-            showresults = <div>Welkom {user.name}</div>;
+            showresults = <div><strong>Welkom {user.name}</strong></div>;
         }
         return (
             <div>            
-                {showresults}
-                <a href="/dashboard">Mijn account</a>
-                 <button type="submit" className="btn btn-secondary btn-sm mt-3 " onClick={this.handleClick}>
+                <div className="row p-2">
+                    <div className="col ">
+                    {showresults}
+                    <a className="nav nav-link" href="/dashboard">Mijn account</a>
+                    <a className="nav nav-link" href="/dashboard">Mijn bestellingen</a>
+                    <a className="nav nav-link" href="/dashboard">Mijn wishlist</a>
+                    <button type="submit" className="btn btn-secondary btn-sm mt-1 " onClick={this.handleClick}>
                     <strong>Uitloggen</strong>
-                </button>
+                     </button>
+                    </div>
+                </div>
+               
             </div>
         );
     }

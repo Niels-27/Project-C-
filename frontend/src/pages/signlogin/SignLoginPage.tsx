@@ -9,8 +9,9 @@ class SignLoginPage extends React.Component<any,any>{
     constructor(props: any) {
         super(props);
         this.state = {};
+        this.handleClick = this.handleClick.bind(this);
     }
-
+    
     public render() {
         return (      
                 <div className="row m-md-5 justify-content-around"> 
@@ -44,7 +45,7 @@ class SignLoginPage extends React.Component<any,any>{
         );
     }
     private handleClick(e){
-        this.props.history.push('/signin');
+        this.props.history.push("/signup");
     }
 }
 

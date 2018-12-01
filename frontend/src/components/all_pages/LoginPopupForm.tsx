@@ -77,8 +77,8 @@ interface IFormikValues
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
                 this.props.history.push("/")
             }, (error) => 
-                {alert(error.text);
-                this.props.history.push("/") ;}
+                    {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
+                    formik.setSubmitting(false)}
             );    
         }     
         else {formik.setSubmitting(false);}
