@@ -15,7 +15,7 @@ import LoginPage from './pages/login/LoginPage';
 import Footer from './components/all_pages/footer';
 import pageNotFound from './pages/404';
 import ShoppingCard from './pages/shoppingCard';
-
+import Payment from './pages/payment';
 import Pagination from './pages/pagination';
 
 
@@ -38,7 +38,9 @@ class Routes extends React.Component<any,any> {
             <Route path="/pagenation" component={Pagination} />
             <Route path="/signup" component={SignUpPage}/>
             <Route path="/login" component={LoginPage}/>
+            <Route path="/payment" component={Payment}/>
             <Route component={pageNotFound} />
+            
           </Switch>
           <Footer/>
           </div>

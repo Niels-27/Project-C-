@@ -1,0 +1,53 @@
+h4{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.amount{
+display: inline;
+}
+
+#pay{
+  margin-top: 10px;
+}
+
+.form-control, .btn{
+    border-radius: 0;}
+
+.standard-button{
+ background-color: #4c4ffa;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 35px;
+  padding-right: 35px;
+  border-radius: 0;
+  border:none;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 16em;
+  font-weight: 600;
+  
+  
+  
+
+  }
+
+.btn-anim{
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+
+.btn-anim:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
