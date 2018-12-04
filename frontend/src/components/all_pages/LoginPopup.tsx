@@ -5,7 +5,7 @@ import { withRouter} from 'react-router-dom';
 import { MdPerson } from "react-icons/md";
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import * as PropTypes from 'prop-types'
-import LoginPopupForm from './LoginPopupForm';
+import LoginForm from './LoginForm';
 import UserMenu from './UserMenu';
 class LoginPopup extends React.Component<any,any> {
 
@@ -19,19 +19,8 @@ class LoginPopup extends React.Component<any,any> {
       popoverOpen: false,
     };
   }
-  // public componentWillMount(){
-  //   if (!this.props.isAuthenticated) {
-  //     alert("Je hebt geen toegang. Niet geautoriseerd");
-  //     this.props.history.push('/');
-  //   }
-  // }
-  // public componentDidUpdate(nextProps){
-  //   if (!nextProps.isAuthenticated) {
-  //     this.props.history.push('/');
-  //   }
-  // }
   public render() {
-    var renderComponent = <LoginPopupForm/>;
+    var renderComponent = <LoginForm/>;
     var popheader = <div>Login</div>
     if(this.props.isAuthenticated){
       renderComponent = <UserMenu/>;

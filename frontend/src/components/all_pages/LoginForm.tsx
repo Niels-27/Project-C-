@@ -102,6 +102,7 @@ interface IFormikValues
                              <button type="submit" className="btn btn-success btn-md btn-block "
                                  disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                                 >
+
                                  <strong>Log in</strong>
                                 </button>
                         </div>    

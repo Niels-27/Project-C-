@@ -32,7 +32,7 @@ class UserMenu extends React.Component<any,any>{
                     {showresults}
                     <a className="nav nav-link" href="/dashboard">Mijn account</a>
                     <a className="nav nav-link" href="/dashboard">Mijn bestellingen</a>
-                    <a className="nav nav-link" href="/dashboard">Mijn wishlist</a>
+                    <a className="nav nav-link" href="/wishlist">Mijn wishlist</a>
                     <button type="submit" className="btn btn-secondary btn-sm mt-1 " onClick={this.handleClick}>
                     <strong>Uitloggen</strong>
                      </button>
