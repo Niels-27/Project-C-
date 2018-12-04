@@ -51,10 +51,13 @@ class ProductList extends React.Component<any, any> {
         var showResults = <div>loading... </div>;
         if (this.props.products){
             if (this.props.maxItems && Object.keys(this.props.products).length > this.props.maxItems){
+
                 const tempArr = this.state.products.slice(0, this.props.maxItems);
                 showResults = <div className="row">{tempArr.map(this.renderAllProducts)} </div>;
-            }else{
+            } else if (Object.keys(this.props.products).length > 0){
                 showResults = <div className="row">{this.state.products.map(this.renderAllProducts)} </div>;
+            }else{
+                showResults = <div className="row"> Woops Geen producten Gevonden</div>;
             }
             
         }
