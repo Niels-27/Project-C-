@@ -109,7 +109,7 @@ class SignUpForm extends React.Component<any,any>{
                     alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                     await this.props.login(values).then(()=> {
                         
-                        this.props.history.push("/dashboard");}, () => {this.props.history.push("/")});
+                        this.props.history.push("/");}, () => {this.props.history.push("/")});
                     
                 }, ({data}) => this.setState({ errors: data}));
         }
@@ -136,7 +136,7 @@ class SignUpForm extends React.Component<any,any>{
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
                             <label htmlFor="firstname">Voornaam</label>
-                            <Field className="form-control" name="firstname" placeholder="Jan" type="text" />
+                            <Field className="form-control" name="firstname"  type="text" />
                             <ErrorMessage
                             name="firstname"
                             component="div"
@@ -145,7 +145,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="lastname">Achternaam</label>
-                            <Field className="form-control" name="lastname" placeholder="Pietersen" type="text" />
+                            <Field className="form-control" name="lastname" type="text" />
                             <ErrorMessage
                             name="lastname"
                             component="div"
@@ -154,7 +154,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>
                         <div className="mb-5">
                             <label htmlFor="email">Email</label>
-                            <Field className="form-control" name="email" placeholder="test1234@gmail.com" type="email" />
+                            <Field className="form-control" name="email" type="email" />
                             <ErrorMessage
                             name="email"
                             component="div"
@@ -183,7 +183,7 @@ class SignUpForm extends React.Component<any,any>{
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
                             <label htmlFor="street">Straatnaam</label>
-                            <Field className="form-control"name="street" placeholder="Jan Pieterstraat" type="text" />
+                            <Field className="form-control"name="street" type="text" />
                             <ErrorMessage
                             name="street"
                             component="div"
@@ -193,7 +193,7 @@ class SignUpForm extends React.Component<any,any>{
                     
                         <div className="mb-5">
                             <label htmlFor="streetnumber">Huisnummer</label>
-                            <Field className="form-control"name="streetnumber" placeholder="61" type="text" />
+                            <Field className="form-control"name="streetnumber"  type="text" />
                             <ErrorMessage
                             name="streetnumber"
                             component="div"
@@ -202,7 +202,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div>   
                         <div className="mb-5">
                             <label htmlFor="zipcode">Postcode</label>
-                            <Field className="form-control"name="zipcode" placeholder="1234AB" type="text" />
+                            <Field className="form-control"name="zipcode" type="text" />
                             <ErrorMessage
                             name="zipcode"
                             component="div"
@@ -211,7 +211,7 @@ class SignUpForm extends React.Component<any,any>{
                         </div> 
                         <div className="mb-5">
                             <label htmlFor="city">Stad</label>
-                            <Field className="form-control"name="city" placeholder="Rotterdam" type="text" />
+                            <Field className="form-control"name="city" type="text" />
                             <ErrorMessage
                             name="city"
                             component="div"

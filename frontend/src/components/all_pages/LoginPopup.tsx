@@ -5,7 +5,7 @@ import { withRouter} from 'react-router-dom';
 import { MdPerson } from "react-icons/md";
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import * as PropTypes from 'prop-types'
-import LoginForm from './LoginForm';
+import LoginPopupForm from './LoginPopupForm';
 import UserMenu from './UserMenu';
 class LoginPopup extends React.Component<any,any> {
 
@@ -20,7 +20,7 @@ class LoginPopup extends React.Component<any,any> {
     };
   }
   public render() {
-    var renderComponent = <LoginForm/>;
+    var renderComponent = <LoginPopupForm/>;
     var popheader = <div>Login</div>
     if(this.props.isAuthenticated){
       renderComponent = <UserMenu/>;
