@@ -10,14 +10,13 @@ export default function(ComposedComponent) {
 
     public componentWillMount() {   
       if (!this.props.isAuthenticated) {
-        alert("Je hebt geen toegang. Niet geautoriseerd");
-        this.props.history.push('/');
+        this.props.history.push('/login');
       }
     }
 
     public componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.props.history.push('/');
+        this.props.history.push('/login');
       }
     }
 

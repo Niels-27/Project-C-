@@ -43,30 +43,33 @@ namespace backend.Controllers
             }     
             return dbList;
         }
-        [HttpGet]
-        [Route("testuser/{email=string}")]
-        public string ScanEmail(string email)  // deze functie kijkt of de email al in gebruik is door database check.
+        [HttpPost]
+        [Route("checkemail")]
+        public async Task<string> ScanEmail()  // deze functie kijkt of de email al in gebruik is door database check.
         {
-           var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
-           if(user.Any()){
-               return "Dit emailadres is al in gebruik.";
-           }
-           return "";
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic userData = JValue.Parse(this.RequestBody);
+            string email = userData.email;
+            
+            var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+            if(user.Any()){
+                return "Dit emailadres is al in gebruik.";
+            }
+            return "";
         }       
         private string RequestBody;
         [HttpPost]
-        [Route("testuser")]
+        [Route("register")]
         public async Task<User> ReadStringDataManual()
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 this.RequestBody = await reader.ReadToEndAsync();
-                 Console.WriteLine(this.RequestBody);
-            }
-           
+            }      
             dynamic userData = JValue.Parse(this.RequestBody);
-            //System.Console.WriteLine(derp);
-            //return productIds.items[0];
             return handleBodyPost(userData);
         }        
         private User handleBodyPost(dynamic user)
@@ -107,7 +110,6 @@ namespace backend.Controllers
             user.Key = encodedKey;   //store key into user
             // store encodedSalt and encodedKey in database
             // you could optionally skip the encoding and store the byte arrays directly
-            Console.WriteLine(user);
             _context.Add(user);   //add user to database
             _context.SaveChanges();
             }
@@ -134,19 +136,26 @@ namespace backend.Controllers
             }
         }
 
-
-        [HttpGet]
-        [Route("testuser/{email=string}/{password=string}")]
-        public string CheckUser(string email, string password)  //Deze functie kijkt of wachtwoord met email klopt.
+        [HttpPost]
+        [Route("checkuser")]
+        public async Task<string> CheckUser()  //Deze functie kijkt of wachtwoord met email klopt.
         {
-           var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+           
+        dynamic userData = JValue.Parse(this.RequestBody);
+        string email = userData.email;
+        string pass = userData.password;
+
+        var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
            if(!user.Any()){
                return "Het emailadres bestaat niet.";
            }
-            return AuthenticateUser(email, password);
+            return AuthenticateUser(email, pass);
         } 
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
         public async Task<IActionResult> Authenticate()
@@ -154,11 +163,9 @@ namespace backend.Controllers
              using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 this.RequestBody = await reader.ReadToEndAsync();
-                 Console.WriteLine(this.RequestBody);
             }
            
             dynamic userData = JValue.Parse(this.RequestBody);
-            Console.WriteLine(userData);
             return handleshit(userData);
            
         }
@@ -169,6 +176,24 @@ namespace backend.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(_user);
+        }
+
+         [HttpPost]
+        [Route("getUserInfo")]
+        public async Task<IActionResult> GetUserData()
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+           
+            dynamic userData = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(userData.unique_name.ToString());
+
+            var result = _context.Users.Where(u => u.Id == userID).Select(u => new{u.Id, u.Name, u.Email}).FirstOrDefault();
+            
+            Console.WriteLine("this is the userID: " + userID);
+            return Ok(result);          
         }
                  
     }

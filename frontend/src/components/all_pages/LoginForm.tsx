@@ -13,18 +13,6 @@ interface IFormikValues
     email: string;
     password: string;
 }
-// const GetIp = async () => {
-//     return await fetch('https://api.ipify.org', {method: 'get', credentials: "omit", headers:{'content-type': 'application/json'}})
-//     .then(response => {
-//         console.log(response)
-//         return response.text;
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         return err;
-//     });
-// };
-
   class LoginPopupForm extends React.Component<any,any>{
     
     public static propTypes = 
@@ -60,8 +48,8 @@ interface IFormikValues
             render={this.renderFormik}
         /> );
     }  
-    private  checkUserExists = async (email, password) => {
-        await this.props.isUserExists(email, password).then((res) => { 
+    private  checkUserExists = async (values) => {
+        await this.props.isUserExists(values).then((res) => { 
             { this.setState({errormessage: res}); console.log(this.state.errormessage)}
             }, () => { console.log("Something Wrong.. With This")});
     }
@@ -69,7 +57,7 @@ interface IFormikValues
 
         formik.setSubmitting(true);
 
-        await this.checkUserExists(values.email, values.password);
+        await this.checkUserExists(values);
 
         if(this.state.errormessage ===''){
             await this.props.login(values).then(userData =>
@@ -77,8 +65,8 @@ interface IFormikValues
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
                 this.props.history.push("/")
             }, (error) => 
-                {alert(error.text);
-                this.props.history.push("/") ;}
+                {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
+                formik.setSubmitting(false)}
             );    
         }     
         else {formik.setSubmitting(false);}
@@ -87,7 +75,7 @@ interface IFormikValues
         return (
             <Form>
                 <div className="form-group">
-                 <div className="row">
+                 <div className="row mt-3">
                     <div className="col" >
                         <div>
                             <label htmlFor="email">Email</label>
@@ -107,15 +95,14 @@ interface IFormikValues
                             className="field-error text-danger"
                             />
                         </div>
-                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-2 ">{this.state.errormessage}</div>)
+                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-3 ">{this.state.errormessage}</div>)
                         : null}  
-                        <div>
-                           <span className="nav-link">Nog geen account? <a href="/signup">Klik hier</a></span>
-                        </div> 
-                        <div className="mt-md-2">
-                             <button type="submit" className="btn btn-success btn-md "
+                       
+                        <div className="mt-md-3">
+                             <button type="submit" className="btn btn-success btn-md btn-block "
                                  disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                                 >
+
                                  <strong>Log in</strong>
                                 </button>
                         </div>    
