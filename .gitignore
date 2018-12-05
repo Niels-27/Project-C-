@@ -396,3 +396,10 @@ backend/obj/Debug/netcoreapp2.0/backend.dll
 backend/obj/Debug/netcoreapp2.0/backend.pdb
 backend/obj/Debug/netcoreapp2.0/backend.assets.cache
 backend/obj/Debug/netcoreapp2.0/backend.assets.cache
+*.dll
+backend/bin/Debug/netcoreapp2.0/backend.dll
+backend/bin/Debug/netcoreapp2.0/backend.dll
+frontend/package-lock.json
+frontend/package-lock.json
+backend/obj/project.assets.json
+*.dll

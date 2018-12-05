@@ -12672,23 +12672,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nofit\\.nuget\\packages\\": {},
+    "C:\\Users\\Mannie\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\Mannie\\Desktop\\Project-C-\\Project-C-\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\backend.csproj",
-      "packagesPath": "C:\\Users\\Nofit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nofit\\Documents\\GitHub\\Project-C-\\backend\\obj\\",
+      "projectPath": "C:\\Users\\Mannie\\Desktop\\Project-C-\\Project-C-\\backend\\backend.csproj",
+      "packagesPath": "C:\\Users\\Mannie\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mannie\\Desktop\\Project-C-\\Project-C-\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nofit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Mannie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
