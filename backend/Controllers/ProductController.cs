@@ -112,7 +112,7 @@ namespace backend.Controllers
 
             backend.Services.MailService MailService = new backend.Services.MailService();
             MailService.email = email;
-            MailService.setCustomMessage("Registratie HR Fashion!", "Bedankt voor uw aankoop bij HR Fashion.\n Wij hebben het totaal bedrag van " + price + " euro ontvangen en versturen uw producten binnen 1 werkdag. \n met vriendelijke groeten HR Fashion");
+            MailService.setCustomMessage("Aankoop HR Fashion!", "Bedankt voor uw aankoop bij HR Fashion.\n Wij hebben het totaal bedrag van " + price + " euro ontvangen en versturen uw producten binnen 1 werkdag. \n met vriendelijke groeten HR Fashion");
             MailService.sendEmail();
         }
 
