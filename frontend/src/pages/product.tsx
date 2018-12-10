@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap';
+
 
 import { Link } from 'react-router-dom';
 import ApiCall from '../logic/apiCall';
@@ -35,10 +37,17 @@ class App extends React.Component<IProps, any> {
         call.setURL('details', this.props.match.params.id.toString());
         this.setState({ product: await call.result() });
     }
+    
+    public toggle() {
+        this.setState({
+          modal: !this.state.modal
+        });
+      }
 
     public render() {
         var renderItem = <span>loading</span>;
-
+        const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
+        
         if (this.state.product !== null) {
             renderItem = (
                 <div className="mt-5 hoverable">
@@ -84,7 +93,42 @@ class App extends React.Component<IProps, any> {
 
                             </h3>
 
-                            <button type="button" className="btn btn-success btn-lg w-100" onClick={this.addProductToShoppiongCard}>Koop nu</button>
+                            <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.addProductToShoppiongCard}>Koop Nu</Button>
+                            <Modal isOpen={this.state.modal} toggle={this.toggle}  >
+                                <ModalHeader toggle={this.toggle} close={closeBtn}>In winkelmandje geplaatst</ModalHeader>                                
+                                <ModalBody>
+                                    <Container>
+                                    <Row>
+                                        <Col xs="7">
+                                            <Row>
+                                            <Col xs="5">
+                                                <img src={this.state.product.imageName} style={{width:100, height:100}}/>
+                                            </Col>
+                                            <Col xs="7">
+                                                <table>
+                                                    <tr>
+                                                        <td>{this.state.product.name}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>€{this.state.product.price}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Maat: {this.state.product.sizeName}</td>
+                                                    </tr>
+                                                </table>
+                                            </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col xs="5">
+                                            <Button type="button" className="btn btn-success w-100" style={{marginBottom:15}}>
+                                                <Link style={{color:"white", textDecoration:"none"}} to="/ShoppingCard">Afrekenen</Link>
+                                            </Button>
+                                            <Button type="button" className="btn btn-success w-100" onClick={this.toggle}>Verder Winkelen</Button>
+                                        </Col>
+                                    </Row>
+                                    </Container>
+                                </ModalBody>
+                            </Modal>
 
                             <section className="Beschikbaarheid">
                                 <div className="mt-5">
@@ -109,6 +153,7 @@ class App extends React.Component<IProps, any> {
 
     private addProductToShoppiongCard = () => {
         const c = this.cookie.get('ShoppingCard');
+        this.toggle();
         if (c) {
             const d = JSON.parse(c);
             d.items.push(this.props.match.params.id.toString());
