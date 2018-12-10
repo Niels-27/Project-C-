@@ -48,6 +48,16 @@ class ApiCall {
             case "userdata":
                 this.link = "/user/getUserInfo";
                 break;
+            case "addressdata":
+                this.link = "/user/getAddressInfo";
+                break;
+            case "wishlistdata":
+                this.link = "/user/getWishListInfo";
+                break;     
+            case "updateUser":{
+                this.link = "/user/updateUser/" + first;
+                break;
+                }
             case "checkuser":
                 this.link = "/user/checkuser";
                 break;

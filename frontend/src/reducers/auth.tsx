@@ -5,15 +5,16 @@ import { SET_CURRENT_USER } from '../actions/types';
 const initialState = {
   isAuthenticated: false,
   user: {},
+  userData: {}
 };
 
 export default (state = initialState, action)=> {
   switch(action.type) {
-    case SET_CURRENT_USER:
-    
+    case SET_CURRENT_USER:   
       return {
         isAuthenticated: !checkObjectEmpty(action.user),
         user: action.user,
+        userData: action.userData
       };
     default: return state;
   }

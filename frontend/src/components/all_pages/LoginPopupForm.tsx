@@ -50,7 +50,6 @@ interface IFormikValues
         this.onSubmit = this.onSubmit.bind(this);
         this.checkUserExists = this.checkUserExists.bind(this);
    }
-
     public render() {
         return (
             <Formik

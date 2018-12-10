@@ -1,13 +1,26 @@
 import ApiCall from '../logic/apiCall';
 
-export function RetrieveUserData(user: object) {   
+export function RetrieveData(userData: object, origin: string) {   
     return dispatch => {
-        return GetUserData(user) ;
+        return GetData(userData, origin) ;
     }
 }
-async function GetUserData(user) {   
+async function GetData(userData, origin) {   
    const call : ApiCall = new ApiCall();
-   call.setURL("userdata");
-   return call.result(user); // hpoi     
+   call.setURL(origin);
+   return call.result(userData); // hpoi     
 }
+
+export function ChangeData(userData: object, origin: string) {   
+    return dispatch => {
+        return Update(userData, origin) ;
+    }
+}
+async function Update(userData, origin) {   
+    const call : ApiCall = new ApiCall();
+    call.setURL("updateUser", origin);
+    return call.result(userData); // hpoi     
+ }
+
+
 

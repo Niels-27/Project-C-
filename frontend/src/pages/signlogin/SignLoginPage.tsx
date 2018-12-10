@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LoginForm from '../../components/all_pages/LoginForm';
+import LoginForm from '../../components/LoginForm';
 import {
     withRouter
 } from "react-router-dom";

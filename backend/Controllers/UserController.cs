@@ -34,7 +34,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("country")]
-        public IEnumerable<Country> GetCountries(){
+        public IEnumerable<Country> GetCountries(){  //
 
             var dbList = _context.Countries.Select(m => m).ToList();
             if (dbList==null){
@@ -44,7 +44,7 @@ namespace backend.Controllers
             return dbList;
         }
         [HttpPost]
-        [Route("checkemail")]
+        [Route("checkemail")]    
         public async Task<string> ScanEmail()  // deze functie kijkt of de email al in gebruik is door database check.
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -62,7 +62,7 @@ namespace backend.Controllers
         }       
         private string RequestBody;
         [HttpPost]
-        [Route("register")]
+        [Route("register")]   //deze functie registreert een gebruiker
         public async Task<User> ReadStringDataManual()
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -72,12 +72,13 @@ namespace backend.Controllers
             dynamic userData = JValue.Parse(this.RequestBody);
             return handleBodyPost(userData);
         }        
-        private User handleBodyPost(dynamic user)
+        private User handleBodyPost(dynamic user)  // Deze functie handlet de user registratie verder
         {    
             DateTime createDate = DateTime.UtcNow;
             User new_user = new User(){
                 Name = user.firstname + " " + user.lastname,
                 Email = user.email,
+                Gender = user.gender,
                 Rank = 1,
                 CreateOn = createDate                     
             };
@@ -92,7 +93,7 @@ namespace backend.Controllers
             };
             _context.Add(new_address);  //Save the user adress data
 
-            var encodedUser = EncodeAndStoreUser(new_user, user.password);    // encode user password
+            var encodedUser = EncodeAndStoreUser(new_user, user.password, true);    // encode user password
 
             backend.Services.MailService MailService = new backend.Services.MailService();
             MailService.email = user.email;
@@ -101,7 +102,7 @@ namespace backend.Controllers
 
             return (encodedUser);
         }
-        private User EncodeAndStoreUser(User user, dynamic password){
+        private User EncodeAndStoreUser(User user, dynamic password, bool addOrNot){  //Deze functie encode de password en storet daarna de user in de database
             string stringed_password = password;
             using (var deriveBytes = new Rfc2898DeriveBytes(stringed_password, 20)) // 20-byte salt
             {
@@ -115,12 +116,18 @@ namespace backend.Controllers
             user.Key = encodedKey;   //store key into user
             // store encodedSalt and encodedKey in database
             // you could optionally skip the encoding and store the byte arrays directly
-            _context.Add(user);   //add user to database
+            if(addOrNot){
+                _context.Add(user); 
+            }
+            else{
+                _context.Update(user);
+            }
+              //add user to database
             _context.SaveChanges();
             }
             return user;
         }
-          private string AuthenticateUser(string email, dynamic password){
+          private string AuthenticateUser(string email, dynamic password){ // deze functie kijkt of het wachtwoord klopt
             string encodedSalt, encodedKey;
             encodedSalt = _context.Users.Where(u => u.Email == email).Select(u => u.Salt).FirstOrDefault();//load salt based on email
             encodedKey = _context.Users.Where(u => u.Email == email).Select(u => u.Key).FirstOrDefault(); //load key based on email
@@ -137,12 +144,11 @@ namespace backend.Controllers
                 if (!testKey.SequenceEqual(key))  
                  return "Het wachtwoord klopt niet.";
                 else
-                return "";  //Het wachtwoord klopt geen message
+                return "";  //Het wachtwoord klopt 
             }
         }
-
         [HttpPost]
-        [Route("checkuser")]
+        [Route("checkuser")]   
         public async Task<string> CheckUser()  //Deze functie kijkt of wachtwoord met email klopt.
         {
              using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -162,7 +168,7 @@ namespace backend.Controllers
         } 
 
         [HttpPost]
-        [Route("authenticate")]
+        [Route("authenticate")]  //Deze functie geeft de userdata  van de loginform
         public async Task<IActionResult> Authenticate()
         {
              using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -171,10 +177,10 @@ namespace backend.Controllers
             }
            
             dynamic userData = JValue.Parse(this.RequestBody);
-            return handleshit(userData);
+            return handleAuthentication(userData);
            
         }
-        public IActionResult  handleshit(dynamic user){
+        public IActionResult  handleAuthentication(dynamic user){  //deze functie authoriseerrt de user met een token
              var _user = _userService.AuthenticateWithToken(user.email.ToString());
 
             if (_user == null)
@@ -185,7 +191,7 @@ namespace backend.Controllers
 
          [HttpPost]
         [Route("getUserInfo")]
-        public async Task<IActionResult> GetUserData()
+        public async Task<IActionResult> GetUserData() // deze functie haalt de data op van de user
         {
              using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
@@ -195,10 +201,100 @@ namespace backend.Controllers
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
 
-            var result = _context.Users.Where(u => u.Id == userID).Select(u => new{u.Id, u.Name, u.Email}).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
+            user.Key = "";
+            user.Salt = "";
             
             Console.WriteLine("this is the userID: " + userID);
-            return Ok(result);          
+            return Ok(user);          
+        }
+         [HttpPost]
+        [Route("getAddressInfo")] 
+        public async Task<IActionResult> GetAddressData()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+           
+            dynamic userData = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(userData.unique_name.ToString());
+
+            var address = _context.Addresses.Where(u => u.Id == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).FirstOrDefault();
+    
+            return Ok(address);          
+        }
+         [HttpPost]
+         [Route("getWishListInfo")]
+        public async Task<IActionResult> GetWishListData()  //deze functie haalt de wishlist data van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+           
+            dynamic userData = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(userData.unique_name.ToString());
+
+            var wishlist = _context.WishListProducts.Where(u => u.Id == userID).Select(u => u.Product).ToList();  //list with products
+    
+            return Ok(wishlist);          
+        }
+         [HttpPost]
+        [Route("updateUser/personal")]
+         public async Task<IActionResult> UpdateUserPersonal()  //deze functie haalt de wishlist data van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }   
+            dynamic up = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(up.id.ToString());
+
+            User user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
+            user.Name = up.firstname + " " + up.lastname;
+            user.Email = up.email;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            
+            return Ok(user);          
+        }
+          [HttpPost]
+        [Route("updateUser/address")]
+         public async Task<IActionResult> UpdateUserAddress()  //deze functie haalt de wishlist data van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }   
+            dynamic up = JValue.Parse(this.RequestBody);
+            int id = Int32.Parse(up.id.ToString());
+
+            Address address = _context.Addresses.Where(a => a.Id == id).Select(a => a).FirstOrDefault();
+            address.Street = up.street + " " + up.streetnumber;
+            address.PostalCode = up.zipcode;
+            address.City = up.city;
+
+            _context.Addresses.Update(address);
+            _context.SaveChanges();
+            
+            return Ok(address);          
+        }
+          [Route("updateUser/password")]
+         public async Task<IActionResult> UpdatePassword()  //deze functie haalt de wishlist data van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }   
+            dynamic up = JValue.Parse(this.RequestBody);
+            int id = Int32.Parse(up.id.ToString());
+
+            User user = _context.Users.Where(u => u.Id == id).Select(u => u).FirstOrDefault();
+
+            var encodedUser = EncodeAndStoreUser(user, up.newPassword, false);
+            
+            return Ok(encodedUser);          
         }
                  
     }
