@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Row, Col, Container } from 'reactstrap';
 
 
 import { Link } from 'react-router-dom';
@@ -24,12 +24,15 @@ class App extends React.Component<IProps, any> {
         super(props);
         this.state = {
             product: {
+                modal: false,
                 name: "",
                 imageName: "",
                 price: "",
                 discription: "",
             }
         };
+
+        this.toggle = this.toggle.bind(this);
     }
 
     public async componentDidMount() {
