@@ -94,6 +94,11 @@ namespace backend.Controllers
 
             var encodedUser = EncodeAndStoreUser(new_user, user.password);    // encode user password
 
+            backend.Services.MailService MailService = new backend.Services.MailService();
+            MailService.email = user.email;
+            MailService.setCustomMessage("Registratie HR Fashion!", "Beste " + user.firstname + ", \n Bedankt voor uw registratie bij HR Fashion u kunt nu inloggen!\n\n met uw account kunt u: \nJe krijgt overzicht op al je bestellingen\nHoud een Wishlist bij\nBestel sneller producten\n\n Met vriendelijke groeten HR Fashion");
+            MailService.sendEmail();
+
             return (encodedUser);
         }
         private User EncodeAndStoreUser(User user, dynamic password){

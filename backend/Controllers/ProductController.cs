@@ -15,7 +15,7 @@ using backend.Models;
 using backend.DTOs;
 using Npgsql;
 using backend.Pagination;
-
+using backend.Services;
 
 
 
@@ -105,6 +105,17 @@ namespace backend.Controllers
 
             return Result;   
         }
+
+        [HttpGet("~/api/PayEmail/{email=string}/{price=string}")]
+        public void SendEmail(string email,string price)  /// Get products by category Heren | Dames
+        {
+
+            backend.Services.MailService MailService = new backend.Services.MailService();
+            MailService.email = email;
+            MailService.setCustomMessage("Registratie HR Fashion!", "Bedankt voor uw aankoop bij HR Fashion.\n Wij hebben het totaal bedrag van " + price + " euro ontvangen en versturen uw producten binnen 1 werkdag. \n met vriendelijke groeten HR Fashion");
+            MailService.sendEmail();
+        }
+
         [HttpGet("~/api/categories/{category=string}/{searchterm=string}")]
         public IQueryable GetProductByCategoryAndID(string category, string searchterm)  /// Get products by category Heren | Dames
         {
