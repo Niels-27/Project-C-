@@ -1,9 +1,9 @@
 import * as React from 'react';
 // import {Form,withForm,validators,withFormButton, FormErrors } from "react-form-validation-context";
 import './payment.css';
-
+import { withRouter } from 'react-router-dom';
 // import { any } from 'prop-types';
-
+import ApiCall from '../logic/apiCall';
 
 
 
@@ -100,6 +100,14 @@ class Payment extends React.Component<any,any>{
 
     }
 
+    public async sendMail(first,seccond){
+        const call: ApiCall = new ApiCall();
+        call.setURL("paymentSucces", seccond, first);
+        await call.result()
+        alert('You have successfully payed!')
+        this.props.history.push("/");
+    }
+
     public contactSubmit = (fields) =>{
           //  console.log('bye')
     
@@ -109,10 +117,9 @@ class Payment extends React.Component<any,any>{
             // if(this.handleValidation(fields))
             if ( (this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === ''))
             {
-                console.log('hi')
-               
-                alert ( 'You have successfully payed!')
-                
+
+                this.sendMail(this.props.match.params.price,"gavindhollander@gmail.com");
+
                
               
             }
@@ -199,13 +206,13 @@ class Payment extends React.Component<any,any>{
                             <div className='row justify-content-center mt-3 col-md-12'>
                             <div className='form-control total btn btn-info standard-button'>
                                 Total:
-                                <span className='amount'>$300</span>
+                                <span className='amount'>€{this.props.match.params.price}</span>
                             </div>
                             </div>
                         </div>
                         <div className='form-row'>
                             <div className='row justify-content-center mt-3 col-md-12 form-group'>
-                            <button className='form-control btn btn-primary submit-button standard-button' type='submit' id="pay"  /* onClick = {this.contactSubmit} */ >Pay »</button>
+                            <button className='form-control btn btn-primary submit-button standard-button' type='submit' id="pay"  onClick = {this.contactSubmit} >Pay »</button>
                             </div>
                         </div>
                         
@@ -221,4 +228,4 @@ class Payment extends React.Component<any,any>{
     }
 }
 
-export default Payment;
+export default withRouter(Payment);

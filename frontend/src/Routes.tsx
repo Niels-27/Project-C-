@@ -40,7 +40,7 @@ class Routes extends React.Component<any,any> {
             <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/pagenation" component={Pagination} />
             <Route path="/signup" component={SignUpPage}/>
-            <Route path="/payment" component={Payment}/>
+            <Route path="/payment/:price" component={Payment}/>
             <Route path="/login" component={SignLoginPage}/>
             <Route path="/dashboard" component={requireAuth(UserPage)}/>
             <Route path="/wishlist" component={requireAuth(WishListPage)}/>
