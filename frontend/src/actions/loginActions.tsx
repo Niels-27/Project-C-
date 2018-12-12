@@ -23,7 +23,7 @@ export function setCurrentUser(user) {
         localStorage.setItem('jwtToken', token);
         if (token !== "undefined") {
           // Set auth token header auth
-          setAuthorizationToken(token);
+          setAuthorizationToken(token);      
           dispatch(setCurrentUser(jwtDecode(token)));
           // Decode token and get user info and exp   
         }         

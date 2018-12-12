@@ -21,8 +21,12 @@ export default function(ComposedComponent) {
     }
 
     public render() {
+      var showComponent = <div>..</div>
+      if (this.props.isAuthenticated){
+        showComponent = <div><ComposedComponent {...this.props} /></div>
+      }
       return (
-        <ComposedComponent {...this.props} />
+        <div>{showComponent}</div>
       );
     }
   }

@@ -6,7 +6,7 @@ import {
 import * as PropTypes from 'prop-types';
 import { Field, Form, Formik, FormikProps, ErrorMessage} from "formik";
 import * as Yup from 'yup';
-import { Login, UserExists  } from '../../actions/loginActions';
+import { Login, UserExists  } from '../actions/loginActions';
 
 interface IFormikValues 
 {

@@ -45,9 +45,22 @@ class ApiCall {
                 }
                 break;  
             }
+            case "paymentSucces":
+                this.link = "/PayEmail/" + first + "/" + second;;
+                break;
             case "userdata":
                 this.link = "/user/getUserInfo";
                 break;
+            case "addressdata":
+                this.link = "/user/getAddressInfo";
+                break;
+            case "wishlistdata":
+                this.link = "/user/getWishListInfo";
+                break;     
+            case "updateUser":{
+                this.link = "/user/updateUser/" + first;
+                break;
+                }
             case "checkuser":
                 this.link = "/user/checkuser";
                 break;
@@ -56,7 +69,13 @@ class ApiCall {
                 break;  
             case "checkemail":
                 this.link = "/user/checkemail";
-                break;                    
+                break;       
+            case "Adminuserdata":
+                this.link = "/admin/users/all";
+                break;       
+            case "AdminuserdataView":
+                this.link = "/admin/users/byid/" + first;
+                break;        
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";

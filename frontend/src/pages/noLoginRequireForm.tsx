@@ -11,9 +11,6 @@ interface IFormikValues {
     firstname: string;
     lastname: string;
     email: string;
-    gender: string;
-    password: string;
-    passwordConfirmation: string;
     street: string;
     streetnumber: string;
     zipcode: string;
@@ -26,9 +23,6 @@ const initialValues: IFormikValues = {
     firstname: "",
     lastname: "",
     email: "",
-    gender: "",
-    password: "",
-    passwordConfirmation: "",
     street: "",
     streetnumber: "",
     zipcode: "",
@@ -48,8 +42,6 @@ const initialValues: IFormikValues = {
       .required('Vereist'),
     email: Yup.string()
       .email('Ongeldig emailadres')
-      .required('Vereist'),
-    gender: Yup.string()
       .required('Vereist'),
     password: Yup.string()
       .min(6, 'Het wachtwoord moet langer zijn dan 6 karakters')
@@ -106,7 +98,6 @@ class SignUpForm extends React.Component<any,any>{
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
         formik.setSubmitting(true);
         await this.checkEmailExists(values);
-        console.log(values)
         if(this.state.errormessage === ''){
             console.log("gelukt!")
             await this.props.userSignUpRequest(values).then(
@@ -162,20 +153,6 @@ class SignUpForm extends React.Component<any,any>{
                             <Field className="form-control" name="email" type="email" />
                             <ErrorMessage
                             name="email"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>  
-                        <div className="mb-5">
-                            <label htmlFor="gender">Geslacht</label>
-                            <Field component="select"className="form-control"name="gender" type="text">
-                            <option value="" disabled>Kies een geslacht</option>
-                                <option>Man</option>
-                                <option>Vrouw</option>
-                                <option>Zeg ik liever niet</option>
-                            </Field>
-                            <ErrorMessage
-                            name="gender"
                             component="div"
                             className="field-error text-danger"
                             />

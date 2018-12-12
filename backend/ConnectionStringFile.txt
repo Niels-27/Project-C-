@@ -1,1 +1,0 @@
-User ID=postgres;Password=1008149;Host=localhost;Port=5432;Database=FashionDb;Pooling=true;

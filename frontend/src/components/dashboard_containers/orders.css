@@ -1,0 +1,43 @@
+
+.orderBox{
+    margin-left: 0px;
+}
+#dashboard-text{
+    margin-left: 2%;
+    margin-top: 2%
+}
+.cardHeader{
+    padding: 1%
+}
+.left-items {
+    margin: 0px;
+    -ms-transform: translateY(25%);
+    transform: translateY(25%);
+}
+
+.inner-boxes{
+    margin-left: 0px;
+
+    margin-right: 0px;
+}
+.orderSection{
+    padding: 0px ;
+}
+
+.OrderDate{
+    margin-left: 3rem;
+
+}
+.OrderStatus{
+    font-size: 25px;
+}
+.OrderPrice{
+    margin-left: 7rem;
+}
+.sectionProductList{
+    padding: 0px;
+}
+.sectionOrderDetails{
+    padding: 1%;
+    text-align: center; 
+ }

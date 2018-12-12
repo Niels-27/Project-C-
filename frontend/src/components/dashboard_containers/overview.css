@@ -1,0 +1,27 @@
+
+#dashboard-text{
+    margin-left: 2%;
+}
+
+.boxes{
+
+    margin-left: 0px;
+    
+}
+.card-body{
+    padding: 5px;
+}
+.cardHeader{
+    padding: 5px;
+    
+}
+.cardHeader p {
+    margin: 0px;
+}
+.cardText{
+    float: left;
+
+}
+.cardLinks{
+    float: right
+}

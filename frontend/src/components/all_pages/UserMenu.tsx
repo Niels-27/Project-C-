@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter} from 'react-router-dom';
 import { Logout } from '../../actions/loginActions';
-import { RetrieveUserData } from '../../actions/userActions';
+import { RetrieveData } from '../../actions/userActions';
 
 class UserMenu extends React.Component<any,any>{
     public static propTypes = {logout: PropTypes.func.isRequired, user: PropTypes.object.isRequired, 
@@ -15,31 +15,31 @@ class UserMenu extends React.Component<any,any>{
     }
     public async componentDidMount(){
         const {retrieveUserData} = this.props;
-        await retrieveUserData(this.props.user).then(res => {this.setState({user: res})}, (error) => {this.setState({user: error})});
+         await retrieveUserData(this.props.user, "userdata").then(res => {this.setState({user: res})}, (error) => {this.setState({user: error})});
     }
     public render() {
         
         const {user} = this.state;
         console.log(user);
-        var showresults = <div>Aan het laden..</div>
+        var showresults = <div>..</div>
         if (user){
-            showresults = <div><strong>Welkom {user.name}</strong></div>;
-        }
-        return (
-            <div>            
+            showresults = (
+            <div className="Usermenu">            
                 <div className="row p-2">
                     <div className="col ">
-                    {showresults}
+                    <strong>Welkom {user.name}</strong>
                     <a className="nav nav-link" href="/dashboard">Mijn account</a>
-                    <a className="nav nav-link" href="/dashboard">Mijn bestellingen</a>
+                    <a className="nav nav-link" href="/dashboard/orders">Mijn bestellingen</a>
                     <a className="nav nav-link" href="/wishlist">Mijn wishlist</a>
-                    <button type="submit" className="btn btn-secondary btn-sm mt-1 " onClick={this.handleClick}>
+                    <button type="submit" className="btn btn-secondary btn-sm mt-1 LogoutButton" onClick={this.handleClick}>
                     <strong>Uitloggen</strong>
-                     </button>
+                    </button>
                     </div>
                 </div>
-               
-            </div>
+           </div>)        
+        }
+        return (
+            <div>{showresults}</div>
         );
     }
     private handleClick(e){
@@ -48,7 +48,7 @@ class UserMenu extends React.Component<any,any>{
     }
 }
 
-export default withRouter(connect(mapStateToProps, {logout: Logout, retrieveUserData: RetrieveUserData})(UserMenu));
+export default withRouter(connect(mapStateToProps, {logout: Logout, retrieveUserData: RetrieveData})(UserMenu));
 
 function mapStateToProps(state) {
     return {

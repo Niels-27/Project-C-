@@ -90,6 +90,7 @@ namespace backend.Models {
         public string Name { get; set; }
         [StringLength(100)]
         public string Email {get; set;}
+        public string Gender {get; set;}
         public string Salt {get; set;}
         public string Key {get; set;}
         [StringLength(15)]

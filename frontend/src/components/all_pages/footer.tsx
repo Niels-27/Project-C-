@@ -9,8 +9,7 @@ import './footer.css' ;
     <Row className="">
       <Col className="">
         <Nav justified className="">
-        <NavItem
-            eventKey={1}>
+        <NavItem>
             Customer Service
             <li className="nav-item ">
                             <a className="nav-link " href="#">Contact us</a>
@@ -22,8 +21,7 @@ import './footer.css' ;
                             <a className="nav-link" href="#">My Orders</a>
                 </li>
           </NavItem>
-          <NavItem
-            eventKey={2}>
+          <NavItem>
             Legal Information
             <li className="nav-item">
                             <a className="nav-link" href="#">Terms & Conditions</a>
@@ -36,7 +34,6 @@ import './footer.css' ;
                 </li>
           </NavItem>
           <NavItem
-            eventKey={3}
             title="Item">
             About
             <li className="nav-item">
@@ -47,7 +44,6 @@ import './footer.css' ;
                 </li>
           </NavItem>
           <NavItem
-            eventKey={4}
             title="Item">
             Follow Us 
             {/* social media Links here
