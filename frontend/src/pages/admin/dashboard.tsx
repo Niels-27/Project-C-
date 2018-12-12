@@ -22,7 +22,7 @@ class Dashboard extends React.Component<any, any>{
                         </button>
                 </nav>
                 <div id="wrapper">
-                    <ul className="sidebar navbar-nav">
+                    <ul className="sidebar-admin navbar-nav">
                         <li className="nav-item active">
                             <Link to="/" className="nav-link">
                                 <i className="fas fa-fw fa-tachometer-alt"/>

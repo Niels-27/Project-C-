@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route,BrowserRouter as Router, Switch} from 'react-router-dom';
 import requireAuth from './utils/requireAuth';
-import { RetrieveUserData } from './actions/userActions';
+import { RetrieveData } from './actions/userActions';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // normal page coompinents.
@@ -44,14 +44,14 @@ class Routes extends React.Component<any,any> {
 
   public async componentDidMount() {
     const { retrieveUserData } = this.props;
-    await retrieveUserData(this.props.user).then(res => { this.setState({ user: res }) }, (error) => { this.setState({ user: error }) });
+    await retrieveUserData(this.props.user,"userdata").then(res => { this.setState({ user: res }) }, (error) => { this.setState({ user: error }) });
   }
 
   public render() {
     const { user } = this.state;
     if (user){
       console.log(user)
-      if(user.rank === 1){
+      if(user.rank === 4){
         return this.renderAdmin();
       }
     }
@@ -110,7 +110,7 @@ class Routes extends React.Component<any,any> {
 // below a example to add a new page.
 // <Route path="/login" component={Login} />
 // export default Routes;
-export default connect(mapStateToProps, {retrieveUserData: RetrieveUserData })(Routes);
+export default connect(mapStateToProps, { retrieveUserData: RetrieveData })(Routes);
 
 function mapStateToProps(state) {
   return {
