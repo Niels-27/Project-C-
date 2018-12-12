@@ -42,10 +42,10 @@ namespace backend.Controllers
             return new ObjectResult(product);
         }
          // GET api/admin/users/id
-        [HttpGet("users/{id}")]
-        public IActionResult GetUserByName(string name)
+        [HttpGet("users/byid/{id}")]
+        public IActionResult GetUserById(string id)
         {
-            var user = _context.Users.FirstOrDefault (t => t.Name == name);
+            var user = _context.Users.FirstOrDefault (t => t.Id == Int32.Parse(id));
             if (user == null){
                 return NotFound();
             }

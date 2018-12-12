@@ -195,7 +195,7 @@ namespace backend.Controllers
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
 
-            var result = _context.Users.Where(u => u.Id == userID).Select(u => new{u.Id, u.Name, u.Email}).FirstOrDefault();
+            var result = _context.Users.Where(u => u.Id == userID).Select(u => new{u.Id, u.Name, u.Email, u.Rank}).FirstOrDefault();
             
             Console.WriteLine("this is the userID: " + userID);
             return Ok(result);          
