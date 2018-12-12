@@ -201,6 +201,7 @@ namespace backend.Controllers
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
 
+
             var user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
