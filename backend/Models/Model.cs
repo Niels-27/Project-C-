@@ -182,6 +182,12 @@ public class FashionContext : DbContext  //De database
                 new{Id = 7, Name = "Refunded", Description = "The payment for the transaction has been refunded."},
                 new{Id = 8, Name = "Voided", Description = "The balance on the transaction has been voided."}
                 );
+                
+             // Add Admin account | Rank 1 = user, 2 = normale user, 3 = mod, 4 = admin|
+            // Username:Password => admin:welkom01
+            modelBuilder.Entity<User>().HasData(
+                new User{Id = 1, Name = "admin", Email = "admin@hrfashion.nl", Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" , Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", CreateOn = DateTime.Now, Rank = 4 }
+            );
 
         }
     }
