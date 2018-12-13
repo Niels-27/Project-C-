@@ -344,6 +344,10 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, CreateOn = new DateTime(2018, 12, 12, 21, 37, 53, 503, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
+                    );
                 });
 
             modelBuilder.Entity("backend.Models.WishListProduct", b =>
