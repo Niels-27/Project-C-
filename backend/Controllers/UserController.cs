@@ -207,6 +207,7 @@ namespace backend.Controllers
             user.Salt = "";
             
             Console.WriteLine("this is the userID: " + userID);
+            System.Console.WriteLine(user);
             return Ok(user);          
         }
          [HttpPost]
@@ -220,9 +221,8 @@ namespace backend.Controllers
            
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
-
-            var address = _context.Addresses.Where(u => u.Id == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).FirstOrDefault();
-    
+            var address = _context.Addresses.Where(u => u.UserId == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).FirstOrDefault();
+   
             return Ok(address);          
         }
          [HttpPost]

@@ -1,24 +1,45 @@
 import * as React from 'react';
 // import {Form,withForm,validators,withFormButton, FormErrors } from "react-form-validation-context";
 import './payment.css';
+import Cookie from '../logic/cookie';
 import { withRouter } from 'react-router-dom';
 // import { any } from 'prop-types';
 import ApiCall from '../logic/apiCall';
 
 
-
-
-
 class Payment extends React.Component<any,any>{
-
+    public cookie: Cookie = new Cookie();
     constructor(props: any) {
         super(props);
+        
         this.state = {
             showPopup : false, value : '', fields: {},name:null,number : null,
-            errors: [null, null], isSubmitDisabled: true,
+            errors: [null, null], isSubmitDisabled: true, notClicked: true,
+            items: this.cookie.get('ShoppingCard') || undefined, products: null, map:null,
+            order : {
+                userId : 0,
+                addressId : 0,
+                orderProducts : {}
+            }
         };
-        
-        
+
+    }
+    public async UpdateItems(obj: string = "") {
+        const call: ApiCall = new ApiCall();
+        call.setURL('array-id');
+        if (this.state.items !== undefined) {
+            if (obj !== "") {
+                this.setState({ products: await call.result(JSON.parse(obj)) });
+            } else {
+                this.setState({ products: await call.result(JSON.parse(this.state.items)) });
+            }
+
+        }
+    }
+    
+    public componentDidMount() {
+        this.RefreshShoppingCard();
+        this.UpdateItems();
     }
 
     public togglePopup = (e) => {
@@ -109,10 +130,22 @@ class Payment extends React.Component<any,any>{
     }
 
     public contactSubmit = (fields) =>{
+            this.setState({notClicked: false})
           //  console.log('bye')
-    
-            console.log(fields.name);
-             
+          const{address, userData} = this.props;
+            console.log(userData)
+            console.log(address)
+            console.log(userData.id)
+            this.setState(prevState => ({
+                order: {
+                    ...prevState.order,
+                    userId: userData.id,
+                    addressId: address.id,
+                    orderProducts: this.state.products
+                }
+
+            }), async () => console.log(this.state.order))
+         
              fields.preventDefault();
             // if(this.handleValidation(fields))
             if ( (this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === ''))
@@ -126,6 +159,7 @@ class Payment extends React.Component<any,any>{
             else
             {
              alert("Form has errors.")
+             this.setState({notClicked: true})
 
             }
             
@@ -145,6 +179,7 @@ class Payment extends React.Component<any,any>{
     // }
 
     public render() {
+        console.log(this.state.products)
         return (
             
 
@@ -212,7 +247,7 @@ class Payment extends React.Component<any,any>{
                         </div>
                         <div className='form-row'>
                             <div className='row justify-content-center mt-3 col-md-12 form-group'>
-                            <button className='form-control btn btn-primary submit-button standard-button' type='submit' id="pay"  onClick = {this.contactSubmit} >Pay »</button>
+                            <button className='form-control btn btn-primary submit-button standard-button' disabled={!(this.props.userData && this.props.address && this.state.notClicked && this.state.products)}type='submit' id="pay"  onClick = {this.contactSubmit} >Pay »</button>
                             </div>
                         </div>
                         
@@ -225,6 +260,15 @@ class Payment extends React.Component<any,any>{
             </div>    
                
         );
+    }
+    private RefreshShoppingCard = () =>{
+        const cookieInfo = this.cookie.get('ShoppingCard');
+        
+        if (this.state.items !== cookieInfo){
+
+            this.setState({ items: cookieInfo || undefined });
+            this.UpdateItems(cookieInfo);
+        }     
     }
 }
 
