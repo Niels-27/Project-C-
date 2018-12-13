@@ -25,11 +25,9 @@ namespace backend.Controllers
 
             _context = context;
         }
-
-
          private string RequestBody;
         [HttpPost]
-        [Route("~/api/orders-by/")]
+        [Route("~/api/postOrder/")]
 
         public async Task<IQueryable> ReadStringDataManual()
         {
@@ -37,69 +35,49 @@ namespace backend.Controllers
             {
                 this.RequestBody = await reader.ReadToEndAsync();
             }
-            dynamic orders = JValue.Parse(this.RequestBody);
-            return this.handleBodyPost(orders.items);
+            dynamic orderProducts = JValue.Parse(this.RequestBody);
+            return this.handleBodyPost(orderProducts);
         }
-
-        // private IQueryable handleBodyPost(dynamic array)
-        // {
-        //     List<string> ItemsList = new List<string>();
-        //     foreach (var item in array)
-        //     {
-        //         ItemsList.Add(item.ToString());
-        //     }
-
-        //     var result = (from o in _context.Orders
-        //                   where ItemsList.Contains(Convert.ToString(o.Id))
-                          
-        //                   select new
-        //                   {
-        //                       Id = o.Id,
-        //                       UserId = o.UserId,
-        //                       StatusId = o.StatusId,
-        //                       AddressId = o.AddressId,
-                              
-                              
-        //                   });
-        //     _context.Add(result);
-        //     _context.SaveChanges();              
-        //     return (result);
-
-        // }
-
-        private Order handleBodyPost(dynamic orders)
+        private Order handleBodyPost(dynamic products)
         {
 
-            System.Console.WriteLine(orders);
-           
+            System.Console.WriteLine(products);
 
+            //front-end stuurt naar de backend, meerdere elementen in een array, bestaande uit producten van een order
+            //elk product uit een order-array vanuit de frontend heeft de bijbehorende userId, ProductId, addressId amount, 
+            // { userId : 1,
+            //   addressId : 1,   
+            //   productOrders: {
+            //     product1: {id: 1, amount: 7}
+            //     product2: {id:3, amount: 1}
+            //     product3:{id:9, amount: 4}
+            //   }
+            // }
            Order new_order = new Order()
                           {
-                              Id = orders.Id,
-                              UserId = orders.UserId,
-                              StatusId = orders.StatusId,
-                              AddressId = orders.AddressId,
+                              UserId = products.userId,
+                              StatusId = 5,
+                              AddressId = products.addressId,
                         };
             _context.Orders.Add(new_order);
             _context.SaveChanges();      
 
-            foreach (dynamic productSold in orders.productSold) {
+            foreach (dynamic productSold in products.productOrders) {
                 ProductSold new_productSold = new ProductSold();
-                new_productSold.Amount = productSold.Amount;
-                new_productSold.Id = productSold.Id;
-                new_productSold.ProductId = productSold.ProductId;
-                new_productSold.Product = productSold.Product;
-                new_productSold.UserId = productSold.UserId;
-                new_productSold.OrderId = productSold.OrderId;
+                new_productSold.Amount = productSold.amount;
+                new_productSold.ProductId = productSold.id;
+                new_productSold.UserId = products.userId;
+                new_productSold.OrderId = new_order.Id;
 
                 _context.ProductsSold.Add(new_productSold);
                 // _context.SaveChanges();
 
                 Product product_select = _context.Products.Where(product => product.Id == new_productSold.ProductId).FirstOrDefault();
-                product_select.Amount = product_select.Amount - 1;
+                product_select.Amount = product_select.Amount - new_productSold.Amount;
                 _context.Products.Update(product_select);
-                _context.SaveChanges();
+                
             }
+            _context.SaveChanges();
 
             // return (new_order);
 
