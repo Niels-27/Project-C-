@@ -69,7 +69,10 @@ class ApiCall {
                 break;  
             case "checkemail":
                 this.link = "/user/checkemail";
-                break;       
+                break; 
+            case "postorder":
+                this.link = "/order/post";
+                break;
             case "Adminuserdata":
                 this.link = "/admin/users/all";
                 break;       

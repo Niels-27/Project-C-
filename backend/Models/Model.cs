@@ -43,6 +43,10 @@ public class FashionContext : DbContext  //De database
             .WithMany(m => m.Products)   //One Category has many Products
             .HasForeignKey(ma => ma.CategoryId);
 
+            modelBuilder.Entity<ProductSold>()
+            .HasIndex(p => new { p.ProductId })
+            .IsUnique(false);
+
             // Initial Data for Products Tabel (10 products for test)
             modelBuilder.Entity<Product>().HasData(new Product{Id = 1, Name = "Zwarte Sweat Shirt",    //#1
             Description = "Coole zwarte sweatshirt voor heren.", Color = "Zwart", 

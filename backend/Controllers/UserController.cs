@@ -205,9 +205,6 @@ namespace backend.Controllers
             var user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
-            
-            Console.WriteLine("this is the userID: " + userID);
-            System.Console.WriteLine(user);
             return Ok(user);          
         }
          [HttpPost]

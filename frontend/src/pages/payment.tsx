@@ -3,11 +3,15 @@ import * as React from 'react';
 import './payment.css';
 import Cookie from '../logic/cookie';
 import { withRouter } from 'react-router-dom';
+import {connect}  from 'react-redux';
+import {PostOrder} from '../actions/orderActions';
+import * as PropTypes from 'prop-types';
 // import { any } from 'prop-types';
 import ApiCall from '../logic/apiCall';
 
 
 class Payment extends React.Component<any,any>{
+    public static propTypes = {postOrder: PropTypes.func.isRequired}
     public cookie: Cookie = new Cookie();
     constructor(props: any) {
         super(props);
@@ -17,6 +21,7 @@ class Payment extends React.Component<any,any>{
             errors: [null, null], isSubmitDisabled: true, notClicked: true,
             items: this.cookie.get('ShoppingCard') || undefined, products: null, map:null,
             order : {
+                cookie: {},
                 userId : 0,
                 addressId : 0,
                 orderProducts : {}
@@ -139,19 +144,22 @@ class Payment extends React.Component<any,any>{
             this.setState(prevState => ({
                 order: {
                     ...prevState.order,
+                    cookie: this.state.items,
                     userId: userData.id,
                     addressId: address.id,
                     orderProducts: this.state.products
                 }
 
-            }), async () => console.log(this.state.order))
+            }), async () => { console.log(this.state.order);
+                              this.props.postOrder(this.state.order).then(res => console.log("succes order"), error => console.log("failure order"))  }
+            )
          
              fields.preventDefault();
             // if(this.handleValidation(fields))
             if ( (this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === ''))
             {
 
-                this.sendMail(this.props.match.params.price,"gavindhollander@gmail.com");
+                this.sendMail(this.props.match.params.price,"nofit64@gmail.com"); //  gavindhollander
 
                
               
@@ -272,4 +280,4 @@ class Payment extends React.Component<any,any>{
     }
 }
 
-export default withRouter(Payment);
+export default withRouter(connect(null, {postOrder: PostOrder})(Payment));
