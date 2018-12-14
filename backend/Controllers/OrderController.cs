@@ -25,7 +25,7 @@ namespace backend.Controllers
 
             _context = context;
         }
-         private string RequestBody;
+        private string RequestBody;
         [HttpPost]
         [Route("post")]
 
@@ -46,32 +46,45 @@ namespace backend.Controllers
             // { userId : 1,
             //   addressId : 1,   
             //   orderProducts: {
-            //     product1: {id: 1, amount: 7}
-            //     product2: {id:3, amount: 1}
-            //     product3:{id:9, amount: 4}
+            //     product1: {id: 1 ...
+            //     product2: {id:3 ...
+            //     product3:{id:9, ....
             //   }
-            // }
+            // }     
+
+            Dictionary<string, int> amountDict = new Dictionary<string, int>();
+            List<string> cookieList = new List<string>();
+            foreach (var item in order.cookie.items) {
+                cookieList.Add(item.ToString());
+            }
+            foreach (var item in cookieList) {
+                if (!amountDict.ContainsKey(item)) { amountDict[item] = 1; }
+                else { amountDict[item]++; }
+            }
+
             int userId = order.userId;
             int addressId = order.addressId;
             User user_select = _context.Users.Where(u => u.Id == userId).Select(u => u).FirstOrDefault();
             Address address_select = _context.Addresses.Where(a => a.Id == addressId).Select(a => a).FirstOrDefault();
             DateTime createDate = DateTime.UtcNow;
+            Status status_select = _context.Statuses.Where(s => s.Id == 5).Select(s => s).FirstOrDefault();
             Order new_order = new Order()
-                          {
-                              User = user_select,
-                              StatusId = 5,
-                              Address = address_select,
+                        {
+                            User = user_select,
+                            Status = status_select,
+                            Address = address_select,
                         };
             _context.Orders.Add(new_order);          
 
             foreach (dynamic productSold in order.orderProducts) {
-                int productId = productSold.id;
+
+                int productId = productSold.id;  // pakt productId
+                int productIdFreq = amountDict[productId.ToString()];
                 Product product_select = _context.Products.Where(product => product.Id == productId).Select(p => p).FirstOrDefault();
-                product_select.Amount = product_select.Amount - 1;
-                Console.WriteLine("Hier is productid:" + product_select.Id);
+                product_select.Amount = product_select.Amount - productIdFreq;  /// Trekt freq af van stocks 
 
                 ProductSold new_productSold = new ProductSold(){
-                    Amount = productSold.amount,
+                    Amount = productIdFreq,
                     Product = product_select,
                     User = user_select,
                     Order = new_order,
@@ -81,13 +94,14 @@ namespace backend.Controllers
                 _context.Products.Update(product_select);
                 // _context.SaveChanges(); 
                 Console.WriteLine("Dit is de amount van productssold:" + new_productSold.Amount);
-                
+                Console.WriteLine("Dit is de amount van de stock van product:" + product_select.Amount);
+
             }
             _context.SaveChanges();
 
             // return (new_order);
 
-            return Ok();
+            return Ok(new_order);
         }
     }
-}            
+}
