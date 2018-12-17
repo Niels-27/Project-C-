@@ -147,7 +147,7 @@ class Payment extends React.Component<any, any>{
 
         }), async () => {
             console.log(this.state.order);
-            this.props.postOrder(this.state.order).then(res => console.log(res), error => console.log("failure order"))
+            await this.props.postOrder(this.state.order).then(res => console.log(res), error => console.log("failure order"))
         }
         )
 

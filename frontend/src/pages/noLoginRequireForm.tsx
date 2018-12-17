@@ -8,8 +8,7 @@ import {
 /* tslint:disable:no-empty */
 
 interface IFormikValues {
-    firstname: string;
-    lastname: string;
+    name: string;
     email: string;
     street: string;
     streetnumber: string;
@@ -20,8 +19,7 @@ interface IFormikValues {
     }
 
 const initialValues: IFormikValues = {
-    firstname: "",
-    lastname: "",
+    name: "",
     email: "",
     street: "",
     streetnumber: "",
@@ -32,23 +30,12 @@ const initialValues: IFormikValues = {
   };
 
   const SignUpSchema = Yup.object().shape({
-    firstname: Yup.string()
-      .min(2, 'Moet langer zijn dan 2 karakters')
-      .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
-      .required('Vereist'),
-    lastname: Yup.string()
+    name: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
       .required('Vereist'),
     email: Yup.string()
       .email('Ongeldig emailadres')
-      .required('Vereist'),
-    password: Yup.string()
-      .min(6, 'Het wachtwoord moet langer zijn dan 6 karakters')
-      .max(20, 'Leuk geprobeerd, maar verzin een korter wachtwoord ;-)')
-      .required('Vereist'),
-    passwordConfirmation: Yup.string()
-      .oneOf([Yup.ref('password'), null], "De wachtwoorden komen niet overeen")                                
       .required('Vereist'),
     street: Yup.string() 
       .max(50, 'Leuk geprobeerd, maar niemand heeft zo een lange straatnaam ;-)')  
@@ -66,7 +53,7 @@ const initialValues: IFormikValues = {
       .required('Vereist'),
   });
 
-class SignUpForm extends React.Component<any,any>{
+class NoLoginRequiredForm extends React.Component<any,any>{
     public static propTypes = 
     {userSignUpRequest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired, login: PropTypes.func.isRequired}
     constructor(props: any) {
@@ -100,16 +87,7 @@ class SignUpForm extends React.Component<any,any>{
         await this.checkEmailExists(values);
         if(this.state.errormessage === ''){
             console.log("gelukt!")
-            await this.props.userSignUpRequest(values).then(
-                 async() => {
-                    alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
-                    await this.props.login(values).then(()=> {
-                        
-                        this.props.history.push("/");}, () => {this.props.history.push("/")});
-                    
-                }, ({data}) => this.setState({ errors: data}));
         }
-       
         else{formik.setSubmitting(false)}
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
@@ -117,7 +95,7 @@ class SignUpForm extends React.Component<any,any>{
             <Form>
                 <div className="row mt-md-5 mb-md-3 justify-content-center">
                     <div className="col col-10">
-                    <h1 className="h1-responsive text-start"><strong>Meld je nu aan!</strong></h1>
+                    <h1 className="h1-responsive text-start"><strong>MIJN GEGEVENS </strong></h1>
                     </div>
                 </div>
                 <div className="row mt-md-2 mb-md-3 justify-content-center">
@@ -131,19 +109,10 @@ class SignUpForm extends React.Component<any,any>{
                  <div className="row justify-content-around">
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
-                            <label htmlFor="firstname">Voornaam</label>
-                            <Field className="form-control" name="firstname"  type="text" />
+                            <label htmlFor="naam">Naam</label>
+                            <Field className="form-control" name="naam"  type="text" />
                             <ErrorMessage
-                            name="firstname"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>
-                        <div className="mb-5">
-                            <label htmlFor="lastname">Achternaam</label>
-                            <Field className="form-control" name="lastname" type="text" />
-                            <ErrorMessage
-                            name="lastname"
+                            name="naam"
                             component="div"
                             className="field-error text-danger"
                             />
@@ -156,25 +125,7 @@ class SignUpForm extends React.Component<any,any>{
                             component="div"
                             className="field-error text-danger"
                             />
-                        </div>   
-                        <div className="mb-5">
-                            <label htmlFor="password">Wachtwoord</label>
-                            <Field className="form-control"name="password" type="password" />
-                            <ErrorMessage
-                            name="password"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>   
-                        <div className="mb-5">
-                            <label htmlFor="passwordConfirmation">Herhaal wachtwoord</label>
-                            <Field className="form-control"name="passwordConfirmation"  type="password" />
-                            <ErrorMessage
-                            name="passwordConfirmation"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>   
+                        </div>    
                     </div>
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
@@ -241,4 +192,4 @@ class SignUpForm extends React.Component<any,any>{
     };   
 }
 
-export default withRouter(SignUpForm);
+export default withRouter(NoLoginRequiredForm);

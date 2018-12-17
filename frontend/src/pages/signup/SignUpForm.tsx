@@ -36,12 +36,13 @@ const initialValues: IFormikValues = {
     country: "",
     createdon: new Date('1900-1-1T00:00:00'),
   };
+  //  /[^!@#$%^&*(),.?"'`~/;:{}|<>+=_-]/
 
   const SignUpSchema = Yup.object().shape({
     firstname: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
-      .required('Vereist'),
+      .required('Vereist'),  
     lastname: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
