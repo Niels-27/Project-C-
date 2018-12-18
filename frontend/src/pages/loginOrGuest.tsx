@@ -1,5 +1,6 @@
 import * as React from 'react';
 import LoggedInOrNot from 'src/components/checkout_components/LoggedInOrNot';
+import './loginOrGuest.css'
 
 class LoginOrGuest extends React.Component<any, any>{
     constructor(props: any) {
@@ -13,17 +14,16 @@ class LoginOrGuest extends React.Component<any, any>{
             (
                 <div className="container">
 
-                <div className="row mt-md-4 boxes">
-                    <div className="col-6 col-sm-8 window">
+                <div className="row mt-md-4">
+                    <div className="col">
                         <div className="card">
-                            <div className="card-header cardHeader">
-                                <p className="cardText"><b>Ik heb al een account</b>
+                            <div className="card-header guestorLoginHeader">
+                                <p className="card-text">Ik heb al een account
                                 </p>
                             </div>
                             <div className="card-body">
-                                <div className="row mt-md-4 boxes">
-                                    <div className="col-6 col-sm-6 window">
-                                        <div className="card-text"><b>Login</b></div>
+                                <div className="row cardBodies ">
+                                    <div className="col">
                                         <LoggedInOrNot userData={userData} address={address} />
                                     </div>
                                 </div>
@@ -32,17 +32,17 @@ class LoginOrGuest extends React.Component<any, any>{
                     </div>
                 </div>
 
-                <div className="row mt-md-4 boxes">
-                    <div className="col-6 col-sm-8 window">
+                <div className="row mt-md-4 ">
+                    <div className="col">
                         <div className="card">
-                            <div className="card-header cardHeader">
+                            <div className="card-header guestorLoginHeader">
 
-                                <p className="card-text"><b>Ik heb nog geen account </b></p>
+                                <p className="card-text">Ik heb nog geen account</p>
 
                             </div>
                             <div className="card-body">
-                                <div className="row mt-md-4 boxes">
-                                    <div className="col window">
+                                <div className="row mt-md-4 mb-md-3 cardBodies ">
+                                    <div className="col">
                                         <p className="card-text">Registreer en geniet van de vele voordelen.</p>
                                         <div><a href="/signup" className="btn btn-success btn-md  ">
                                             <strong>REGISTREREN EN AFREKENEN</strong>

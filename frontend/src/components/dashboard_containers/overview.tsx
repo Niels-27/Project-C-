@@ -65,7 +65,7 @@ class Overview extends React.Component<any,any>{
                     <div className="card">
                         <div className="card-header cardHeader">
                         
-                        <p className="cardText"><b>Huidig afleveradres</b></p>  <p className="cardLinks"><a href="/dashboard/accountdetails">Wijzig adres</a></p>
+                        <p className="cardText"><b>Addressen</b></p>  <p className="cardLinks"><a href="/dashboard/accountdetails">Wijzig of voeg nieuw adres toe</a></p>
                         </div> 
                         <div className="card-body">
                             <div className="card-text">

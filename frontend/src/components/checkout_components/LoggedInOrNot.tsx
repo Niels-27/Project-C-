@@ -13,10 +13,11 @@ class LoggedInOrNot extends React.Component<any,any> {
     var renderComponent = <div>..</div>
     if(isAuthenticated && userData && address){
         renderComponent= <div>
-            <WithModal userData={userData} address={address}/>
             <div>
-                Is de bovenstaande informatie correct of wil je nog iets wijzigen? Dan kun je die hierboven nog aanpassen.
+                Je bent nu ingelogd als <b>{userData.name}</b>. <br/>
+                Is de onderstaande informatie incorrect of wil je nog iets wijzigen? Dan kun je die hieronder nog aanpassen.
             </div>
+            <WithModal userData={userData} address={address}/>   
         </div>
     }
     else if(!isAuthenticated){

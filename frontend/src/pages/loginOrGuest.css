@@ -1,0 +1,10 @@
+.guestorLoginHeader{
+    padding-left:  40px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 1.5rem;
+    color: darkslategrey
+}
+.cardBodies{
+    padding: 40px
+}

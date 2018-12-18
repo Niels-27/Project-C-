@@ -101,13 +101,16 @@ class PersonalAddresssDataForm extends React.Component<any,any & IFormikValues>{
         }       
         console.log(this.props)
         const personalValues:object = {
+            id: values.id,
             firstname: values.firstname,
             lastname: values.lastname,
             email: values.email,
         }
         const addressValues:object = {
+            id: values.addressId,
             street: values.street,
             streetnumber: values.streetnumber,
+            zipcode: values.zipcode,
             city: values.city,
         }
         this.props.storeValues(personalValues, "personal"); // send values back to parent
@@ -117,85 +120,102 @@ class PersonalAddresssDataForm extends React.Component<any,any & IFormikValues>{
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
         return (
-            <Form>
-                <div className="row mb-md-3 justify-content-center">
+            <Form> 
+                <div className="row mt-md-3">
+                    <div className="col">
+                        <span className="text-start">
+                                <h5>Woonadres</h5>
+                                </span>
+                        <hr/>
+                   </div>
+                 </div>
+                <div className="row  mt-md-2">
                     <div className="col">
                     <span className="text-start">
                     {formik.touched.email && this.state.errormessage !== '' ? (<div className="text-danger">{this.state.errormessage}</div>)
                      : null  }</span>
                     </div>
                 </div>
+                
                 <div className="form-group">
                  <div className="row justify-content-center">
-                    <div className="col col-6" >
+                    <div className="col col-5" >
+                    
                         <div className="mb-2">
                             <label htmlFor="firstname">Voornaam</label>
-                            <Field className="form-control" name="firstname"  type="text" />
+                            <Field className="form-control" name="firstname"  type="text" disabled/>
                             <ErrorMessage
                             name="firstname"
                             component="div"
                             className="field-error text-danger"
                             />
                         </div>
-                        <div className="mb-2">
-                            <label htmlFor="lastname">Achternaam</label>
-                            <Field className="form-control" name="lastname" type="text" />
-                            <ErrorMessage
-                            name="lastname"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="email">Email</label>
-                            <Field className="form-control" name="email" type="email" />
-                            <ErrorMessage
-                            name="email"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>   
-                        <div className="col col-6" >
+                          
                         <div className="mb-2">
                             <label htmlFor="street">Straatnaam</label>
-                            <Field className="form-control"name="street" type="text" />
+                            <Field className="form-control"name="street" type="text" disabled />
                             <ErrorMessage
                             name="street"
                             component="div"
                             className="field-error text-danger"
                             />
-                        </div>   
-                    
-                        <div className="mb-2">
-                            <label htmlFor="streetnumber">Huisnummer</label>
-                            <Field className="form-control"name="streetnumber"  type="text" />
-                            <ErrorMessage
-                            name="streetnumber"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </div>   
-                        <div className="mb-2">
+                        </div>  
+                        <div className="mb-5">
                             <label htmlFor="zipcode">Postcode</label>
-                            <Field className="form-control"name="zipcode" type="text" />
+                            <Field className="form-control"name="zipcode" type="text" disabled />
                             <ErrorMessage
                             name="zipcode"
                             component="div"
                             className="field-error text-danger"
                             />
-                        </div> 
+                        </div>  
+                        <span className="text-start">
+                        <h5>Persoonlijke gegevens</h5>
+                        </span>
+                        <hr/>
+
+                            <div className="mb-2">
+                            <label htmlFor="email">Email</label>
+                            <Field className="form-control" name="email" type="email" disabled />
+                            <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>     
+                        </div>   
+                        <div className="col col-5 ml-5" >
+                        <div className="mb-2">
+                            <label htmlFor="lastname">Achternaam</label>
+                            <Field className="form-control" name="lastname" type="text" disabled />
+                            <ErrorMessage
+                            name="lastname"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>      
+                        <div className="mb-2">
+                            <label htmlFor="streetnumber">Huisnummer</label>
+                            <Field className="form-control"name="streetnumber"  type="text"  disabled/>
+                            <ErrorMessage
+                            name="streetnumber"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </div>    
+                      
                         <div className="mb-2">
                             <label htmlFor="city">Stad</label>
-                            <Field className="form-control"name="city" type="text" />
+                            <Field className="form-control"name="city" type="text"  disabled/>
                             <ErrorMessage
                             name="city"
                             component="div"
                             className="field-error text-danger"
                             />
                         </div>
-                        <div className="mb-2">
+                        <div className="mb-4">
                             <label htmlFor="country">Land</label>
-                            <Field component="select"className="form-control"name="country" type="text">
+                            <Field component="select"className="form-control"name="country" type="text" disabled={true}>
                             <option value="" disabled>Kies een land</option>
                                 <option>Nederland</option>
                             </Field>
@@ -204,16 +224,15 @@ class PersonalAddresssDataForm extends React.Component<any,any & IFormikValues>{
                             component="div"
                             className="field-error text-danger"
                             />
-                        </div>  
-                        </div>
+                        </div>   
                         <div className="form-group">
-                        <button type="submit" className="btn btn-success btn-sm" style={{float:"right"}} 
+                        <button type="submit" className="btn btn-success btn-md" style={{float:"right"}} 
                             disabled={!formik.isValid || formik.isValidating || formik.isSubmitting}
                             >
                                 <strong>Wijzigen</strong>
                             </button>
                         </div> 
-                    </div>
+                        </div>
                 </div>
             </div>
           </Form>
