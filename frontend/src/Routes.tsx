@@ -24,7 +24,7 @@ import Pagination from './pages/pagination';
 import Help from './pages/help';
 import propPasser from './utils/propPasser';
 
-// imports for admin 
+// imports admin pages
 import DashboardWrap from './pages/admin/dashboard';
 import AdminHome from './pages/admin/home';
 import AdminUsers from './pages/admin/users';
