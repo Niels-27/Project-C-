@@ -13,7 +13,7 @@ export default function(ComposedComponent) {
         super(props);
 
         this.state = {
-            items: this.cookie.get('ShoppingCard') || undefined
+            items: this.cookie.get('ShoppingCard') || undefined, origin: ""
         };
 
     }
@@ -22,11 +22,17 @@ export default function(ComposedComponent) {
         const lol = JSON.parse(this.state.items)
         console.log(lol)
         console.log(lol.items)
+        console.log(this.props)
+
         if((lol.items.length === 0)){
             this.props.history.push('/ShoppingCard');}
         else if(!this.props.isAuthenticated){
-            this.props.history.push('/checkout');
-        }
+            this.props.history.push({
+                pathname: '/checkout',
+                state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
+              });
+            } 
+       
     }
 
     public componentWillUpdate(nextProps) {
@@ -34,10 +40,12 @@ export default function(ComposedComponent) {
         const lol = JSON.parse(this.state.items)
         console.log(lol)
         console.log(lol.items)
-        if((lol.items.length === 0)){
-            this.props.history.push('/ShoppingCard');}
-        else if (!nextProps.isAuthenticated) {
-            this.props.history.push('/ShoppingCard');
+
+        if (!nextProps.isAuthenticated) {
+            this.props.history.push({
+                pathname: '/checkout',
+                state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
+              });
         }
     }
 

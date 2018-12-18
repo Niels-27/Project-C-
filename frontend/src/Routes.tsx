@@ -25,6 +25,7 @@ import Payment from './pages/payment';
 import Pagination from './pages/pagination';
 import Help from './pages/help';
 import propPasser from './utils/propPasser';
+import pushBack from './utils/pushBack';
 import requireNoLogin from './utils/requireNoLogin';
 
 // imports for admin 
@@ -77,10 +78,10 @@ class Routes extends React.Component<any,any> {
             <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/pagenation" component={Pagination} />
             <Route path="/form" component={noLoginRequireForm}/>
-            <Route path="/checkout" component={loginOrGuest}/>
+            <Route path="/checkout" component={propPasser(loginOrGuest)}/>
             <Route path="/signup" component={SignUpPage}/>
             <Route path="/payment/:price" component={requireNoLogin(Payment)}/>
-            <Route path="/login" component={SignLoginPage}/>
+            <Route path="/login" component={pushBack(SignLoginPage)}/>
             <Route path="/dashboard" component={requireAuth(UserPageRouter)}/>
             <Route path="/wishlist" component={requireAuth(propPasser(WishListPage))}/>
             <Route path="/help" component={Help} />

@@ -69,8 +69,16 @@ class PasswordChangeForm extends React.Component<any,any & IFormikValues>{
             console.log(this.props.values)
             if(this.state.errormessage === ''){
                 console.log("gelukt!")
-                await changeData(this.props.values, this.props.type)
-                .then((result) => {console.log(result);alert("Wijziging gelukt!")
+                await changeData(this.props.values, this.props.type)    
+                .then(async (result) => {
+                    if(this.props.values2 !== '' && this.props.type2 !== ''){
+                        await changeData(this.props.values2, this.props.type2)
+                        .then((res2) => {console.log(res2);alert("Wijziging gelukt!")}, (error) => console.log(error))
+                    }  
+                    else{
+                        console.log(result);alert("Wijziging gelukt!")
+                    }
+                    
                     this.props.history.go()}, 
                 () => this.setState({errormessage: "Er is iets misgegaan."} ) )       
             }   

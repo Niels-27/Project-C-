@@ -74,7 +74,7 @@ interface IFormikValues
             await this.props.login(values).then(userData =>
             {
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
-                 this.props.history.push("/")
+                //  this.props.history.push("/")
             }, (error) => 
                     {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
                     formik.setSubmitting(false)}

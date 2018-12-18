@@ -130,8 +130,9 @@ class ShoppingCard extends React.Component<any, any> {
 
     public render() {
 
-        const handleOnClickBuy = () =>{        
-            this.props.history.push("/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 );   
+        const handleOnClickBuy = () =>{       
+            // this.props.history.push("/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 );  
+            this.props.history.push("/checkout"); 
         }
 
         if(this.state.products === null){
@@ -184,7 +185,7 @@ class ShoppingCard extends React.Component<any, any> {
                         <td />
                         <td/>
                         <td>
-                        <button type="button" className="btn btn-success" onClick={handleOnClickBuy}>
+                        <button type="button" className="btn btn-success" onClick={handleOnClickBuy} disabled={JSON.parse(this.state.items).items.length === 0}> 
                             Naar de kassa <span className="glyphicon glyphicon-play"/>
                         </button></td>
                     </tr>
