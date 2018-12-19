@@ -114,8 +114,13 @@ class SignUpForm extends React.Component<any,any>{
                  async() => {
                     alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                     await this.props.login(values).then(()=> {
-                        
-                        this.props.history.push("/");}, () => {this.props.history.push("/")});
+                        if(this.props.location.state){
+                            this.props.history.push(this.props.location.state.origin);
+                        }
+                        else{this.props.history.push("/")
+                        }
+
+                       }, () => {this.props.history.push("/")});
                     
                 }, ({data}) => this.setState({ errors: data}));
         }

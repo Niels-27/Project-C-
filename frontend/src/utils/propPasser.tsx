@@ -6,7 +6,7 @@ import {RetrieveData} from '../actions/userActions';
 export default function(ComposedComponent) {
   class Propper extends React.Component<any,any> {
     public static propTypes = {user: PropTypes.object.isRequired, address: PropTypes.object.isRequired,
-      retrieveData: PropTypes.func.isRequired};
+      retrieveData: PropTypes.func.isRequired, isAuthenticated: PropTypes.bool.isRequired};
       constructor(props: any) {
         super(props);
         this.state = {user: null, address:null, value: null, address2:null}
@@ -32,11 +32,10 @@ export default function(ComposedComponent) {
             await retrieveData(this.state.value,"addressbyId")  // get addresses
             .then(res => {this.setState({address2: res})},
              (error) => {this.setState({address2: error})});   
-           
-
+           if(!this.props.isAuthenticated){
+             this.setState({value: null})
            }
-        
-       
+      }   
         
   }
     public render() {
@@ -56,6 +55,7 @@ export default function(ComposedComponent) {
 }
 function mapStateToProps(state) {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated
   };
 }

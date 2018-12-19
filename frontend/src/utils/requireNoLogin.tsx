@@ -13,25 +13,25 @@ export default function(ComposedComponent) {
         super(props);
 
         this.state = {
-            items: this.cookie.get('ShoppingCard') || undefined, origin: ""
+            items: this.cookie.get('ShoppingCard') || undefined
         };
 
     }
-    public componentWillMount() { 
+    public async componentWillMount() { 
         console.log(this.state.items)
         const lol = JSON.parse(this.state.items)
         console.log(lol)
         console.log(lol.items)
         console.log(this.props)
-
+        console.log(this.props.location.state)    
         if((lol.items.length === 0)){
             this.props.history.push('/ShoppingCard');}
         else if(!this.props.isAuthenticated){
-            this.props.history.push({
-                pathname: '/checkout',
-                state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
-              });
+            this.props.history.push("/ShoppingCard");
             } 
+        else if(!this.props.location.state){
+              this.props.history.push('/forbidden');
+            }
        
     }
 
@@ -40,12 +40,16 @@ export default function(ComposedComponent) {
         const lol = JSON.parse(this.state.items)
         console.log(lol)
         console.log(lol.items)
-
+        console.log(this.props.location.state)
         if (!nextProps.isAuthenticated) {
-            this.props.history.push({
-                pathname: '/checkout',
-                state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
-              });
+            this.props.history.push('/forbidden');
+        }
+        else if(lol.items.length === 0){
+          this.props.history.push('/forbidden');
+        }
+        
+        else if(!this.props.location.state){
+          this.props.history.push('/forbidden');
         }
     }
 

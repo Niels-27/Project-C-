@@ -30,7 +30,13 @@ class LoggedInOrNot extends React.Component<any, any> {
     public render() {
         const goToPayment = () => {
             if(this.props.location.state){
-                this.props.history.push(this.props.location.state.origin)
+                this.props.history.push({
+                    pathname:this.props.location.state.origin,
+                    state: {origin: "/checkout"}})
+            }
+            else{
+                alert("Je hebt geen items in de winkelmand.")
+                this.props.history.push("/ShoppingCard")
             }
         }
         console.log(this.props)
@@ -50,7 +56,7 @@ class LoggedInOrNot extends React.Component<any, any> {
             </div>
         }
         else if (!isAuthenticated) {
-            renderComponent = <LoginFormCheckout />;
+            renderComponent = <LoginFormCheckout {...this.props} />;
         }
         return (
             <div>

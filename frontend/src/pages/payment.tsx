@@ -183,6 +183,9 @@ class Payment extends React.Component<any, any>{
 
     public render() {
         console.log(this.state.products)
+        const cancel = ()  => {
+            this.props.history.push({pathname:"/ShoppingCard", state: {}})
+        }
         return (
 
 
@@ -249,8 +252,12 @@ class Payment extends React.Component<any, any>{
                             </div>
                         </div>
                         <div className='form-row'>
-                            <div className='row justify-content-center mt-3 col-md-12 form-group'>
+                            <div className='row justify-content-center mt-3 mb-4 col-md-12 form-group'>
                                 <button className='form-control btn btn-primary submit-button standard-button' disabled={!(this.props.userData && this.props.address && this.state.notClicked && this.state.products)} type='submit' id="pay" onClick={this.contactSubmit} >Pay »</button>
+                               
+                            </div>
+                            <div className="mt-1" style={{textAlign:"center", paddingLeft:50, paddingRight:50}}>
+                            <button style={{position: "relative", left: 100}}className=' btn btn-secondary btn-md'onClick={cancel} >Cancel bestelling</button>
                             </div>
                         </div>
 

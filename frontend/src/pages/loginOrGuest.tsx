@@ -15,7 +15,7 @@ class LoginOrGuest extends React.Component<any, any>{
     public toRegisterAndPay(){
         this.props.history.push({
             pathname: '/signup',
-            state: { origin: this.state.origin }
+            state: { origin: this.props.location.state.origin }
         })
     }
 

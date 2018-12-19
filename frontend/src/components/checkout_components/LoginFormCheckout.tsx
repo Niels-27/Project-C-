@@ -62,7 +62,14 @@ interface IFormikValues
         if(this.state.errormessage ===''){
             await this.props.login(values).then(userData =>
             {
-                this.props.history.push("/payment")
+                alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
+                if(this.props.location.state){
+                    this.props.history.push({
+                        pathname:this.props.location.state.origin,
+                        state: {origin: "/checkout"}})
+                }
+                else{this.props.history.push("/checkout")
+                }
             }, (error) => 
                 {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
                 formik.setSubmitting(false)}
