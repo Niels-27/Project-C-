@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './dashboard.css';
+// import './dashboard.css';
 class AdminHome extends React.Component<any, any>{
 
     constructor(props: any) {

@@ -54,6 +54,18 @@ class ApiCall {
             case "addressdata":
                 this.link = "/user/getAddressInfo";
                 break;
+            case "addressbyId":
+                this.link ="/user/getAddressById";
+                break;
+            case "allAdresses":
+                this.link = "/user/getAllAdresses";
+                break;
+            case "postAddress":
+                this.link = "/user/postAddress";
+                break;
+            case "removeAddress":
+                this.link = "/user/removeAddress";
+                break;
             case "wishlistdata":
                 this.link = "/user/getWishListInfo";
                 break;     
@@ -69,7 +81,10 @@ class ApiCall {
                 break;  
             case "checkemail":
                 this.link = "/user/checkemail";
-                break;       
+                break; 
+            case "postorder":
+                this.link = "/order/post";
+                break;
             case "Adminuserdata":
                 this.link = "/admin/users/all";
                 break;       

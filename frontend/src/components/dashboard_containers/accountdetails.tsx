@@ -48,7 +48,7 @@ class AccountDetails extends React.Component<any,any>{
                             <div className="card">
                                 <div className="card-header cardHeader">
                                 
-                                <p className="cardText"><b>Adresgegevens</b></p>
+                                <p className="cardText"><b>Adresgegevens (Hoofdadres)</b></p>
                     
                                 </div> 
                                 <div className="card-body">

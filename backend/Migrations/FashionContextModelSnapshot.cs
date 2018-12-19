@@ -271,8 +271,6 @@ namespace backend.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("DiscountId");
-
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
@@ -281,12 +279,9 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscountId");
-
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -344,6 +339,10 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, CreateOn = new DateTime(2018, 12, 14, 2, 32, 23, 184, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
+                    );
                 });
 
             modelBuilder.Entity("backend.Models.WishListProduct", b =>
@@ -426,11 +425,6 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ProductSold", b =>
                 {
-                    b.HasOne("backend.Models.Discount", "Discount")
-                        .WithMany("ProductsSold")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("backend.Models.Order", "Order")
                         .WithMany("ProductsSold")
                         .HasForeignKey("OrderId")

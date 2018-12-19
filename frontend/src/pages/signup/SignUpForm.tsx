@@ -36,12 +36,13 @@ const initialValues: IFormikValues = {
     country: "",
     createdon: new Date('1900-1-1T00:00:00'),
   };
+  //  /[^!@#$%^&*(),.?"'`~/;:{}|<>+=_-]/
 
   const SignUpSchema = Yup.object().shape({
     firstname: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
-      .required('Vereist'),
+      .required('Vereist'),  
     lastname: Yup.string()
       .min(2, 'Moet langer zijn dan 2 karakters')
       .max(20, 'Leuk geprobeerd, maar niemand heeft zo een lange naam ;-)')
@@ -113,8 +114,13 @@ class SignUpForm extends React.Component<any,any>{
                  async() => {
                     alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                     await this.props.login(values).then(()=> {
-                        
-                        this.props.history.push("/");}, () => {this.props.history.push("/")});
+                        if(this.props.location.state){
+                            this.props.history.push(this.props.location.state.origin);
+                        }
+                        else{this.props.history.push("/")
+                        }
+
+                       }, () => {this.props.history.push("/")});
                     
                 }, ({data}) => this.setState({ errors: data}));
         }

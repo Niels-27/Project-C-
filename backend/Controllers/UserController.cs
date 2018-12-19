@@ -202,11 +202,9 @@ namespace backend.Controllers
             int userID = Int32.Parse(userData.unique_name.ToString());
 
 
-            var user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
-            
-            Console.WriteLine("this is the userID: " + userID);
             return Ok(user);          
         }
          [HttpPost]
@@ -220,11 +218,40 @@ namespace backend.Controllers
            
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
-
-            var address = _context.Addresses.Where(u => u.Id == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).FirstOrDefault();
-    
+            var address = _context.Addresses.Where(u => u.UserId == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).FirstOrDefault();
+   
             return Ok(address);          
         }
+           [HttpPost]
+        [Route("getAllAdresses")] 
+        public async Task<IActionResult> GetAllAddresses()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }       
+            Console.WriteLine("HALLO HIER UIT GET ALL ADDRESSES");
+            dynamic userData = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(userData.unique_name.ToString());
+            var addresses = _context.Addresses.Where(u => u.UserId == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).ToList();
+            return Ok(addresses);          
+        }
+               [HttpPost]
+        [Route("getAddressById")] 
+        public async Task<IActionResult> GetAddressByID()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }       
+            Console.WriteLine("HALLO HIER UIT GET ALL ADDRESSES");
+            dynamic address = JValue.Parse(this.RequestBody);
+            int addressID = address.id;
+            var new_address = _context.Addresses.Where(a => a.Id == addressID).Include(c => c.Country).Select(a => a).FirstOrDefault();
+            return Ok(new_address);          
+        }
+       
+       
          [HttpPost]
          [Route("getWishListInfo")]
         public async Task<IActionResult> GetWishListData()  //deze functie haalt de wishlist data van de user
@@ -296,6 +323,49 @@ namespace backend.Controllers
             var encodedUser = EncodeAndStoreUser(user, up.newPassword, false);
             
             return Ok(encodedUser);          
+        }
+        [HttpPost]
+        [Route("postAddress")] 
+        public async Task<IActionResult> AddAdress()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }  
+            dynamic address = JValue.Parse(this.RequestBody);
+
+            int userId = Int32.Parse(address.userid.ToString());
+            User user = _context.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+            string country = address.country;
+
+            Country selectedCountry = _context.Countries.Where(c => c.Name == country).Select(c => c).FirstOrDefault();
+
+            Address new_address = new Address(){
+                Street = address.street,
+                PostalCode = address.zipcode,
+                City = address.city,
+                Country = selectedCountry,
+                User = user
+            };
+            _context.Add(new_address);  //Save the user adress data
+            _context.SaveChanges();
+            return Ok(new_address);  //         
+        }
+         [HttpPost]
+        [Route("removeAddress")] 
+        public async Task<IActionResult> RemoveAdres()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }       
+            dynamic address = JValue.Parse(this.RequestBody);
+            int addressId = Int32.Parse(address.id.ToString());
+            var foundAddress = _context.Addresses.Where(a => a.Id == addressId).Include(c => c.Country).OrderBy(a => a.Id).FirstOrDefault();
+            _context.Remove(foundAddress);
+            _context.SaveChanges();
+            return Ok(foundAddress);          
         }
                  
     }
