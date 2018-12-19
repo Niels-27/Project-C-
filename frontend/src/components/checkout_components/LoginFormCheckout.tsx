@@ -75,7 +75,7 @@ interface IFormikValues
             <Form>
                 <div className="form-group">
                  <div className="row mt-3">
-                    <div className="col" >
+                    <div className="col col-6" >
                         <div>
                             <label htmlFor="email">Email</label>
                             <Field className="form-control" name="email" type="email"/>

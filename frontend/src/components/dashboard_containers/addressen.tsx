@@ -20,13 +20,13 @@ class Addressen extends React.Component<any,any>{
         return this.state.modal;
       }
     public render() {
-        const {userData, address} = this.props
+        const {userData} = this.props
         console.log(this.props)
         var showresults = <span>..</span>
-        if (address && userData && this.state.addresses){
+        if ( userData && this.state.addresses){
             showresults = (
             <div> 
-            <h5><b>Mijn addressen</b></h5>
+            <h5><b>Mijn adressen</b></h5>
             <p id="dashboard-text">
                 Hier kan je het overzicht van jouw addressen bekijken en beheren. <br/>
                 <b>Je mag maximaal 4 addressen beheren.</b>
@@ -48,8 +48,8 @@ class Addressen extends React.Component<any,any>{
             </div>   
         );
     }
-    public componentDidMount(){
-        this.props.RetrieveData(this.props.user, "allAdresses")
+    public async componentDidMount(){
+       await  this.props.RetrieveData(this.props.user, "allAdresses")
         .then(results => this.setState({addresses: results}), error => console.log(error) )
     }
     private renderAdres(address, index){
@@ -64,7 +64,7 @@ class Addressen extends React.Component<any,any>{
             this.props.PostAddress(adresObject, "removeAddress")
             .then(removedAdres => {console.log(removedAdres); this.props.history.go() }, error => console.log(error))   // insert functie which removes adres en refreshes the page
         }
-        var showButton= <div>Hoofdadres/Actieve adres</div>
+        var showButton= <span>Hoofdadres</span>
         if(index+1 !== 1){
             showButton = (<button className="btn btn-link btn-sm"onClick={removeAdres}>Verwijder adres</button>)
         }

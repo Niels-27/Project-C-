@@ -79,8 +79,8 @@ class Routes extends React.Component<any,any> {
             <Route path="/pagenation" component={Pagination} />
             <Route path="/form" component={noLoginRequireForm}/>
             <Route path="/checkout" component={propPasser(loginOrGuest)}/>
-            <Route path="/signup" component={SignUpPage}/>
-            <Route path="/payment/:price" component={requireNoLogin(Payment)}/>
+            <Route path="/signup" component={pushBack(SignUpPage)}/>
+            <Route path="/payment/:price" component={requireNoLogin(propPasser(Payment))}/>
             <Route path="/login" component={pushBack(SignLoginPage)}/>
             <Route path="/dashboard" component={requireAuth(UserPageRouter)}/>
             <Route path="/wishlist" component={requireAuth(propPasser(WishListPage))}/>

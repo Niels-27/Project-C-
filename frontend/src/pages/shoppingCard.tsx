@@ -131,8 +131,9 @@ class ShoppingCard extends React.Component<any, any> {
     public render() {
 
         const handleOnClickBuy = () =>{       
-            // this.props.history.push("/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 );  
-            this.props.history.push("/checkout"); 
+            this.props.history.push({
+                pathname:"/checkout",
+                state: {origin: "/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 }}); 
         }
 
         if(this.state.products === null){

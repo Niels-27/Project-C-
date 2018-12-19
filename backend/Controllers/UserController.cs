@@ -202,7 +202,7 @@ namespace backend.Controllers
             int userID = Int32.Parse(userData.unique_name.ToString());
 
 
-            var user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
             return Ok(user);          
@@ -236,6 +236,21 @@ namespace backend.Controllers
             var addresses = _context.Addresses.Where(u => u.UserId == userID).Include(c => c.Country).OrderBy(t => t.Id).Select(u => u).ToList();
             return Ok(addresses);          
         }
+               [HttpPost]
+        [Route("getAddressById")] 
+        public async Task<IActionResult> GetAddressByID()  //deze functie haalt de adress data op van de user
+        {
+             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }       
+            Console.WriteLine("HALLO HIER UIT GET ALL ADDRESSES");
+            dynamic address = JValue.Parse(this.RequestBody);
+            int addressID = address.id;
+            var new_address = _context.Addresses.Where(a => a.Id == addressID).Include(c => c.Country).Select(a => a).FirstOrDefault();
+            return Ok(new_address);          
+        }
+       
        
          [HttpPost]
          [Route("getWishListInfo")]

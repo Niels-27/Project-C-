@@ -54,6 +54,9 @@ class ApiCall {
             case "addressdata":
                 this.link = "/user/getAddressInfo";
                 break;
+            case "addressbyId":
+                this.link ="/user/getAddressById";
+                break;
             case "allAdresses":
                 this.link = "/user/getAllAdresses";
                 break;

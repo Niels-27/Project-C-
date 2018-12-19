@@ -35,7 +35,7 @@ class DashboardNavigation extends React.Component<any,any>{
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="/dashboard/addressen">
-                                    Mijn addressen
+                                    Mijn adressen
                                     </a>
                                 </li>
                                 <li className="nav-item">

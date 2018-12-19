@@ -1,11 +1,24 @@
 import * as React from 'react';
 import LoggedInOrNot from 'src/components/checkout_components/LoggedInOrNot';
 import './loginOrGuest.css'
-
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as PropTypes from 'prop-types'
 class LoginOrGuest extends React.Component<any, any>{
+    public static propTypes = {isAuthenticated: PropTypes.bool.isRequired}
     constructor(props: any) {
         super(props);
+        this.state={};
+        this.toRegisterAndPay = this.toRegisterAndPay.bind(this);
+        
     }
+    public toRegisterAndPay(){
+        this.props.history.push({
+            pathname: '/signup',
+            state: { origin: this.state.origin }
+        })
+    }
+
     public render() {
         const {userData, address} = this.props;
         var showResults = <div>..</div>
@@ -24,7 +37,7 @@ class LoginOrGuest extends React.Component<any, any>{
                             <div className="card-body">
                                 <div className="row cardBodies ">
                                     <div className="col">
-                                        <LoggedInOrNot userData={userData} address={address} />
+                                        <LoggedInOrNot {...this.props}/>
                                     </div>
                                 </div>
                             </div>
@@ -44,16 +57,17 @@ class LoginOrGuest extends React.Component<any, any>{
                                 <div className="row mt-md-4 mb-md-3 cardBodies ">
                                     <div className="col">
                                         <p className="card-text">Registreer en geniet van de vele voordelen.</p>
-                                        <div><a href="/signup" className="btn btn-success btn-md  ">
+                                        <div><button onClick={this.toRegisterAndPay} className="btn btn-success btn-md" disabled={this.props.isAuthenticated}>
                                             <strong>REGISTREREN EN AFREKENEN</strong>
-                                        </a>
+                                        </button>
                                         </div>
                                         <hr />
                                         <p className="text-center">Of</p>
                                         <div className="">
-                                            <a href="/userform" className="btn btn-success btn-md mt-4 ">
+                                        <p className="card-text">Reken af zonder account.</p>
+                                            <button className="btn btn-success btn-md " disabled={this.props.isAuthenticated}>
                                                 <strong>AFREKENEN ALS GAST</strong>
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -69,5 +83,10 @@ class LoginOrGuest extends React.Component<any, any>{
         );
     }
 }
+function mapStateToProps(state) {
+    return {
+      isAuthenticated: state.auth.isAuthenticated
+    };
+}
 
-export default LoginOrGuest;
+export default withRouter(connect(mapStateToProps, {})(LoginOrGuest));
