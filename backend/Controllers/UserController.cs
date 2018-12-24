@@ -263,9 +263,10 @@ namespace backend.Controllers
            
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
+            
+            // Wishlist bevat de id's van de producten
+            var wishlist = _context.WishListProducts.Where(u => u.UserId == userID).Select(u => u.Product).ToList();  //list with products
 
-            var wishlist = _context.WishListProducts.Where(u => u.Id == userID).Select(u => u.Product).ToList();  //list with products
-    
             return Ok(wishlist);          
         }
          [HttpPost]
@@ -367,6 +368,42 @@ namespace backend.Controllers
             _context.SaveChanges();
             return Ok(foundAddress);          
         }
+
+
+        [HttpPost]   //Deze functie voegt een item toe aan de wishlist
+        [Route("wishlistAdd")]
+        public async Task<IActionResult> PostWishListItem()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                // Dit is je JSON data | USERID + ITEMID is nodig
+                this.RequestBody = await reader.ReadToEndAsync();
+                Console.WriteLine(this.RequestBody);
+            }
+           
+            // Zet de JSON naar een string
+            dynamic userData = JValue.Parse(this.RequestBody);
+            Console.WriteLine(userData.user_id);
+            // System.Console.WriteLine(userData.user_id + userData.product_id);
+            // ^v gekopieerde code. Vraag of je zelf een aparte json moet maken.
+
+            // unique_name is de UserID
+            int userID = Int32.Parse(userData.user_id.ToString());
+            int productID = Int32.Parse(userData.product_id.ToString());
+
+            System.Console.WriteLine("test" + userID + productID);
+         
+            WishListProduct new_wishitem = new WishListProduct(){
+                UserId = userID,
+                ProductId = productID  // hier moet het productid komen die uit de json komt
+            };
+            
+            _context.WishListProducts.Add(new_wishitem);
+            _context.SaveChanges();
+
+            return Ok(new_wishitem);
+        }
+
                  
     }
 }

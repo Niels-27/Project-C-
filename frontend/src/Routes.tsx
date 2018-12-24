@@ -74,7 +74,7 @@ class Routes extends React.Component<any,any> {
             <Route exact path="/" component={Home} />
             <Route path="/AllProducts/:category/search/:search" component={AllProducts} />
             <Route path="/AllProducts/:category" component={AllProducts} />
-            <Route path="/product/:id" component={Product} />
+            <Route path="/product/:id" component={propPasser(Product)} />
             <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/pagenation" component={Pagination} />
             <Route path="/form" component={noLoginRequireForm}/>

@@ -16,7 +16,7 @@ interface IProps {
     };
 }
 
-class App extends React.Component<IProps, any> {
+class App extends React.Component<IProps&any, any> {
 
     public cookie: Cookie = new Cookie();
 
@@ -29,6 +29,10 @@ class App extends React.Component<IProps, any> {
                 imageName: "",
                 price: "",
                 discription: "",
+            },
+            wishobject: {
+                user_id: 0, 
+                product_id:0
             }
         };
 
@@ -40,7 +44,38 @@ class App extends React.Component<IProps, any> {
         call.setURL('details', this.props.match.params.id.toString());
         this.setState({ product: await call.result() });
     }
+
+    // Onderstaande code letterlijk overgenomen. Even re-organiseren.
+
+    public async SaveToWish(props) {
+        const call: ApiCall = new ApiCall();
+        const test = props;
+        if (this.props.userData) {
+            // const userobject = {user_id:this.props.userData.id, product_id:props.match.params.id }
+            // const okeoke = new Object(user_id: )
+            call.setURL('wishlistAdd');
+            await call.result(test).then(result => console.log(result + "succes bando"))
+        }
+    }
+
+    public SaveToWishFunc = () =>{
+        this.setState(prevState => ({
+            wishobject: {
+                user_id: this.props.userData.id,
+                product_id:this.props.match.params.id, 
+            }
+        }), async () => {
+            console.log(this.state.wishobject + "");
+            this.SaveToWish(this.state.wishobject);
+        }
+        
+        )
+        // this.SaveToWish(this.state.wishobject);
+    }
     
+    // Bovenstaande code letterlijk overgenomen. Even re-organiseren.
+
+
     public toggle() {
         this.setState({
           modal: !this.state.modal
@@ -97,6 +132,8 @@ class App extends React.Component<IProps, any> {
                             </h3>
 
                             <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.addProductToShoppiongCard}>Koop Nu</Button>
+                            <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.SaveToWishFunc} style={{marginTop:15}}>Smash Like</Button>
+
                             <Modal isOpen={this.state.modal} toggle={this.toggle}  >
                                 <ModalHeader toggle={this.toggle} close={closeBtn}>In winkelmandje geplaatst</ModalHeader>                                
                                 <ModalBody>
