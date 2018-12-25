@@ -404,6 +404,19 @@ namespace backend.Controllers
             return Ok(new_wishitem);
         }
 
-                 
+        
+        [HttpDelete("wishlistDelete/{userID}/{itemID}")]
+        public IActionResult DeleteWishItem(int userID, int itemID)
+        {
+            var result = (from m in _context.WishListProducts where m.UserId ==  userID && m.ProductId == itemID select m).FirstOrDefault();
+            if(result == null){
+                return NoContent();
+            }
+
+            _context.WishListProducts.Remove(result);
+            _context.SaveChanges();
+
+            return Ok();
+        }        
     }
 }

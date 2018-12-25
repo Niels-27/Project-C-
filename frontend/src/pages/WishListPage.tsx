@@ -13,14 +13,27 @@ class WishListPage extends React.Component<any,any>{
         super(props);
         this.state = {};
     }
+
     public async componentDidMount(){
         const {retrieveWishListData} = this.props
         await retrieveWishListData(this.props.user, "wishlistdata").then(res => {this.setState({user: res})}, (error) => {this.setState({user: error})});
         console.log(this.props.user);
         console.log(this.props.wishlist);
-
-    
     }
+
+    public DeleteFromWishFunc = (id) =>{
+        const options = {
+            method: 'delete',
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+        }
+        
+        fetch("http://localhost:5000/api/user/wishlistDelete/"+this.props.user.unique_name+"/"+id, options).catch(err => {
+            console.error('Request failed', err)
+        })
+    }
+
     public render() {
 
         var test = <tr><td>Loading...</td></tr>
@@ -35,8 +48,12 @@ class WishListPage extends React.Component<any,any>{
                         <td>{wishitem.price}</td>
                         <td>{wishitem.amount}</td>
                         <td>
-                            <button type="button" className="btn btn-success">
+                            <button type="button" className="btn btn-success w-100" style={{marginBottom: 10}}>
                                 Toevoegen
+                            </button>
+                            <br/>
+                            <button type="button" className="btn btn-danger w-100" onClick={this.DeleteFromWishFunc.bind(this, wishitem.id)}>
+                                Verwijderen
                             </button>
                         </td>
                     </tr>           
@@ -44,10 +61,6 @@ class WishListPage extends React.Component<any,any>{
                 );
             })
         }
-
-
-
-
 
         return (
             <div>
@@ -74,6 +87,7 @@ class WishListPage extends React.Component<any,any>{
         );
     }
 }
+
 export default connect(mapStateToProps, {retrieveWishListData:RetrieveData})(WishListPage);;
 
 function mapStateToProps(state) {
