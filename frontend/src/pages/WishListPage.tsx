@@ -3,12 +3,16 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {RetrieveData} from '../actions/userActions';
 import { Row, Container } from 'reactstrap';
+import Cookie from '../logic/cookie';
 
 
 
 class WishListPage extends React.Component<any,any>{
     public static propTypes = {user: PropTypes.object.isRequired,
         retrieveWishListData: PropTypes.func.isRequired};
+
+    public cookie: Cookie = new Cookie();
+
     constructor(props: any) {
         super(props);
         this.state = {};
@@ -48,7 +52,7 @@ class WishListPage extends React.Component<any,any>{
                         <td>{wishitem.price}</td>
                         <td>{wishitem.amount}</td>
                         <td>
-                            <button type="button" className="btn btn-success w-100" style={{marginBottom: 10}}>
+                            <button type="button" className="btn btn-success w-100" style={{marginBottom: 10}} onClick={this.addProductToShoppiongCard.bind(this, wishitem.id)}>
                                 Toevoegen
                             </button>
                             <br/>
@@ -85,6 +89,19 @@ class WishListPage extends React.Component<any,any>{
                 </Container>     
             </div>
         );
+    }
+
+    private addProductToShoppiongCard = (id) => {
+        const c = this.cookie.get('ShoppingCard');
+        if (c) {
+            const d = JSON.parse(c);
+            d.items.push(id.toString());
+            this.cookie.set('ShoppingCard', JSON.stringify(d));
+            /// add to cookie
+        } else {
+            const cjson = { items: [this.props.match.params.id.toString()] }
+            this.cookie.set('ShoppingCard', JSON.stringify(cjson));
+        }
     }
 }
 
