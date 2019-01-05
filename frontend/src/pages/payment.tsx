@@ -125,7 +125,7 @@ class Payment extends React.Component<any, any>{
         const call: ApiCall = new ApiCall();
         call.setURL("paymentSucces", seccond, first);
         await call.result()
-        alert('You have successfully payed!')
+        alert('Bestelling met succes afgerond! Je krijgt een email met een bevestiging van je aankoop!')
         this.props.history.push("/");
     }
 
@@ -136,12 +136,18 @@ class Payment extends React.Component<any, any>{
         console.log(userData)
         console.log(address)
         console.log(userData.id)
+        var userID = userData.id;
+        var adresID = address.id
+        if(this.props.location.state){
+            userID = this.props.location.state.addresUser.userId;
+            adresID = this.props.location.state.addresUser.addressId;
+        }
         this.setState(prevState => ({
             order: {
                 ...prevState.order,
                 cookie: JSON.parse(this.state.items),
-                userId: userData.id,
-                addressId: address.id,
+                userId: userID,
+                addressId: adresID,
                 orderProducts: this.state.products
             }
 

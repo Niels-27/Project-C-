@@ -1,5 +1,4 @@
 import ApiCall from '../logic/apiCall';
-import { SET_PENDING_ORDER } from './types';
 
 export function PostOrder(order: object) {   
     return dispatch => {
@@ -12,15 +11,23 @@ async function PostOrderData(orderData: object) {
    return call.result(orderData); // hpoi     
 }
 
-export function setPending(cookie: object) {   
+export function GetOrders(id:string) {   
     return dispatch => {
-        dispatch(setPendingOrder(cookie));       
+        return GetOrdersByID(id) ;
     }
 }
-
-export function setPendingOrder(cookie: object) {
-    return {
-      type: SET_PENDING_ORDER,
-      cookie,
-    };
-  }
+async function GetOrdersByID(id: string) {   
+   const call : ApiCall = new ApiCall();
+   call.setURL("getOrders", id);
+   return call.result(); // hpoi     
+}
+export function GetDelivered(id:string) {   
+    return dispatch => {
+        return GetDeliveredOrders(id) ;
+    }
+}
+async function GetDeliveredOrders(id: string) {   
+   const call : ApiCall = new ApiCall();
+   call.setURL("getHistory", id);
+   return call.result(); // hpoi     
+}

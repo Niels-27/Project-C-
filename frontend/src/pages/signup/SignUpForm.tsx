@@ -115,7 +115,9 @@ class SignUpForm extends React.Component<any,any>{
                     alert("Je bent met succes geregistreerd.\n" + "Welkom, " + values.firstname + " " + values.lastname + "!");
                     await this.props.login(values).then(()=> {
                         if(this.props.location.state){
-                            this.props.history.push(this.props.location.state.origin);
+                            this.props.history.push({
+                                pathname:this.props.location.state.origin,
+                                state: {origin: "/checkout"}})
                         }
                         else{this.props.history.push("/")
                         }

@@ -86,7 +86,7 @@ class PasswordChangeForm extends React.Component<any, any & IFormikValues>{
     private renderFormik = (formik: FormikProps<IFormikValues>) => {
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalHeader toggle={this.props.toggle}>Adres toevoegen</ModalHeader>
+                <ModalHeader toggle={this.props.toggle}>Verifiëren</ModalHeader>
                 <ModalBody>
                     <Form>
                         <div className="row mt-md-1 mb-md-1 justify-content-center">

@@ -10,11 +10,18 @@ class LoginOrGuest extends React.Component<any, any>{
         super(props);
         this.state={};
         this.toRegisterAndPay = this.toRegisterAndPay.bind(this);
+        this.goToNoLoginForm = this.goToNoLoginForm.bind(this);
         
     }
     public toRegisterAndPay(){
         this.props.history.push({
             pathname: '/signup',
+            state: { origin: this.props.location.state.origin }
+        })
+    }
+    public goToNoLoginForm(){
+        this.props.history.push({
+            pathname: '/form',
             state: { origin: this.props.location.state.origin }
         })
     }
@@ -65,7 +72,7 @@ class LoginOrGuest extends React.Component<any, any>{
                                         <p className="text-center">Of</p>
                                         <div className="">
                                         <p className="card-text">Reken af zonder account.</p>
-                                            <button className="btn btn-success btn-md " disabled={this.props.isAuthenticated}>
+                                            <button onClick={this.goToNoLoginForm} className="btn btn-success btn-md " disabled={this.props.isAuthenticated} >
                                                 <strong>AFREKENEN ALS GAST</strong>
                                             </button>
                                         </div>

@@ -26,15 +26,15 @@ export default function(ComposedComponent) {
         console.log(this.props.location.state)    
         if((lol.items.length === 0)){
             this.props.history.push('/ShoppingCard');}
-        else if(!this.props.isAuthenticated){
-            this.props.history.push("/ShoppingCard");
-            } 
+        
         else if(!this.props.location.state){
               this.props.history.push('/forbidden');
             }
+        else if(!this.props.isAuthenticated && !this.props.location.state){
+              this.props.history.push("/ShoppingCard");
+          } 
        
     }
-
     public componentWillUpdate(nextProps) {
         console.log(this.state.items)
         const lol = JSON.parse(this.state.items)
@@ -55,9 +55,9 @@ export default function(ComposedComponent) {
 
     public render() {
       var showComponent = <div>..</div>
-      if (this.props.isAuthenticated){
-        showComponent = <div><ComposedComponent {...this.props} /></div>
-      }
+     
+      showComponent = <div><ComposedComponent {...this.props} /></div>
+      
       return (
         <div>{showComponent}</div>
       );

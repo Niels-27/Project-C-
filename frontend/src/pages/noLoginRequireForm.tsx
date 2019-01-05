@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {SignUpGuest, IsEmailExists} from '../actions/signUpActions';
 import {ErrorMessage, Field, Form, Formik, FormikProps, FormikValues} from "formik";
 import * as Yup from 'yup';
 import {
@@ -55,7 +57,7 @@ const initialValues: IFormikValues = {
 
 class NoLoginRequiredForm extends React.Component<any,any>{
     public static propTypes = 
-    {userSignUpRequest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired, login: PropTypes.func.isRequired}
+    {signUpGuest: PropTypes.func.isRequired, isEmailExists: PropTypes.func.isRequired, login: PropTypes.func.isRequired}
     constructor(props: any) {
         super(props);
         this.state = {
@@ -86,7 +88,18 @@ class NoLoginRequiredForm extends React.Component<any,any>{
         formik.setSubmitting(true);
         await this.checkEmailExists(values);
         if(this.state.errormessage === ''){
-            console.log("gelukt!")
+            await this.props.signUpGuest(values).then( (result) => {
+                console.log(result)
+                if(this.props.location.state){
+                    this.props.history.push({
+                        pathname:this.props.location.state.origin,
+                        state: {origin: "/checkout", addresUser: result}})
+                }
+                else{
+                    this.props.history.push("/")
+                }
+            }, (data) => this.setState({ errors: data})
+            )
         }
         else{formik.setSubmitting(false)}
     }
@@ -109,10 +122,10 @@ class NoLoginRequiredForm extends React.Component<any,any>{
                  <div className="row justify-content-around">
                     <div className="col col-6 col-md-4" >
                         <div className="mb-5">
-                            <label htmlFor="naam">Naam</label>
-                            <Field className="form-control" name="naam"  type="text" />
+                            <label htmlFor="name">Naam</label>
+                            <Field className="form-control" name="name"  type="text" />
                             <ErrorMessage
-                            name="naam"
+                            name="name"
                             component="div"
                             className="field-error text-danger"
                             />
@@ -181,7 +194,7 @@ class NoLoginRequiredForm extends React.Component<any,any>{
                         <button type="submit" className="btn btn-success btn-lg "
                             disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                             >
-                                <strong>Aanmelden</strong>
+                                <strong>Afrekenen</strong>
                             </button>
                         </div> 
                     </div>
@@ -192,4 +205,4 @@ class NoLoginRequiredForm extends React.Component<any,any>{
     };   
 }
 
-export default withRouter(NoLoginRequiredForm);
+export default withRouter(connect(null, {isEmailExists: IsEmailExists,signUpGuest: SignUpGuest})(NoLoginRequiredForm));

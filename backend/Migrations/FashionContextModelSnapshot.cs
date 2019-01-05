@@ -310,7 +310,8 @@ namespace backend.Migrations
                         new { Id = 5, Description = "The payment for the transaction has been accepted by the payment gateway.", Name = "Paid" },
                         new { Id = 6, Description = "The order has been marked as shipped by the merchant.", Name = "Shipped" },
                         new { Id = 7, Description = "The payment for the transaction has been refunded.", Name = "Refunded" },
-                        new { Id = 8, Description = "The balance on the transaction has been voided.", Name = "Voided" }
+                        new { Id = 8, Description = "The balance on the transaction has been voided.", Name = "Voided" },
+                        new { Id = 9, Description = "The order is delivered to the client.", Name = "Delivered" }
                     );
                 });
 
@@ -341,7 +342,7 @@ namespace backend.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = 1, CreateOn = new DateTime(2018, 12, 14, 2, 32, 23, 184, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
+                        new { Id = 1, CreateOn = new DateTime(2019, 1, 5, 2, 49, 7, 291, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
                     );
                 });
 
