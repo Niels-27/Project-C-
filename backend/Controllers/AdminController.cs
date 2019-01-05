@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
+using System.Text;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace backend.Controllers
 {
@@ -51,6 +55,9 @@ namespace backend.Controllers
             }
             return new ObjectResult(user);
         }
+        private string RequestBody;
+        
+ 
 
         // POST api/admin/categories/create
         [HttpPost("users/create")]

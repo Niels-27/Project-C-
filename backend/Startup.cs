@@ -23,6 +23,7 @@ namespace backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -30,6 +31,7 @@ namespace backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             String text = System.IO.File.ReadAllText("ConnectionStringFile.txt");
 
             //Add this line to your method
@@ -76,8 +78,7 @@ namespace backend
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(builder => builder
-           .AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());   
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowCredentials());   
            
             app.UseAuthentication();
                     

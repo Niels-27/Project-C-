@@ -24,7 +24,7 @@ import Pagination from './pages/pagination';
 import Help from './pages/help';
 import propPasser from './utils/propPasser';
 
-// imports admin pages
+// imports admin
 import DashboardWrap from './pages/admin/dashboard';
 import AdminHome from './pages/admin/home';
 import AdminUsers from './pages/admin/users';
@@ -97,6 +97,7 @@ class Routes extends React.Component<any,any> {
             <Route exact path="/" component={AdminHome} />
             <Route exact path="/user/edite/:id" component={AdminUsers} />
             <Route exact path="/user/view/:id" component={AdminUsersView} />
+            <Route exact path="/user/make" component={SignUpPage} />
             <Route exact path="/users" component={AdminUsers} />
             <Route exact path="/products" component={AdminProducts} />
             

@@ -21,6 +21,7 @@ using Npgsql;
 
 namespace backend.Controllers
 {
+    
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -260,6 +261,52 @@ namespace backend.Controllers
             
             return Ok(user);          
         }
+
+        [HttpPost]
+        [Route("updateUser/ChangeByid")]
+        public async Task<IActionResult> UpdateUserByID()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic up = JValue.Parse(this.RequestBody);
+            int userID = Int32.Parse(up.id.ToString());
+
+            User user = _context.Users.Where(u => u.Id == userID).Select(u => u).FirstOrDefault();
+            user.Name = up.name;
+            user.Email = up.email;
+            user.Rank = up.rank;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            user.Salt="";
+            user.Key="";
+
+            return Ok(user);
+        }
+        [HttpPost]
+        [Route("updateUserAddr/ChangeByid")]
+        public async Task<IActionResult> UpdateUserAddressAdmin()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic up = JValue.Parse(this.RequestBody);
+            int id = Int32.Parse(up.id.ToString());
+
+            Address address = _context.Addresses.Where(a => a.Id == id).Select(a => a).FirstOrDefault();
+            address.Street = up.street;
+            address.PostalCode = up.postal;
+            address.City = up.city;
+
+            _context.Addresses.Update(address);
+            _context.SaveChanges();
+
+            return Ok(address);
+        }
+
           [HttpPost]
         [Route("updateUser/address")]
          public async Task<IActionResult> UpdateUserAddress()  //deze functie haalt de wishlist data van de user

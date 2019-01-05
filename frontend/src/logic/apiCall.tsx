@@ -75,7 +75,10 @@ class ApiCall {
                 break;       
             case "AdminuserdataView":
                 this.link = "/admin/users/byid/" + first;
-                break;        
+                break;    
+            case "AdminuserdataChange":
+                this.link = "/user/updateUser/ChangeByid/";
+                break;      
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";
