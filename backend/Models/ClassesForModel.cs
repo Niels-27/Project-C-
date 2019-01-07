@@ -53,22 +53,22 @@ namespace backend.Models {
         public float DiscountPercentage {get; set;}
         public DateTime StartDate {get; set;}
         public DateTime EndDate {get; set;}
-        public ICollection<ProductSold> ProductsSold {get; set;}
         
     }
         public class ProductSold
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int ProductId { get; set; }
-        public Product Product{get; set;} // F1
         public int Amount {get; set;}
         public int UserId {get; set;}
         public  User User {get;set;}  // F2
+         public int ProductId { get; set; }
+        public Product Product{get; set;} // F1
         public DateTime Date{get; set;}
         public int OrderId {get; set;}
         public  Order Order {get;set; }  //F3
-        public int DiscountId {get; set;}
-        public  Discount Discount {get; set;}  //F4
+
 
     }
         public class Order  //Done
@@ -85,6 +85,8 @@ namespace backend.Models {
     }
         public class User //Done
     {
+        [Key]
+         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [StringLength(100)]
         public string Name { get; set; }

@@ -22,6 +22,7 @@ const store = createStore(
     window['devToolsExtension'] ? window['devToolsExtension']() : f => f
   )
 );
+
 if(localStorage.jwtToken === 'undefined'){
   localStorage.removeItem('jwtToken');  
 }
@@ -29,7 +30,6 @@ if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
 }
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

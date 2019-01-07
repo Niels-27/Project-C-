@@ -210,6 +210,53 @@ namespace backend.Controllers
 
             return Ok();
         }
+
+         // GET api/admin/order/userid
+        [HttpGet("orders/{id}")]
+        public IActionResult GetOrder(int id)
+        {
+            var order = _context.Orders.FirstOrDefault (t => t.UserId == id);
+            if (order == null){
+                return NotFound();
+            }
+            return new ObjectResult(order);
+        }
+
+         // POST api/admin/order/add
+        [HttpPost("order/add")]
+        public IActionResult AddOrder([FromBody]Order order)
+        {
+            if(order == null){
+                return NoContent();
+            }
+            _context.Orders.Add(order);
+            // _context.Addresses.Add(user_address)
+            _context.SaveChanges();
+            return Ok();
+
+        }
+
+         // GET api/admin/productsold/all
+        [HttpGet("productssold/all")]
+        public IQueryable<ProductSold> GetAllSoldProducts()
+        {
+            var result = from m in _context.ProductsSold select m;
+            return result;
+        }
+
+
+         // POST api/admin/productsold/solditem
+        [HttpPost("productsold/solditem")]
+        public IActionResult AddToProductSold([FromBody]ProductSold sold_item)
+        {
+            if(sold_item == null){
+                return NoContent();
+            }
+            _context.ProductsSold.Add(sold_item);
+            _context.SaveChanges();
+            return Ok();
+
+        }
             
     }
 }

@@ -6,6 +6,7 @@ import propPasser from '../utils/propPasser';
 import AccountDetails from 'src/components/dashboard_containers/accountdetails';
 import Orders from 'src/components/dashboard_containers/orders';
 import History from 'src/components/dashboard_containers/history';
+import Addressen from '../components/dashboard_containers/addressen';
 
 class UserPage extends React.Component<any,any>{
 
@@ -16,13 +17,15 @@ class UserPage extends React.Component<any,any>{
 
     public render() {
         console.log(this.props.match.url)
+        console.log(this.props)
         return (
             <Router>
                 <DashboardNavigation>
                 <Switch>
                   <Route exact path={`${this.props.match.url}`} component={propPasser(Overview)}/>
-                  <Route path={`${this.props.match.url}/orders`} component={propPasser(Orders)} />
+                  <Route path={`${this.props.match.url}/orders`} component={Orders} />
                   <Route path={`${this.props.match.url}/history`} component={propPasser(History)} />
+                  <Route path={`${this.props.match.url}/addressen`} component={propPasser(Addressen)} />
                   <Route path={`${this.props.match.url}/accountdetails`} component={propPasser(AccountDetails)} />
                 </Switch>   
                 </DashboardNavigation>

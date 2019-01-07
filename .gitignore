@@ -403,7 +403,6 @@ backend/bin/Debug/netcoreapp2.0/backend.dll
 backend/bin/Debug/netcoreapp2.0/backend.dll
 frontend/package-lock.json
 frontend/package-lock.json
-backend/obj/project.assets.json
 *.dll
 
 backend/bin/Debug/netcoreapp2.0/backend.dll
@@ -412,3 +411,4 @@ backend/obj/Debug/netcoreapp2.0/backend.csproj.CoreCompileInputs.cache
 backend/obj/Debug/netcoreapp2.0/backend.dll
 backend/obj/Debug/netcoreapp2.0/backend.pdb
 
+backend/Migrations

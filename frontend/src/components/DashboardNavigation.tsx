@@ -34,6 +34,11 @@ class DashboardNavigation extends React.Component<any,any>{
                                     </a>
                                 </li>
                                 <li className="nav-item">
+                                    <a className="nav-link" href="/dashboard/addressen">
+                                    Mijn adressen
+                                    </a>
+                                </li>
+                                <li className="nav-item">
                                     <a className="nav-link" href="/dashboard/accountdetails">
                                     Mijn gegevens
                                     </a>

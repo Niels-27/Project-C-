@@ -23,7 +23,6 @@ class ShoppingCard extends React.Component<any, any> {
             }else{
                 this.setState({ products: await call.result(JSON.parse(this.state.items)) }); 
             }
-           
         }
     }
 
