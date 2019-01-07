@@ -34,6 +34,46 @@ namespace backend.Controllers
             var result = from m in _context.Users select m;
             return result;
         }
+        public class countUserRegs
+        {
+            public string month;
+            public string amount;
+        }
+        [HttpGet("stats/users/registrations")]
+  
+        public List<string> StatsGetAllUsers()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = from m in _context.Users select m.CreateOn;
+            List<string> items = new List<string>();
+            List<string> returnList = new List<string>();
+
+            foreach (var item in result)
+            {
+                if(item.ToString("yyyy") == thisYear.ToString()){
+                   items.Add(item.ToString("MM")); 
+                }
+                
+            }
+            Dictionary<string, int> counts = items.GroupBy(x => x)
+                                                        .ToDictionary(g => g.Key,
+                                                                        g => g.Count());
+
+            for (int i = 1; i < 13; i++)
+            {
+                if (counts.ContainsKey(i.ToString("D2")))
+                {
+                    returnList.Add(counts[i.ToString("D2")].ToString());
+                }else{
+                    returnList.Add("0");
+                }
+                
+            }
+
+
+            return returnList;
+        }
+
 
         // GET api/admin/products/id
         [HttpGet("products/{id}")]
