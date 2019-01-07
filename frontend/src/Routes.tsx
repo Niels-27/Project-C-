@@ -15,6 +15,8 @@ import Product from './pages/product';
 import SignUpPage from './pages/signup/SignUpPage';
 import SignLoginPage from './pages/signlogin/SignLoginPage';
 import UserPageRouter from './pages/UserPage';
+import noLoginRequireForm from './pages/noLoginRequireForm';
+import loginOrGuest from './pages/loginOrGuest';
 import WishListPage from './pages/WishListPage'
 import Footer from './components/all_pages/footer';
 import pageNotFound from './pages/404';
@@ -23,7 +25,9 @@ import Payment from './pages/payment';
 import Pagination from './pages/pagination';
 import Help from './pages/help';
 import propPasser from './utils/propPasser';
-
+import pushBack from './utils/pushBack';
+import requireNoLogin from './utils/requireNoLogin';
+import noAccess from './pages/noAccess';
 // imports for admin 
 import DashboardWrap from './pages/admin/dashboard';
 import AdminHome from './pages/admin/home';
@@ -73,13 +77,15 @@ class Routes extends React.Component<any,any> {
             <Route path="/product/:id" component={Product} />
             <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/pagenation" component={Pagination} />
-
-            <Route path="/signup" component={SignUpPage}/>
-            <Route path="/payment/:price" component={Payment}/>
-            <Route path="/login" component={SignLoginPage}/>
+            <Route path="/form" component={noLoginRequireForm}/>
+            <Route path="/checkout" component={propPasser(loginOrGuest)}/>
+            <Route path="/signup" component={pushBack(SignUpPage)}/>
+            <Route path="/payment/:price" component={requireNoLogin(propPasser(Payment))}/>
+            <Route path="/login" component={pushBack(SignLoginPage)}/>
             <Route path="/dashboard" component={requireAuth(UserPageRouter)}/>
             <Route path="/wishlist" component={requireAuth(propPasser(WishListPage))}/>
             <Route path="/help" component={Help} />
+            <Route path="/forbidden" component={noAccess} />
             <Route component={pageNotFound} />
 
           </Switch>

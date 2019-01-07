@@ -13,6 +13,7 @@ class SignLoginPage extends React.Component<any,any>{
     }
     
     public render() {
+        console.log(this.props)
         return (      
                 <div className="row m-md-5 justify-content-around"> 
                     

@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Cookie from '../logic/cookie';
 import ApiCall from '../logic/apiCall';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as PropTypes from 'prop-types'
 import "./shoppingCard.css";
 class ShoppingCard extends React.Component<any, any> {
-    public static propTypes = { isAuthenticated: PropTypes.bool.isRequired };
     public cookie: Cookie = new Cookie();
     constructor(props) {
         super(props);
@@ -133,12 +130,10 @@ class ShoppingCard extends React.Component<any, any> {
 
     public render() {
 
-        const handleOnClickBuy = () =>{
-            if (this.props.isAuthenticated){
-                this.props.history.push("/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 );
-            }else{
-                this.props.history.push("/login");
-            }
+        const handleOnClickBuy = () =>{       
+            this.props.history.push({
+                pathname:"/checkout",
+                state: {origin: "/payment/" + Math.round((this.returnTotalPrice() + 6.95) * 100) / 100 }}); 
         }
 
         if(this.state.products === null){
@@ -191,7 +186,7 @@ class ShoppingCard extends React.Component<any, any> {
                         <td />
                         <td/>
                         <td>
-                        <button type="button" className="btn btn-success" onClick={handleOnClickBuy}>
+                        <button type="button" className="btn btn-success" onClick={handleOnClickBuy} disabled={JSON.parse(this.state.items).items.length === 0}> 
                             Naar de kassa <span className="glyphicon glyphicon-play"/>
                         </button></td>
                     </tr>
@@ -267,10 +262,6 @@ class ShoppingCard extends React.Component<any, any> {
 
 }
 
-export default withRouter(connect(mapStateToProps)(ShoppingCard));
+export default withRouter(ShoppingCard);
 
-function mapStateToProps(state) {
-    return {
-        isAuthenticated: state.auth.isAuthenticated
-    };
-}
+

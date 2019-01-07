@@ -43,6 +43,10 @@ public class FashionContext : DbContext  //De database
             .WithMany(m => m.Products)   //One Category has many Products
             .HasForeignKey(ma => ma.CategoryId);
 
+            modelBuilder.Entity<ProductSold>()
+            .HasIndex(p => new { p.ProductId })
+            .IsUnique(false);
+
             // Initial Data for Products Tabel (10 products for test)
             modelBuilder.Entity<Product>().HasData(new Product{Id = 1, Name = "Zwarte Sweat Shirt",    //#1
             Description = "Coole zwarte sweatshirt voor heren.", Color = "Zwart", 
@@ -180,7 +184,8 @@ public class FashionContext : DbContext  //De database
                 new{Id = 5, Name = "Paid", Description = "The payment for the transaction has been accepted by the payment gateway."},
                 new{Id = 6, Name = "Shipped", Description = "The order has been marked as shipped by the merchant."},
                 new{Id = 7, Name = "Refunded", Description = "The payment for the transaction has been refunded."},
-                new{Id = 8, Name = "Voided", Description = "The balance on the transaction has been voided."}
+                new{Id = 8, Name = "Voided", Description = "The balance on the transaction has been voided."},
+                new{Id = 9, Name = "Delivered", Description = "The order is delivered to the client."}
                 );
                 
              // Add Admin account | Rank 1 = user, 2 = normale user, 3 = mod, 4 = admin|

@@ -13,19 +13,7 @@ interface IFormikValues
     email: string;
     password: string;
 }
-// const GetIp = async () => {
-//     return await fetch('https://api.ipify.org', {method: 'get', credentials: "omit", headers:{'content-type': 'application/json'}})
-//     .then(response => {
-//         console.log(response)
-//         return response.text;
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         return err;
-//     });
-// };
-
-  class LoginPopupForm extends React.Component<any,any>{
+  class LoginFormCheckout extends React.Component<any,any>{
     
     public static propTypes = 
     {login: PropTypes.func.isRequired, isUserExists: PropTypes.func.isRequired}
@@ -50,6 +38,7 @@ interface IFormikValues
         this.onSubmit = this.onSubmit.bind(this);
         this.checkUserExists = this.checkUserExists.bind(this);
    }
+
     public render() {
         return (
             <Formik
@@ -74,10 +63,16 @@ interface IFormikValues
             await this.props.login(values).then(userData =>
             {
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
-                //  this.props.history.push("/")
+                if(this.props.location.state){
+                    this.props.history.push({
+                        pathname:this.props.location.state.origin,
+                        state: {origin: "/checkout"}})
+                }
+                else{this.props.history.push("/checkout")
+                }
             }, (error) => 
-                    {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
-                    formik.setSubmitting(false)}
+                {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
+                formik.setSubmitting(false)}
             );    
         }     
         else {formik.setSubmitting(false);}
@@ -86,8 +81,8 @@ interface IFormikValues
         return (
             <Form>
                 <div className="form-group">
-                 <div className="row">
-                    <div className="col" >
+                 <div className="row mt-3">
+                    <div className="col col-6" >
                         <div>
                             <label htmlFor="email">Email</label>
                             <Field className="form-control" name="email" type="email"/>
@@ -106,16 +101,15 @@ interface IFormikValues
                             className="field-error text-danger"
                             />
                         </div>
-                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-2 ">{this.state.errormessage}</div>)
+                        { this.state.errormessage !== ''? (<div className="alert alert-danger mt-md-3 ">{this.state.errormessage}</div>)
                         : null}  
-                        <div>
-                           <span className="nav-link">Nog geen account? <a href="/signup">Klik hier</a></span>
-                        </div> 
-                        <div className="mt-md-2">
+                       
+                        <div className="mt-md-3">
                              <button type="submit" className="btn btn-success btn-md "
                                  disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                                 >
-                                 <strong>Log in</strong>
+
+                                 <strong>GA NAAR DE KASSA</strong>
                                 </button>
                         </div>    
                     </div>
@@ -125,4 +119,4 @@ interface IFormikValues
         );
     }; 
 }
-export default withRouter(connect(null, {login : Login, isUserExists: UserExists})(LoginPopupForm));
+export default withRouter(connect(null, {login : Login, isUserExists: UserExists})(LoginFormCheckout));

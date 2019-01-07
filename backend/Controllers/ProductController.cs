@@ -191,48 +191,6 @@ namespace backend.Controllers
             return (result);
 
         }
-
-        // [HttpGet("~/api/categories/{category}/{category2}")]
-        // public IQueryable GetProductByCategories(string category, string category2)  /// Get products by category Heren | Dames
-        // {
-        //     char[] subset = category.ToCharArray(); /// string 'heren' omzetten naar 'Heren' of 'dames' naar 'Dames'
-        //     subset[0] = Char.ToUpper(subset[0]);
-        //     string cat = new string(subset);
-        //     System.Console.WriteLine(cat + " category");  // Even de string testen
-
-        //     char[] subset2 = category2.ToCharArray(); /// string 'heren' omzetten naar 'Heren' of 'dames' naar 'Dames'
-        //     subset2[0] = Char.ToUpper(subset2[0]);
-        //     string cat2 = new string(subset2);
-        //     System.Console.WriteLine(cat2 + " subcategory");  // Even de string testen
-
-        //      var Result = 
-        //             from p in _context.Products select p;
-        //     var Result = (
-        //         from pc in _context.ProductCategory
-        //         let hfl = (
-        //             from p in _context.Products 
-        //             from pc2 in _context.ProductCategory
-        //             let partial = (   //parent category
-        //                 from c in _context.Categories
-        //                 from pc3 in _context.ProductCategory                        
-        //                 where c.Id == pc3.CategoryId where c.Name == cat /// Category gelijk aan 
-        //                 select c)
-        //             where p.Id == pc2.ProductId
-        //             where pc2.CategoryId == partial.Id             
-        //             select p)
-        //         let partial = (
-        //             from c in _context.Categories
-        //             from pc in _context.ProductCategory                        
-        //             where c.Id == pc.CategoryId where c.Name == cat2 /// Category gelijk aan 
-        //             select c)
-
-        //         where hfl.Id == pc.ProductId
-        //         where pc.CategoryId == partial.Id
-        //         orderby hfl.Id               
-        //         select hfl
-        //         );
-        // return Result;
-        // }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();

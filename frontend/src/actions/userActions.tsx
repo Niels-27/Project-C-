@@ -21,6 +21,16 @@ async function Update(userData, origin) {
     call.setURL("updateUser", origin);
     return call.result(userData); // hpoi     
  }
+ export function PostAddress(address: object, origin: string) {   
+    return dispatch => {
+        return HandlePost(address, origin) ;
+    }
+}
+async function HandlePost(address, origin) {   
+   const call : ApiCall = new ApiCall();
+   call.setURL(origin);
+   return call.result(address); // hpoi     
+}
 
 
 

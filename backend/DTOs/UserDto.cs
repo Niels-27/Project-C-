@@ -1,4 +1,4 @@
-
+using System;
 namespace backend.DTOs
 
 {
@@ -9,5 +9,12 @@ namespace backend.DTOs
 
         public string Email { get; set; }
         public string Token { get; set; }
+    }
+
+    public class GuestDTO
+    {
+        public int UserId {get; set;}
+        public int AddressId { get; set; }
+
     }
 }
