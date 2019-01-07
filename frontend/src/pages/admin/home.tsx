@@ -1,14 +1,10 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import './dashboard.css';
 import  LineChardComp from './chards/Linechards';
 import PieChardComp from './chards/Piechard';
 import AreaChardComp from './chards/Areacard';
 
 
-=======
-// import './dashboard.css';
->>>>>>> master
 class AdminHome extends React.Component<any, any>{
 
     constructor(props: any) {
