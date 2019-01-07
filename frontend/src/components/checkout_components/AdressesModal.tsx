@@ -12,7 +12,7 @@ class AddressenModal extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            addresses: null,  modal: false, values: {}, type: '', count: 0, removedAdres: null}
+            modal: false, values: {}, type: '', count: 0, removedAdres: null}
         this.toggle = this.toggle.bind(this);
         this.renderAddresses = this.renderAddresses.bind(this);     
     }
@@ -22,14 +22,10 @@ class AddressenModal extends React.Component<any, any>{
         });
         return this.state.modal;
       }
-      public async componentDidMount(){
-        await  this.props.RetrieveData(this.props.user, "allAdresses")
-         .then(results => this.setState({addresses: results}), error => console.log(error) )
-     }
     public render() {
         const { userData } = this.props
         var showresults = <div>Laden..</div>
-        if (userData && this.state.addresses) {
+        if (userData) {
         showresults=(<div>
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
                 <ModalHeader toggle={this.props.toggle}>Adres kiezen</ModalHeader>
@@ -38,10 +34,10 @@ class AddressenModal extends React.Component<any, any>{
                     <b>Kies een adres als het afleveradres.</b>
                     </p>
                     <div className="row boxes">
-                        {this.state.addresses.map(this.renderAddresses)}
+                        {this.props.userData.addresses.map(this.renderAddresses)}
                     </div>
                     <div className="mt-4">
-                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={this.state.addresses.length ===4} onClick={this.toggle}>
+                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={this.props.userData.addresses.length ===4} onClick={this.toggle}>
                                            Voeg nieuw adres toe
                             </Button>
                 

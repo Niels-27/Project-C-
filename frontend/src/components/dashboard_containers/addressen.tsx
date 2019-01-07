@@ -9,7 +9,7 @@ class Addressen extends React.Component<any,any>{
     public static propTypes = {user: PropTypes.object.isRequired}
     constructor(props: any) {
         super(props);
-        this.state = {addresses: null,  modal: false, values: {}, type: '', count: 0, removedAdres: null}
+        this.state = {modal: false, values: {}, type: '', count: 0, removedAdres: null}
         this.toggle = this.toggle.bind(this);
         this.renderAdres = this.renderAdres.bind(this);
     }
@@ -23,7 +23,7 @@ class Addressen extends React.Component<any,any>{
         const {userData} = this.props
         console.log(this.props)
         var showresults = <span>..</span>
-        if ( userData && this.state.addresses){
+        if ( userData ){
             showresults = (
             <div> 
             <h5><b>Mijn adressen</b></h5>
@@ -32,10 +32,10 @@ class Addressen extends React.Component<any,any>{
                 <b>Je mag maximaal 4 addressen beheren.</b>
             </p>
             <div className="row boxes">
-                {this.state.addresses.map(this.renderAdres)}
+                {this.props.userData.addresses.map(this.renderAdres)}
             </div>
             <div className="mt-4">
-            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={this.state.addresses.length ===4}>
+            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={this.props.userData.addresses.length ===4}>
                                 <strong>Voeg een adres toe</strong>
             </button>
             </div>
@@ -47,10 +47,6 @@ class Addressen extends React.Component<any,any>{
                 {showresults}        
             </div>   
         );
-    }
-    public async componentDidMount(){
-       await  this.props.RetrieveData(this.props.user, "allAdresses")
-        .then(results => this.setState({addresses: results}), error => console.log(error) )
     }
     private renderAdres(address, index){
         const adresObject : object = {

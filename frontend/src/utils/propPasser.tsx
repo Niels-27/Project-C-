@@ -9,7 +9,7 @@ export default function(ComposedComponent) {
       retrieveData: PropTypes.func.isRequired, isAuthenticated: PropTypes.bool.isRequired};
       constructor(props: any) {
         super(props);
-        this.state = {user: null, address:null, value: null, address2:null}
+        this.state = {user: null, address:null, value: null}
         this.giveId = this.giveId.bind(this)
       } 
       public giveId(value:object){
@@ -29,13 +29,10 @@ export default function(ComposedComponent) {
            console.log(this.state.value) 
 
            if(this.state.value!=null){
-            await retrieveData(this.state.value,"addressbyId")  // get addresses
-            .then(res => {this.setState({address2: res})},
-             (error) => {this.setState({address2: error})});   
-           if(!this.props.isAuthenticated){
-             this.setState({value: null})
-           }
-      }   
+              if(!this.props.isAuthenticated){
+                this.setState({value: null})
+              }
+           }   
         
   }
     public render() {

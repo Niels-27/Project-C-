@@ -202,7 +202,7 @@ namespace backend.Controllers
             int userID = Int32.Parse(userData.unique_name.ToString());
 
 
-            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).Select(u => u).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).ThenInclude(c => c.Country).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
             return Ok(user);          

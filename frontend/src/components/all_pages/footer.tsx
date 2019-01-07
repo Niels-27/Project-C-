@@ -12,35 +12,35 @@ import './footer.css' ;
         <NavItem>
             Customer Service
             <li className="nav-item ">
-                            <a className="nav-link " href="#">Contact us</a>
+                            <a className="nav-link " >Contact us</a>
                 </li>
                 <li className="nav-item">
-                            <a className="nav-link" href="#">Shipping & Delivery</a>
+                            <a className="nav-link" >Shipping & Delivery</a>
                 </li>
                 <li className="nav-item">
-                            <a className="nav-link" href="#">My Orders</a>
+                            <a className="nav-link" >My Orders</a>
                 </li>
           </NavItem>
           <NavItem>
             Legal Information
             <li className="nav-item">
-                            <a className="nav-link" href="#">Terms & Conditions</a>
+                            <a className="nav-link" >Terms & Conditions</a>
                 </li>
                 <li className="nav-item">
-                            <a className="nav-link" href="#">Privacy Policy</a>
+                            <a className="nav-link" >Privacy Policy</a>
                 </li>
                 <li className="nav-item">
-                            <a className="nav-link" href="#">Right of Withdrawal</a>
+                            <a className="nav-link" >Right of Withdrawal</a>
                 </li>
           </NavItem>
           <NavItem
             title="Item">
             About
             <li className="nav-item">
-                            <a className="nav-link" href="#">About HR Fashion</a>
+                            <a className="nav-link" >About HR Fashion</a>
                 </li>
                 <li className="nav-item">
-                            <a className="nav-link" href="#">Store Locations</a>
+                            <a className="nav-link" >Store Locations</a>
                 </li>
           </NavItem>
           <NavItem

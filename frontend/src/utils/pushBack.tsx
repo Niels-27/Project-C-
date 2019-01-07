@@ -11,9 +11,9 @@ export default function(ComposedComponent) {
     public componentWillMount() {  
        if(this.props.location.state){
            if (this.props.isAuthenticated) {
-            this.props.history.push(this.props.location.state.origin)
+            this.props.history.push(this.props.location.state.forwarder)
      }}
-     else if(this.props.isAuthenticated){
+     else if(this.props.isAuthenticated || !this.props.location.state){
         this.props.history.push('/');
     }
     }
@@ -21,10 +21,10 @@ export default function(ComposedComponent) {
     public componentWillUpdate(nextProps) {
         if(this.props.location.state){
             if (nextProps.isAuthenticated) {
-                this.props.history.push(this.props.location.state.origin)
+                this.props.history.push(this.props.location.state.forwarder)
             }
         }
-        else if(nextProps.isAuthenticated){
+        else if(nextProps.isAuthenticated || !this.props.location.state){
             this.props.history.push('/');
         }
      

@@ -139,8 +139,10 @@ class Payment extends React.Component<any, any>{
         var userID = userData.id;
         var adresID = address.id
         if(this.props.location.state){
-            userID = this.props.location.state.addresUser.userId;
-            adresID = this.props.location.state.addresUser.addressId;
+            if(this.props.location.state.addresUser){
+                userID = this.props.location.state.addresUser.userId;
+                adresID = this.props.location.state.addresUser.addressId;
+            }    
         }
         this.setState(prevState => ({
             order: {
@@ -263,7 +265,7 @@ class Payment extends React.Component<any, any>{
                                
                             </div>
                             <div className="mt-1" style={{textAlign:"center", paddingLeft:50, paddingRight:50}}>
-                            <button style={{position: "relative", left: 100}}className=' btn btn-secondary btn-md'onClick={cancel} >Cancel bestelling</button>
+                            <button style={{position: "relative", left: 100}}className=' btn btn-secondary btn-md' disabled={!(this.state.notClicked)}onClick={cancel} >Cancel bestelling</button>
                             </div>
                         </div>
 

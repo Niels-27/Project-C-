@@ -43,7 +43,13 @@ class UserMenu extends React.Component<any,any>{
         );
     }
     private handleClick(e){
-        this.props.logout();
+        if(this.props.location.pathname.includes("/payment")){
+            this.props.logout(); 
+            this.props.history.push("/"); 
+        }
+        else{
+            this.props.logout(); 
+        }  
         // this.props.history.push('/');
     }
 }
