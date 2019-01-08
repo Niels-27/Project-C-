@@ -138,10 +138,13 @@ class Payment extends React.Component<any, any>{
         console.log(userData.id)
         var userID = userData.id;
         var adresID = address.id
-        if(this.props.location.state){
-            userID = this.props.location.state.addresUser.userId;
-            adresID = this.props.location.state.addresUser.addressId;
+        if (this.props.location.state) {
+            if (this.props.location.state.addresUser) {
+                userID = this.props.location.state.addresUser.userId;
+                adresID = this.props.location.state.addresUser.addressId;
+            }
         }
+        
         this.setState(prevState => ({
             order: {
                 ...prevState.order,
