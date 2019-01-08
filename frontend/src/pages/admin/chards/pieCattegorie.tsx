@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip, PieChart, Pie, ResponsiveContainer} from 'recharts';
+import { Tooltip, PieChart, Pie, ResponsiveContainer } from 'recharts';
 import ApiCall from '../../../logic/apiCall';
 export default class PieChardComp extends React.Component<any, any>{
 
@@ -12,9 +12,8 @@ export default class PieChardComp extends React.Component<any, any>{
     }
 
     public async componentDidMount() {
-        // this.setstate({ data: this.props.data ,title:this.props.title });
         const call: ApiCall = new ApiCall();
-        call.setURL('AdminStatsRigisterdVSGuest');
+        call.setURL('AdminStatsCategorie');
         await this.setState({ data: await call.result() });
     }
 
@@ -24,36 +23,35 @@ export default class PieChardComp extends React.Component<any, any>{
             data = [{ name: 'loading', value: 1 }];
         } else {
             this.state.data.forEach(x => {
-                data.push({ name: this.displayRank(x.rank), value: x.amount });
+                x.cat.forEach(y => {
+                    data.push({ name: y[0].name, value: x.sold });
+                });
             });
+            const result = [] as any[];
+            data.forEach(function (a) {
+                if (!this[a.name]) {
+                    this[a.name] = { name: a.name, value: 0 };
+                    result.push(this[a.name]);
+                }
+                this[a.name].value += a.value;
+            }, Object.create(null));
+            data = result;
         }
 
-
-
+console.log(data);
 
         return (
-            <div style={{minWidth:'100px',minHeight:'100px',paddingBottom:'50px'}}>
-                <h5 style={{ textAlign:'center' }}>{this.state.title}</h5>
+            <div style={{ minWidth: '100px', minHeight: '100px', paddingBottom: '50px' }}>
+                <h5 style={{ textAlign: 'center' }}>{this.state.title}</h5>
                 <ResponsiveContainer height={150}>
-                <PieChart>
+                    <PieChart>
                         <Pie data={data} fill="#8884d8" />
-                    <Tooltip />
-                </PieChart>
+                        <Tooltip />
+                    </PieChart>
                 </ResponsiveContainer>
             </div>
         );
     }
 
-    private displayRank = (rank) => {
-        switch (rank) {
-            case 1:
-                return "Gebruiker";
-            case 4:
-                return "Administrator";
-            case 2:
-                return "Gast Aankoop";
-            default:
-                return "Er is iets fout gegaan";
-        }
-}
+
 }

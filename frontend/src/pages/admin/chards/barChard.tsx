@@ -44,7 +44,7 @@ export default class AreaChardComp extends React.Component<any, any>{
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Verkocht" fill="#82ca9d" />
+                        <Bar dataKey="Verkocht" fill="#8884d8" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

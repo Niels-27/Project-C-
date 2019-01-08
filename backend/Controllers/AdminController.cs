@@ -73,28 +73,51 @@ namespace backend.Controllers
 
             return returnList;
         }
+        public class countUsers{
+            public int amount;
+            public int rank;
+        }
+        [HttpGet("stats/users/vs/guest")]
+
+        public IQueryable<countUsers> StatsGetAllUsersVSgest()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = _context.Users.GroupBy(user => user.Rank)
+            .Select(r => new countUsers
+            {
+                rank = r.Key,
+                amount = r.Select(p => p.Id).Count()
+            });
+
+
+
+            return result;
+        }
 
         [HttpGet("stats/sales/thisYear")]
 
         public List<string> GetStatsSalesThisYear()
         {
             var thisYear = DateTime.Now.Year;
-            var result = from m in _context.ProductsSold select m.Date;
+            var result = from m in _context.ProductsSold select m;
             List<string> items = new List<string>();
             List<string> returnList = new List<string>();
 
             foreach (var item in result)
             {
-                if (item.ToString("yyyy") == thisYear.ToString())
+                if (item.Date.ToString("yyyy") == thisYear.ToString())
                 {
-                    items.Add(item.ToString("MM"));
+                    for (int i = 0; i < item.Amount; i++)
+                    {
+                        items.Add(item.Date.ToString("MM"));
+                    } 
                 }
 
             }
             Dictionary<string, int> counts = items.GroupBy(x => x)
                                                         .ToDictionary(g => g.Key,
                                                                         g => g.Count());
-
+            
             for (int i = 1; i < 13; i++)
             {
                 if (counts.ContainsKey(i.ToString("D2")))
@@ -107,7 +130,6 @@ namespace backend.Controllers
                 }
 
             }
-
 
             return returnList;
         }
@@ -133,6 +155,66 @@ namespace backend.Controllers
         }
         public IQueryable<string> getNameOfProduct(int id){
             var x = from m in _context.Products where m.Id == id select m.Name;
+            return x;
+        }
+        public class ManOrWomanClass
+        {
+            public int id;
+            public IQueryable<int> manOrWoman;
+            public int sold;
+        }
+   
+        [HttpGet("stats/overallSales/manOrWoman")]
+        public IQueryable<ManOrWomanClass> StatsManOrWoman()
+        {
+
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new ManOrWomanClass
+            {
+                id = r.Key,
+                manOrWoman = this.getCatOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold);
+
+
+            return result;
+        }
+        public IQueryable<int> getCatOfProduct(int id)
+        {
+            var x = from m in _context.ProductCategory where m.ProductId == id && (m.CategoryId == 1 || m.CategoryId == 2) select m.CategoryId;
+            Console.WriteLine(x);
+            return x;
+        }
+
+        public class categorieReturnClass{
+            public int id;
+            public IQueryable<IEnumerable<Category>> cat;
+            public int sold;
+        }
+
+        [HttpGet("stats/overallSales/Categorie")]
+        public IOrderedQueryable<categorieReturnClass> StatsCategorie()
+        {
+
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new categorieReturnClass
+            {
+                id = r.Key,
+                cat = this.getAllCatOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold);
+
+
+            return result;
+        }
+        public IQueryable<IEnumerable<Category>> getAllCatOfProduct(int id)
+        {
+            var x = from m in _context.ProductCategory 
+                    join cat in _context.Categories on m.CategoryId equals cat.Id into g
+                    where m.ProductId == id && (m.CategoryId != 1 && m.CategoryId != 2) 
+                    select g;
+
+            Console.WriteLine(x);
             return x;
         }
         // GET api/admin/products/id

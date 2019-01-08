@@ -2,6 +2,8 @@ import * as React from 'react';
 import './dashboard.css';
 // import  LineChardComp from './chards/Linechards';
 import PieChardComp from './chards/Piechard';
+import PieManOrWoman from './chards/pieManOrWoman';
+import PieCattegorie from './chards/pieCattegorie';
 import AreaChardComp from './chards/Areacard';
 import AreaSaleChardComp from './chards/areaSales';
 import BarChard from './chards/barChard';
@@ -24,7 +26,7 @@ class AdminHome extends React.Component<any, any>{
         return (
             <div className="row">
                 <div className="col-md-12" style={{minHeight:'100px'}}>
-                    <AreaSaleChardComp title="Sales 2019" />
+                    <AreaSaleChardComp title="Verkochten producten 2019" />
                     
                 </div>
                 <div className="col-sm-6" style={{ minHeight: '100px' }}>
@@ -35,13 +37,13 @@ class AdminHome extends React.Component<any, any>{
                 </div>
 
                 <div className="col-sm-4" style={{ minHeight: '100px' }}>
-                    <PieChardComp title="Man / Vrouw" />
+                    <PieManOrWoman title="Producten Man / Vrouw" />
                 </div>
                 <div className="col-sm-4" style={{ minHeight: '100px' }}>
-                    <PieChardComp title="Categorien" />
+                    <PieCattegorie title="Populairste Categorien" />
                 </div>
                 <div className="col-sm-4" style={{ minHeight: '100px' }}>
-                    <PieChardComp title="iets" />
+                    <PieChardComp title="Gasten en gebruikers" />
                 </div>
 
 
