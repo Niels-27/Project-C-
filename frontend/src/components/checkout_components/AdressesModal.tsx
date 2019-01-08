@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody ,Button } from 'reactstrap';
 import { RetrieveData, PostAddress } from 'src/actions/userActions';
-import AdresModal from '../dashboard_containers/addressen_components/AdresModal';
+import AdresModal from '../checkout_components/AdresModal';
 /* tslint:disable:no-empty */
 /* tslint:disable:jsx-boolean-value */
 
@@ -12,9 +12,10 @@ class AddressenModal extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            modal: false, values: {}, type: '', count: 0, removedAdres: null}
+            modal: false, values: {}, type: '', count: 0, removedAdres: null, user:null}
         this.toggle = this.toggle.bind(this);
-        this.renderAddresses = this.renderAddresses.bind(this);     
+        this.renderAddresses = this.renderAddresses.bind(this);  
+        
     }
     public async toggle() {
         await this.setState({
@@ -22,6 +23,7 @@ class AddressenModal extends React.Component<any, any>{
         });
         return this.state.modal;
       }
+      
     public render() {
         const { userData } = this.props
         var showresults = <div>Laden..</div>
@@ -48,7 +50,7 @@ class AddressenModal extends React.Component<any, any>{
 
             </Modal>
 
-           <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal}/>
+           <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal} trigger={this.props.trigger}/>
 
             </div>   )     
         }
@@ -61,11 +63,12 @@ class AddressenModal extends React.Component<any, any>{
         }
         const selectAdres = () =>{
             this.props.toggle();
-            this.props.giveId(address);
+            this.props.storeValue(address);
+            this.props.giveId(address);       
             this.props.toggleBool();  
         }
         return(
-            <div className="col col-sm-12 window" key={address.id}>
+            <div className="col col-sm-12 window" key={address.id} id={address.id}>
             <button onClick={selectAdres} className="btn btn-link">
             <div className="card">
                 <div className="card-header cardHeader">            
