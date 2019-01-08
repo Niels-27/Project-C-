@@ -15,17 +15,17 @@ class WishListPage extends React.Component<any,any>{
 
     constructor(props: any) {
         super(props);
-        this.state = {};
+        this.state = {
+            wishlist: null
+        };
+        this.UpdateList = this.UpdateList.bind(this);
+        this.renderWishListItem = this.renderWishListItem.bind(this);
     }
 
     public async componentDidMount(){
-        const {retrieveWishListData} = this.props
-        await retrieveWishListData(this.props.user, "wishlistdata").then(res => {this.setState({user: res})}, (error) => {this.setState({user: error})});
-        console.log(this.props.user);
-        console.log(this.props.wishlist);
+        this.UpdateList();
     }
-
-    public DeleteFromWishFunc = (id) =>{
+    public DeleteFromWishFunc = async(id) =>{
         const options = {
             method: 'delete',
             headers: {
@@ -36,17 +36,14 @@ class WishListPage extends React.Component<any,any>{
         fetch("http://localhost:5000/api/user/wishlistDelete/"+this.props.user.unique_name+"/"+id, options).catch(err => {
             console.error('Request failed', err)
         })
+        this.UpdateList();   
     }
 
-    public render() {
 
-        var test = <tr><td>Loading...</td></tr>
+    public renderWishListItem = (wishitem, index) => {
 
-        if (this.props.wishlist) {
-            test = this.props.wishlist.map(wishitem => {
-                return(                    
-                    
-                    <tr key={wishitem.id}>
+        return (
+                <tr key={index} id={wishitem.id}>
                         <td><img src={wishitem.imageName} style={{width: 100, height: 100}}/></td>
                         <td>{wishitem.name}</td> 
                         <td>{wishitem.price}</td>
@@ -56,41 +53,54 @@ class WishListPage extends React.Component<any,any>{
                                 Toevoegen
                             </button>
                             <br/>
-                            <button type="button" className="btn btn-danger w-100" onClick={this.DeleteFromWishFunc.bind(this, wishitem.id)}>
+                            <button type="button" className="btn btn-danger w-100" onClick={this.DeleteFromWishFunc.bind(this,wishitem.id)}>
                                 Verwijderen
                             </button>
                         </td>
-                    </tr>           
-                       
-                );
-            })
-        }
-
-        return (
-            <div>
-                <Container>
-                    <Row style={{marginTop:20}}>
-                        <h1 style={{marginBottom:10, marginLeft:15}}>Mijn Wishlist</h1>
-                    </Row>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Foto</th>
-                                <th>Naam</th>
-                                <th>Prijs</th>
-                                <th>Amount</th>
-                                <th>Button</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {test}
-                        </tbody>
-                    </table>
-                </Container>     
-            </div>
+                    </tr>    
         );
     }
 
+    public render() {
+
+        var test = <tr><td>Loading...</td></tr>
+        console.log(this.state.wishlist)
+        if (this.state.wishlist) {
+            test = <div>
+            <Container>
+                <Row style={{marginTop:20}}>
+                    <h1 style={{marginBottom:10, marginLeft:15}}>Mijn Wishlist</h1>
+                </Row>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Naam</th>
+                            <th>Prijs</th>
+                            <th>Amount</th>
+                            <th>Button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.wishlist.map(this.renderWishListItem)}
+                    </tbody>
+                </table>
+            </Container>     
+        </div>
+        }
+        return (
+           <div>   {test}      </div>
+        );
+    }
+    private async UpdateList(){
+        const {retrieveWishListData} = this.props
+        this.setState({wishlist: await 
+            retrieveWishListData(this.props.user, "wishlistdata").then(async res => res, (error) => error)
+ 
+        }) 
+        console.log(this.props.user);
+    }
+    
     private addProductToShoppiongCard = (id) => {
         const c = this.cookie.get('ShoppingCard');
         if (c) {

@@ -9,7 +9,7 @@ export default function(ComposedComponent) {
       retrieveData: PropTypes.func.isRequired, isAuthenticated: PropTypes.bool.isRequired};
       constructor(props: any) {
         super(props);
-        this.state = {user: null, address:null, value: null, address2:null, wishlist:null}
+        this.state = {user: null, address:null, value: null, address2:null}
         this.giveId = this.giveId.bind(this)
       } 
       public giveId(value:object){
@@ -28,10 +28,6 @@ export default function(ComposedComponent) {
            (error) => {this.setState({address: error})});  
            console.log(this.state.value) 
 
-          await retrieveData(this.props.user, "wishlistdata")  // get wishlist
-          .then(res => {this.setState({wishlist: res})},
-          (error) => {this.setState({wishlist: error})});
- 
           if(this.state.value!=null){
             await retrieveData(this.state.value,"addressbyId")  // get addresses
             .then(res => {this.setState({address2: res})},
@@ -46,10 +42,10 @@ export default function(ComposedComponent) {
       console.log(this.state.user)
       console.log(this.state.address)
       console.log(this.state.value)
-      console.log(this.state.wishlist)
-      var showComponent  =   <ComposedComponent userData={this.state.user} address = {this.state.address} giveId={this.giveId}wishlist = {this.state.wishlist}{...this.props} />
+
+      var showComponent  =   <ComposedComponent userData={this.state.user} address = {this.state.address} giveId={this.giveId}{...this.props} />
       if(this.state.value !== null){
-        showComponent= <ComposedComponent userData={this.state.user} address = {this.state.value} giveId={this.giveId}wishlist = {this.state.wishlist}{...this.props} />
+        showComponent= <ComposedComponent userData={this.state.user} address = {this.state.value} giveId={this.giveId}{...this.props} />
       }
       return (
         <div>{showComponent}</div>
