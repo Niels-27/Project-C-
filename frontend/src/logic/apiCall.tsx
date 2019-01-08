@@ -106,6 +106,13 @@ class ApiCall {
             case "Adminuserstats":
                 this.link = "/admin/stats/users/registrations";
             break;   
+            case "Adminsalestats":
+                this.link = "/admin/stats/sales/thisYear";
+            break;
+            case "AdminPopulairStats":
+                this.link = "/admin/stats/sales/thenBest";
+            break;
+            
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";

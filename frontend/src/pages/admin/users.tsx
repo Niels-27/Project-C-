@@ -77,6 +77,8 @@ class AdminUsers extends React.Component<any, any>{
                     return "Gebruiker";
                 case 4:
                     return "Administrator";
+                case 2:
+                    return "Gast Aankoop";
                 default:
                     return "Er is iets fout gegaan";
             }

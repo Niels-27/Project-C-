@@ -15,7 +15,7 @@ export default class AreaChardComp extends React.Component<any, any>{
 
     public async componentDidMount() {
         const call: ApiCall = new ApiCall();
-        call.setURL('Adminuserstats');
+        call.setURL('Adminsalestats');
         await this.setState({ registrations_stats: await call.result() });
     }
 
@@ -23,31 +23,31 @@ export default class AreaChardComp extends React.Component<any, any>{
         console.log(this.state.data);
         var data;
         if (!this.state.registrations_stats) {
-            data = [{ name: 'Januari', Registraties: 0 },
-            { name: 'Februari', Registraties: 0 },
-            { name: 'Maart', Registraties: 0 },
-            { name: 'April', Registraties: 0 },
-            { name: 'Mei', Registraties: 0 },
-            { name: 'Juni', Registraties: 0 },
-            { name: 'juli', Registraties: 0 },
-            { name: 'Augustus', Registraties: 0 },
-            { name: 'September', Registraties: 0 },
-            { name: 'Oktober', Registraties: 0 },
-            { name: 'November', Registraties: 0 },
-            { name: 'December', Registraties: 0 },];
+            data = [{ name: 'Januari', Verkocht: 0 },
+            { name: 'Februari', Verkocht: 0 },
+            { name: 'Maart', Verkocht: 0 },
+            { name: 'April', Verkocht: 0 },
+            { name: 'Mei', Verkocht: 0 },
+            { name: 'Juni', Verkocht: 0 },
+                { name: 'juli', Verkocht: 0 },
+            { name: 'Augustus', Verkocht: 0 },
+            { name: 'September', Verkocht: 0 },
+                { name: 'Oktober', Verkocht: 0 },
+            { name: 'November', Verkocht: 0 },
+            { name: 'December', Verkocht: 0 },];
         } else {
-            data = [{ name: 'Januari', Registraties: this.state.registrations_stats[0] },
-            { name: 'Februari', Registraties: this.state.registrations_stats[1] },
-            { name: 'Maart', Registraties: this.state.registrations_stats[2] },
-            { name: 'April', Registraties: this.state.registrations_stats[3] },
-            { name: 'Mei', Registraties: this.state.registrations_stats[4] },
-            { name: 'Juni', Registraties: this.state.registrations_stats[5] },
-            { name: 'juli', Registraties: this.state.registrations_stats[6] },
-            { name: 'Augustus', Registraties: this.state.registrations_stats[7] },
-            { name: 'September', Registraties: this.state.registrations_stats[8] },
-            { name: 'Oktober', Registraties: this.state.registrations_stats[9] },
-            { name: 'November', Registraties: this.state.registrations_stats[10] },
-            { name: 'December', Registraties: this.state.registrations_stats[11] },];
+            data = [{ name: 'Januari', Verkocht: this.state.registrations_stats[0] },
+                { name: 'Februari', Verkocht: this.state.registrations_stats[1] },
+            { name: 'Maart', Verkocht: this.state.registrations_stats[2] },
+            { name: 'April', Verkocht: this.state.registrations_stats[3] },
+            { name: 'Mei', Verkocht: this.state.registrations_stats[4] },
+            { name: 'Juni', Verkocht: this.state.registrations_stats[5] },
+            { name: 'juli', Verkocht: this.state.registrations_stats[6] },
+            { name: 'Augustus', Verkocht: this.state.registrations_stats[7] },
+            { name: 'September', Verkocht: this.state.registrations_stats[8] },
+            { name: 'Oktober', Verkocht: this.state.registrations_stats[9] },
+            { name: 'November', Verkocht: this.state.registrations_stats[10] },
+            { name: 'December', Verkocht: this.state.registrations_stats[11] },];
         }
 
 
@@ -62,7 +62,7 @@ export default class AreaChardComp extends React.Component<any, any>{
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
-                        <Area type='monotone' dataKey='Registraties' stroke='#8884d8' fill='#8884d8' />
+                        <Area type='monotone' dataKey='Verkocht' stroke='#8884d8' fill='#8884d8' />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

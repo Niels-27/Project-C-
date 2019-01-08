@@ -44,7 +44,7 @@ namespace backend.Controllers
         public List<string> StatsGetAllUsers()
         {
             var thisYear = DateTime.Now.Year;
-            var result = from m in _context.Users select m.CreateOn;
+            var result = from m in _context.Users where m.Rank != 2 select m.CreateOn;
             List<string> items = new List<string>();
             List<string> returnList = new List<string>();
 
@@ -74,7 +74,67 @@ namespace backend.Controllers
             return returnList;
         }
 
+        [HttpGet("stats/sales/thisYear")]
 
+        public List<string> GetStatsSalesThisYear()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = from m in _context.ProductsSold select m.Date;
+            List<string> items = new List<string>();
+            List<string> returnList = new List<string>();
+
+            foreach (var item in result)
+            {
+                if (item.ToString("yyyy") == thisYear.ToString())
+                {
+                    items.Add(item.ToString("MM"));
+                }
+
+            }
+            Dictionary<string, int> counts = items.GroupBy(x => x)
+                                                        .ToDictionary(g => g.Key,
+                                                                        g => g.Count());
+
+            for (int i = 1; i < 13; i++)
+            {
+                if (counts.ContainsKey(i.ToString("D2")))
+                {
+                    returnList.Add(counts[i.ToString("D2")].ToString());
+                }
+                else
+                {
+                    returnList.Add("0");
+                }
+
+            }
+
+
+            return returnList;
+        }
+
+        public class BestSelling{
+            public int id;
+            public IQueryable<string> name;
+            public int sold;
+        }
+        [HttpGet("stats/sales/thenBest")]
+        public IQueryable<BestSelling> GetStatsThenBestThisYear()
+        {
+            var thisYear = DateTime.Now.Year;
+            
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new BestSelling{
+                id = r.Key,
+                name = this.getNameOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold).Take(10);
+
+            return result;
+        }
+        public IQueryable<string> getNameOfProduct(int id){
+            var x = from m in _context.Products where m.Id == id select m.Name;
+            return x;
+        }
         // GET api/admin/products/id
         [HttpGet("products/{id}")]
         public IActionResult GetProductById(int id)
