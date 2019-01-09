@@ -109,7 +109,7 @@ interface IFormikValues
                                  disabled={!formik.isValid || formik.isSubmitting || formik.isValidating}
                                 >
 
-                                 <strong>GA DE NAAR KASSA</strong>
+                                 <strong>GA NAAR DE KASSA</strong>
                                 </button>
                         </div>    
                     </div>

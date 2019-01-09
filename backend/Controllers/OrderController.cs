@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using backend.Models;
 using backend.DTOs;
 using Npgsql;
+
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
@@ -22,9 +23,77 @@ namespace backend.Controllers
         FashionContext _context;
         public OrderController(FashionContext context)
         {
-
             _context = context;
         }
+       
+          [HttpGet]
+        [Route("get/{userId=int}")]
+        public async Task<ActionResult>  GetOrderByUserId(int userId){
+
+            int[] orderIds =  _context.Orders.Where(o => o.UserId == userId && o.StatusId != 9).Select(o => o.Id).ToArray(); // array met order id's
+            if(orderIds == null){
+                return NoContent();
+            }
+            List<Array> OrderList = new List<Array>(){};
+            foreach(var orderId in orderIds){
+                var orderDTO = await(
+                    from o in _context.Orders from ps in _context.ProductsSold from p in _context.Products
+                    from pz in _context.ProductSizes from s in _context.Statuses
+                    where pz.Id == p.ProductSizeId
+                    where p.Id == ps.ProductId
+                    where ps.OrderId == o.Id
+                    where o.Id == orderId
+                    where s.Id == o.StatusId
+                    select new {
+                        ProductId = ps.ProductId,
+                        OrderId = ps.OrderId,
+                        Name = p.Name,
+                        SizeName = pz.SizeName,
+                        Price = p.Price,
+                        Amount = ps.Amount,
+                        ImageName = p.ImageName,
+                        Status = s.Name,
+                        Date = ps.Date
+                    }
+                ).ToArrayAsync();
+                OrderList.Add(orderDTO);
+            }
+            return Ok(OrderList);
+        }  
+           [HttpGet]
+        [Route("getHistory/{userId=int}")]
+        public async Task<ActionResult>  GetOrderByHistory(int userId){
+
+            int[] orderIds =  _context.Orders.Where(o => o.UserId == userId && o.StatusId == 9).Select(o => o.Id).ToArray(); // array met order id's
+            if(orderIds == null){
+                return NoContent();
+            }
+            List<Array> OrderList = new List<Array>(){};
+            foreach(var orderId in orderIds){
+                var orderDTO = await(
+                    from o in _context.Orders from ps in _context.ProductsSold from p in _context.Products
+                    from pz in _context.ProductSizes from s in _context.Statuses
+                    where pz.Id == p.ProductSizeId
+                    where p.Id == ps.ProductId
+                    where ps.OrderId == o.Id
+                    where o.Id == orderId
+                    where s.Id == o.StatusId
+                    select new {
+                        ProductId = ps.ProductId,
+                        OrderId = ps.OrderId,
+                        Name = p.Name,
+                        SizeName = pz.SizeName,
+                        Price = p.Price,
+                        Amount = ps.Amount,
+                        ImageName = p.ImageName,
+                        Status = s.Name,
+                        Date = ps.Date
+                    }
+                ).ToArrayAsync();
+                OrderList.Add(orderDTO);
+            }
+            return Ok(OrderList);
+        }         
         private string RequestBody;
         [HttpPost]
         [Route("post")]

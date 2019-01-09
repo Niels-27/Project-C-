@@ -23,7 +23,7 @@ class UserPage extends React.Component<any,any>{
                 <DashboardNavigation>
                 <Switch>
                   <Route exact path={`${this.props.match.url}`} component={propPasser(Overview)}/>
-                  <Route path={`${this.props.match.url}/orders`} component={propPasser(Orders)} />
+                  <Route path={`${this.props.match.url}/orders`} component={Orders} />
                   <Route path={`${this.props.match.url}/history`} component={propPasser(History)} />
                   <Route path={`${this.props.match.url}/addressen`} component={propPasser(Addressen)} />
                   <Route path={`${this.props.match.url}/accountdetails`} component={propPasser(AccountDetails)} />

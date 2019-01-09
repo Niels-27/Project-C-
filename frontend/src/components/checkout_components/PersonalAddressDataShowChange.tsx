@@ -21,7 +21,7 @@ class PersonalAddresssDataForm extends React.Component<any,any>{
         if (userData && address){
             showresults=  <div> 
             Je bent nu ingelogd als <b>{this.props.userData.name}</b>. <br/>
-            Is de onderstaande informatie incorrect of wil je nog iets wijzigen? Dan kun je die hieronder nog aanpassen.
+            Is de onderstaande informatie incorrect of wil je nog het adres wijzigen? Klik op <b>WIJZIG ADRES</b> om het huidige adres aan te passen.
             <div className="row mt-md-3">
                 <div className="col">
                     <span className="text-start">

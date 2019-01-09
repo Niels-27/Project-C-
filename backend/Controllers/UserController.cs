@@ -54,7 +54,7 @@ namespace backend.Controllers
             dynamic userData = JValue.Parse(this.RequestBody);
             string email = userData.email;
             
-            var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+            var user = _context.Users.Where(u => u.Email == email && u.Rank != 2).Select(u=> u);
             if(user.Any()){
                 return "Dit emailadres is al in gebruik.";
             }
@@ -160,7 +160,7 @@ namespace backend.Controllers
         string email = userData.email;
         string pass = userData.password;
 
-        var user = _context.Users.Where(u => u.Email == email).Select(u=> u);
+        var user = _context.Users.Where(u => u.Email == email && u.Rank != 2).Select(u=> u);
            if(!user.Any()){
                return "Het emailadres bestaat niet.";
            }
@@ -367,6 +367,46 @@ namespace backend.Controllers
             _context.SaveChanges();
             return Ok(foundAddress);          
         }
-                 
+
+
+         [HttpPost]
+        [Route("registerGuest")]   //deze functie registreert een gebruiker
+        public async Task<GuestDTO> ReadStringDataManual2()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }      
+            dynamic userData = JValue.Parse(this.RequestBody);
+            return handleBodyPost2(userData);
+        }        
+        private GuestDTO handleBodyPost2(dynamic user)  // Deze functie handlet de user registratie verder
+        {     
+            DateTime createDate = DateTime.UtcNow;
+            User new_user = new User(){
+                Name = user.name,
+                Email = user.email,
+                Rank = 2,
+                CreateOn = createDate                     
+            };
+            string country = user.country;
+            Country selectedCountry = _context.Countries.Where(c => c.Name == country).Select(c => c).FirstOrDefault();
+            Address new_address = new Address(){
+                Street = user.street + " " + user.streetnumber,
+                PostalCode = user.zipcode,
+                City = user.city,
+                Country = selectedCountry,
+                User = new_user
+            };
+            _context.Add(new_user);
+            _context.Add(new_address);  //Save the user adress data
+            _context.SaveChanges();
+
+            GuestDTO guest =  new GuestDTO(){
+                UserId = new_user.Id,
+                AddressId = new_address.Id
+            };
+            return (guest);
+        }  
     }
 }

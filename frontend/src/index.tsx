@@ -7,8 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { setCurrentUser } from './actions/loginActions';
-import { setPendingOrder } from './actions/orderActions';
-import Cookie from './logic/cookie';
 import rootReducer from './rootReducer';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
@@ -25,10 +23,6 @@ const store = createStore(
   )
 );
 
-const cookie: Cookie = new Cookie();
-const cookieList: string|undefined = cookie.get('ShoppingCard');
-console.log(cookieList)
-
 if(localStorage.jwtToken === 'undefined'){
   localStorage.removeItem('jwtToken');  
 }
@@ -36,10 +30,6 @@ if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
 }
-if (cookieList) {
-  store.dispatch(setPendingOrder(JSON.parse(cookieList)));
-}
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

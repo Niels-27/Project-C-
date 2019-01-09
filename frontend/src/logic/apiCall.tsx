@@ -79,11 +79,20 @@ class ApiCall {
             case "register":
                 this.link = "/user/register";
                 break;  
+            case "registerGuest":
+                this.link = "/user/registerGuest";
+                break;
             case "checkemail":
                 this.link = "/user/checkemail";
                 break; 
             case "postorder":
                 this.link = "/order/post";
+                break;
+            case "getOrders":
+                this.link = "/order/get/" + first;
+                break;
+            case "getHistory":
+                this.link = "/order/getHistory/" + first;
                 break;
             case "Adminuserdata":
                 this.link = "/admin/users/all";

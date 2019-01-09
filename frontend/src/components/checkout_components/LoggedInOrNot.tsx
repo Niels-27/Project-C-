@@ -35,7 +35,6 @@ class LoggedInOrNot extends React.Component<any, any> {
                     state: {origin: "/checkout"}})
             }
             else{
-                alert("Je hebt geen items in de winkelmand.")
                 this.props.history.push("/ShoppingCard")
             }
         }
@@ -48,7 +47,7 @@ class LoggedInOrNot extends React.Component<any, any> {
                <PersonalAddressDataShowChange toggleBool={this.toggleBool}doSomething ={doSomething}address={address}toggle={this.toggle} {...this.props}/>
                 <div className="mt-md-5">
                     <button onClick={goToPayment}className="btn btn-success btn-md" style={{ float: "left" }}>
-                        <strong>GA NAAR KASSA</strong>
+                        <strong>GA NAAR DE KASSA</strong>
                       </button>
                     <button className="btn btn-secondary btn-md" style={{ float: "right" }} onClick={this.toggle}><b>WIJZIG ADRES</b></button>
                 </div>
