@@ -72,7 +72,7 @@ Price = 190.00M, ProductSizeId = 3, Amount = 20, ImageName="https://c.static-nik
 
 modelBuilder.Entity<Product>().HasData(new Product{Id = 6 , Name = "Nike Air Max 95 ",    //#6
 Description = "Deze versie van de Nike Air Max 95 behoudt de iconische look van de AM95, maar heeft een voering van zachte, dikke stof om je voeten warm te houden als de temperatuur daalt.", Color = "Roze", 
-Price = 180.00M, ProductSizeId = 3, Amount = 20, ImageName="https://www.nike.com/nl/t/air-max-95-winterized-damesschoen-gkDT6T/BV0309-200"});
+Price = 180.00M, ProductSizeId = 3, Amount = 20, ImageName="https://c.static-nike.com/a/images/f_auto,b_rgb:f5f5f5,w_880/eb53e7tcsvla8eyfh83z/air-max-95-winterized-damesschoen-B3Vf87.jpg"});
 
 modelBuilder.Entity<Product>().HasData(new Product{Id = 7 , Name = "Puma Basket Heart",    //#7
 Description = "Met een eigen draai aan een van PUMA's meest herkenbare modellen heeft deze Basket-uitvoering all kenmerken van de iconische versie, zoals de beroemde smalle tooling en lange, strakke lijnen, maar dan met een brede, strikachtige sluiting zodat je zowel een stoer als vrouwelijk gevoel hebt in deze coole, casual look.", Color = "Zwart", 
