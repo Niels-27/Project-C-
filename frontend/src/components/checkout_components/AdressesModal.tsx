@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody ,Button } from 'reactstrap';
 import { RetrieveData, PostAddress } from 'src/actions/userActions';
-import AdresModal from '../dashboard_containers/addressen_components/AdresModal';
+import AdresModal from '../checkout_components/AdresModal';
 /* tslint:disable:no-empty */
 /* tslint:disable:jsx-boolean-value */
 
@@ -12,9 +12,10 @@ class AddressenModal extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            addresses: null,  modal: false, values: {}, type: '', count: 0, removedAdres: null}
+            modal: false, values: {}, type: '', count: 0, removedAdres: null, user:null}
         this.toggle = this.toggle.bind(this);
-        this.renderAddresses = this.renderAddresses.bind(this);     
+        this.renderAddresses = this.renderAddresses.bind(this);  
+        
     }
     public async toggle() {
         await this.setState({
@@ -22,14 +23,11 @@ class AddressenModal extends React.Component<any, any>{
         });
         return this.state.modal;
       }
-      public async componentDidMount(){
-        await  this.props.RetrieveData(this.props.user, "allAdresses")
-         .then(results => this.setState({addresses: results}), error => console.log(error) )
-     }
+      
     public render() {
         const { userData } = this.props
         var showresults = <div>Laden..</div>
-        if (userData && this.state.addresses) {
+        if (userData) {
         showresults=(<div>
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
                 <ModalHeader toggle={this.props.toggle}>Adres kiezen</ModalHeader>
@@ -38,10 +36,10 @@ class AddressenModal extends React.Component<any, any>{
                     <b>Kies een adres als het afleveradres.</b>
                     </p>
                     <div className="row boxes">
-                        {this.state.addresses.map(this.renderAddresses)}
+                        {this.props.userData.addresses.map(this.renderAddresses)}
                     </div>
                     <div className="mt-4">
-                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={this.state.addresses.length ===4} onClick={this.toggle}>
+                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={this.props.userData.addresses.length ===4} onClick={this.toggle}>
                                            Voeg nieuw adres toe
                             </Button>
                 
@@ -52,7 +50,7 @@ class AddressenModal extends React.Component<any, any>{
 
             </Modal>
 
-           <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal}/>
+           <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal} trigger={this.props.trigger}/>
 
             </div>   )     
         }
@@ -65,11 +63,12 @@ class AddressenModal extends React.Component<any, any>{
         }
         const selectAdres = () =>{
             this.props.toggle();
-            this.props.giveId(address);
+            this.props.storeValue(address);
+            this.props.giveId(address);       
             this.props.toggleBool();  
         }
         return(
-            <div className="col col-sm-12 window" key={address.id}>
+            <div className="col col-sm-12 window" key={address.id} id={address.id}>
             <button onClick={selectAdres} className="btn btn-link">
             <div className="card">
                 <div className="card-header cardHeader">            

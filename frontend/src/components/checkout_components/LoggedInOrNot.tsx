@@ -11,9 +11,15 @@ class LoggedInOrNot extends React.Component<any, any> {
     public static propTypes = { isAuthenticated: PropTypes.bool.isRequired };
     constructor(props: any) {
         super(props);
-        this.state = {modal: false, values: {}, address: null, doSomething: false}
+        this.state = {modal: false, doSomething: false, address:null}
         this.toggle = this.toggle.bind(this);
         this.toggleBool = this.toggleBool.bind(this)
+        this.storeValue = this.storeValue.bind(this) 
+    }
+    public async storeValue(value:object) {
+        await this.setState({
+          address: value // open/close modal
+        });
     }
     public async toggle() {
         await this.setState({
@@ -32,7 +38,7 @@ class LoggedInOrNot extends React.Component<any, any> {
             if(this.props.location.state){
                 this.props.history.push({
                     pathname:this.props.location.state.origin,
-                    state: {origin: "/checkout"}})
+                    state: {origin: "/checkout", chosenAddress: this.state.address}})
             }
             else{
                 this.props.history.push("/ShoppingCard")
@@ -40,7 +46,7 @@ class LoggedInOrNot extends React.Component<any, any> {
         }
         console.log(this.props)
         const { isAuthenticated, userData, address } = this.props;
-        const {modal,doSomething, type} = this.state;   
+        const {modal,doSomething} = this.state;   
         var renderComponent = <div>..</div>
         if (isAuthenticated && userData && address) {
             renderComponent = <div>
@@ -51,7 +57,7 @@ class LoggedInOrNot extends React.Component<any, any> {
                       </button>
                     <button className="btn btn-secondary btn-md" style={{ float: "right" }} onClick={this.toggle}><b>WIJZIG ADRES</b></button>
                 </div>
-                <AddressesModal toggleBool={this.toggleBool} type={type} toggle={this.toggle} modal={modal}{...this.props}/>
+                <AddressesModal storeValue={this.storeValue} toggleBool={this.toggleBool} toggle={this.toggle} modal={modal}{...this.props}/>
             </div>
         }
         else if (!isAuthenticated) {

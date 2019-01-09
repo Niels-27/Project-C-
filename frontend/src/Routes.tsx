@@ -55,7 +55,7 @@ class Routes extends React.Component<any,any> {
     const { user } = this.state;
     if (user){
       console.log(user)
-      if(user.rank === 4){
+      if(user.rank === 44){
         return this.renderAdmin();
       }
     }
@@ -74,16 +74,16 @@ class Routes extends React.Component<any,any> {
             <Route exact path="/" component={Home} />
             <Route path="/AllProducts/:category/search/:search" component={AllProducts} />
             <Route path="/AllProducts/:category" component={AllProducts} />
-            <Route path="/product/:id" component={Product} />
+            <Route path="/product/:id" component={propPasser(Product)} />
             <Route path="/ShoppingCard" component={ShoppingCard} />
             <Route path="/pagenation" component={Pagination} />
-            <Route path="/form" component={noLoginRequireForm}/>
-            <Route path="/checkout" component={propPasser(loginOrGuest)}/>
-            <Route path="/signup" component={pushBack(SignUpPage)}/>
+            <Route path="/form" component={requireNoLogin(noLoginRequireForm)}/>
+            <Route path="/checkout" component={requireNoLogin(propPasser(loginOrGuest))}/>
+            <Route path="/signup" component={SignUpPage}/>
             <Route path="/payment/:price" component={requireNoLogin(propPasser(Payment))}/>
             <Route path="/login" component={pushBack(SignLoginPage)}/>
             <Route path="/dashboard" component={requireAuth(UserPageRouter)}/>
-            <Route path="/wishlist" component={requireAuth(propPasser(WishListPage))}/>
+            <Route path="/wishlist" component={requireAuth(WishListPage)}/>
             <Route path="/help" component={Help} />
             <Route path="/forbidden" component={noAccess} />
             <Route component={pageNotFound} />

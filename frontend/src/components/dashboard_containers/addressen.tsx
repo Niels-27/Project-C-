@@ -9,7 +9,7 @@ class Addressen extends React.Component<any,any>{
     public static propTypes = {user: PropTypes.object.isRequired}
     constructor(props: any) {
         super(props);
-        this.state = {addresses: null,  modal: false, values: {}, type: '', count: 0, removedAdres: null}
+        this.state = {modal: false, values: {}, type: '', count: 0, removedAdres: null, addresses: null}
         this.toggle = this.toggle.bind(this);
         this.renderAdres = this.renderAdres.bind(this);
     }
@@ -18,12 +18,11 @@ class Addressen extends React.Component<any,any>{
           modal: !this.state.modal  // open/close modal
         });
         return this.state.modal;
-      }
+      } 
     public render() {
         const {userData} = this.props
-        console.log(this.props)
         var showresults = <span>..</span>
-        if ( userData && this.state.addresses){
+        if ( userData ){
             showresults = (
             <div> 
             <h5><b>Mijn adressen</b></h5>
@@ -32,14 +31,14 @@ class Addressen extends React.Component<any,any>{
                 <b>Je mag maximaal 4 addressen beheren.</b>
             </p>
             <div className="row boxes">
-                {this.state.addresses.map(this.renderAdres)}
+                {userData.addresses.map(this.renderAdres)}
             </div>
             <div className="mt-4">
-            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={this.state.addresses.length ===4}>
+            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={userData.addresses.length ===4}>
                                 <strong>Voeg een adres toe</strong>
             </button>
             </div>
-            <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal}/>
+            <AdresModal userData={userData} toggle={this.toggle} modal={this.state.modal} {...this.props}/>
         </div>)
         }
         return (
@@ -47,10 +46,6 @@ class Addressen extends React.Component<any,any>{
                 {showresults}        
             </div>   
         );
-    }
-    public async componentDidMount(){
-       await  this.props.RetrieveData(this.props.user, "allAdresses")
-        .then(results => this.setState({addresses: results}), error => console.log(error) )
     }
     private renderAdres(address, index){
         const adresObject : object = {
@@ -60,9 +55,13 @@ class Addressen extends React.Component<any,any>{
             city: address.city,
             country: address.country.name,
         }
-        const removeAdres= () =>{
-            this.props.PostAddress(adresObject, "removeAddress")
-            .then(removedAdres => {console.log(removedAdres); this.props.history.go() }, error => console.log(error))   // insert functie which removes adres en refreshes the page
+        const removeAdres= async () =>{
+            this.setState({removedAdres: await 
+                this.props.PostAddress(adresObject, "removeAddress")
+                .then(removedAdres => removedAdres, error => error
+            )});
+            this.props.trigger();
+               // insert functie which removes adres en refreshes the page
         }
         var showButton= <span>Hoofdadres</span>
         if(index+1 !== 1){

@@ -10,26 +10,26 @@ export default function(ComposedComponent) {
 
     constructor(props: any) {
       super(props);
-      this.state = { origin: ""};
+      this.state = { forwarder: ""};
   }
 
     public async componentWillMount() {  
       console.log(this.props.location.pathname)
-      await this.setState({origin: this.props.location.pathname}) 
+      await this.setState({forwarder: this.props.location.pathname}) 
       if (!this.props.isAuthenticated) {
         this.props.history.push({
           pathname: '/login',
-          state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
+          state: { forwarder: this.state.forwarder }  // this.props.location.state.origin in the rendered component
         });
       }
     }
 
     public async componentWillUpdate(nextProps) {
-      await this.setState({origin: this.props.location.pathname}) 
+      await this.setState({forwarder: this.props.location.pathname}) 
       if (!nextProps.isAuthenticated) {
         this.props.history.push({
           pathname: '/login',
-          state: { origin: this.state.origin }  // this.props.location.state.origin in the rendered component
+          state: { forwarder: this.state.forwarder }  // this.props.location.state.origin in the rendered component
         });
       }
     }
