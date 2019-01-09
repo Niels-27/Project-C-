@@ -86,7 +86,7 @@ class NoLoginRequiredForm extends React.Component<any,any>{
     }
     private async onSubmit(values: IFormikValues, formik: FormikProps<IFormikValues>){
         formik.setSubmitting(true);
-        await this.checkEmailExists(values);
+        // await this.checkEmailExists(values);
         if(this.state.errormessage === ''){
             await this.props.signUpGuest(values).then( (result) => {
                 console.log(result)

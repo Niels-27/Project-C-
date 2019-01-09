@@ -165,11 +165,12 @@ class Payment extends React.Component<any, any>{
         fields.preventDefault();
         // if(this.handleValidation(fields))
         if ((this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === '')) {
-
-            this.sendMail(this.props.match.params.price, "nofit64@gmail.com"); //  gavindhollander
-
-
-
+            if(this.props.location.state.addresUser){
+                this.sendMail(this.props.match.params.price, this.props.location.state.addresUser.email ); //  gavindhollander
+            } 
+            else{
+                this.sendMail(this.props.match.params.price, userData.email); //  gavindhollander
+            }
         }
         else {
             alert("Form has errors.")
