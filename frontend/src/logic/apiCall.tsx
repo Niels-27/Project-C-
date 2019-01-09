@@ -103,6 +103,9 @@ class ApiCall {
             case "AdminuserdataChange":
                 this.link = "/user/updateUser/ChangeByid/";
                 break;   
+            case "AdminProductdataChange":
+                this.link = "/admin/products/update/byid";
+                break; 
             case "Adminuserstats":
                 this.link = "/admin/stats/users/registrations";
             break;   
@@ -121,6 +124,22 @@ class ApiCall {
             case "AdminStatsRigisterdVSGuest":
                 this.link = "/admin/stats/users/vs/guest";
                 break;
+            case "removeUser":
+                this.link = "/admin/users/delete/" + first;
+                break;
+                case "removeProduct":
+                this.link = "/admin/products/delete/" + first;
+                break;
+            case "AdminAllCattegories":
+                this.link = "/admin/cattegorie/all"
+                break;
+            case "AdminGetAllSizes":
+                this.link = "/admin/sizes/all"
+                break;
+            case "AdminNewProduct":
+                this.link = "/admin/new/Product"
+                break;
+                
             default:
                 this.link = "/product";
                 return "there was no availeble option defined. basic path used!";
@@ -128,7 +147,16 @@ class ApiCall {
         console.log(this.link);
         return "Path defined. used path for ${link}";
     }
-
+    public MakeDeliteCall() {
+        return axios.delete(this.PATH_BASE + this.link)
+            .then(res => {
+                return res.data;
+            })
+            .catch(err => {
+                console.log(err);
+                return {};
+            });
+    }
     private MakeGetCall() {
         return axios.get(this.PATH_BASE + this.link)
             .then(res => {
@@ -140,6 +168,7 @@ class ApiCall {
             });
     }
 
+   
 
     private MakePostCall(post) {
         console.log(post);

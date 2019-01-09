@@ -342,7 +342,7 @@ namespace backend.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = 1, CreateOn = new DateTime(2019, 1, 5, 2, 49, 7, 291, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
+                        new { Id = 1, CreateOn = new DateTime(2019, 1, 7, 17, 31, 40, 623, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
                     );
                 });
 

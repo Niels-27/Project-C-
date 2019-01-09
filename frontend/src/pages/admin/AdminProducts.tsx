@@ -24,6 +24,7 @@ class AdminUsers extends React.Component<any, any>{
                     <h5>Producten</h5>
                     <nav className="navbar navbar-light bg-light" style={{marginBottom:'15px'}}>
                         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style={{ maxWidth: '300px' }} value={this.state.searchString} onChange={this.handleChange}/>
+                        <Link to="/product/make" className="btn btn-outline-dark">Nieuw Product</Link>
                     </nav>
                     <table className="table table-bordered" id="dataTable" >
                         <thead>
@@ -75,7 +76,7 @@ class AdminUsers extends React.Component<any, any>{
                         <td>{product.name}</td>
                         <td>{product.price}</td>
                         <td>{product.amount}</td>
-                        <td><Link to={'/product/view/' + product.id}>Bekijk</Link> | <Link to={'/product/edite/' + product.id}>Bewerk</Link></td>
+                        <td><Link to={'/product/view/' + product.id}>Bekijk/Bewerk</Link></td>
                     </tr>);
         }
        return ;

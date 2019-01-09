@@ -38,8 +38,9 @@ import DashboardWrap from './pages/admin/dashboard';
 import AdminHome from './pages/admin/home';
 import AdminUsers from './pages/admin/users';
 import AdminUsersView from './pages/admin/AdminUsersView';
+import AdminProductsView from './pages/admin/AdminProductsView';
 import AdminProducts from './pages/admin/AdminProducts';
-
+import AdminNewProduct from './pages/admin/newProduct';
 class Routes extends React.Component<any,any> {
   public static propTypes = {  
     user: PropTypes.object.isRequired,
@@ -106,11 +107,12 @@ class Routes extends React.Component<any,any> {
       <DashboardWrap>
         <Switch>
             <Route exact path="/" component={AdminHome} />
-            <Route exact path="/user/edite/:id" component={AdminUsers} />
+            <Route exact path="/product/view/:id" component={AdminProductsView} />
             <Route exact path="/user/view/:id" component={AdminUsersView} />
             <Route exact path="/user/make" component={SignUpPage} />
             <Route exact path="/users" component={AdminUsers} />
             <Route exact path="/products" component={AdminProducts} />
+            <Route exact path="/product/make" component={AdminNewProduct} />
             
             <Route component={pageNotFound} />
         </Switch>

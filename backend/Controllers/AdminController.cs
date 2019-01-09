@@ -237,6 +237,40 @@ namespace backend.Controllers
             }
             return new ObjectResult(user);
         }
+
+        [HttpPost("new/Product")]
+        public async void CreateNewProduct()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic p = JValue.Parse(this.RequestBody);
+            Product product = new Product(){
+                ImageName = p.imageName,
+                Name = p.name,
+                Price = p.price,
+                Color = p.color,
+                Amount = p.amount,
+                Description = p.description,
+                ProductSizeId = p.size
+            };
+            _context.Add(product);
+            _context.SaveChanges();
+        }
+
+        [HttpGet("cattegorie/all")]
+        public IQueryable<Category> GetAllCattegories()
+        {
+            var result = from c in _context.Categories orderby c.Id select c;
+            return result;
+        }
+        [HttpGet("sizes/all")]
+        public IOrderedQueryable<ProductSize> GetAllSizes()
+        {
+            var result = from c in _context.ProductSizes orderby c.Id select c;
+            return result;
+        }
         private string RequestBody;
         
  
@@ -254,7 +288,28 @@ namespace backend.Controllers
             return Ok();
 
         }
+        [HttpPost("products/update/byid")]
+        public async Task<IActionResult> UpdateProductById()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic up = JValue.Parse(this.RequestBody);
+            int id = Int32.Parse(up.id.ToString());
 
+            var products = _context.Products.Where(a => a.Id == id).Select(a => a).FirstOrDefault();
+            products.ImageName = up.ImageName;
+            products.Name = up.Name;
+            products.Color = up.Color;
+            products.Price = up.Price;
+            products.Description = up.Description;
+
+            _context.Products.Update(products);
+            _context.SaveChanges();
+
+            return Ok(products);
+        }
        // PUT api/admin/products/id
         [HttpPut("products/update/{id}")]
         public IActionResult PutProduct(int id, [FromBody]Product product_edit)

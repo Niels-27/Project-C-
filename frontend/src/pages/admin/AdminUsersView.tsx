@@ -61,7 +61,11 @@ class AdminUsers extends React.Component<any, any>{
                             <li className="breadcrumb-item"><Link to="/">Dashboard</Link></li>
                             <li className="breadcrumb-item"><Link to="/Users">Users</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">{user.name}</li>
+                             <b onClick={this.removeUserHandler} style={{color:'red',marginLeft:'auto'}}>
+                            Verwijder Gebruiker
+                        </b>
                         </ol>
+
                     </nav>
                 <div className="row" style={{ margin: '15px auto'}}>
                     <div className="col-sm-12">
@@ -84,7 +88,7 @@ class AdminUsers extends React.Component<any, any>{
                                 <option value="1">{this.displayRank(1)}</option>
                                 <option value = "4" > { this.displayRank(4)}</option>
                             </select>
-                        <button className="btn" onClick={this.handleClick}>Opslaan</button>
+                                <button className="btn btn-light" onClick={this.handleClick}>Opslaan</button>
 
                         <hr />
 
@@ -104,13 +108,30 @@ class AdminUsers extends React.Component<any, any>{
 
     }
 
+    private removeUserHandler = () =>{
+        const response = this.removeUser(this.props.match.params.id);
+        if(response){
+            alert("gebruiker is verwijderd");
+            this.props.history.push("/Users");
+        }else{
+            alert(response);
+        }
+    }
+
+    private async removeUser(id){
+        const call: ApiCall = new ApiCall();
+        call.setURL('removeUser', id);
+        const result = await call.MakeDeliteCall();
+        return result;
+    }
+
     private renderAdress =() =>{
         if(this.state.user_adr !== null){
             return(<div>
                 {this.state.user_adr.city + " "}
                 {this.state.user_adr.street + " "}
                 {this.state.user_adr.postalCode + " "}
-                {this.state.user_adr.country.name}
+                {this.state.user_adr.country ? this.state.user_adr.country.name : "Deze user heeft geen gegevends"}
 
                 
                 </div>);
