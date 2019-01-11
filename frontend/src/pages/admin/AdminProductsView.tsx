@@ -50,7 +50,7 @@ description:null,
 
                                     <div className="carousel-inner text-center text-md-left" role="listbox">
                                         <div className="carousel-item active">
-                                            <img src={product.url} alt="First slide" className="img-fluid img-thumbnail" />
+                                                        {product.url ? <img src={product.url} alt="First slide" className="img-fluid img-thumbnail"/> :""}
                                         </div>
 
 

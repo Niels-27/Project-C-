@@ -238,8 +238,60 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
-
         [HttpPost("new/Product")]
+
+        public async Task<Product> InsertProduct()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic product = JValue.Parse(this.RequestBody);
+
+            int sizeID = product.size;
+            ProductSize productSize = _context.ProductSizes.Where(ps => ps.Id == sizeID).Select(ps => ps).FirstOrDefault();
+
+            decimal price = product.price;
+            var lastID = from q in _context.Products orderby -q.Id select q.Id;
+            Product new_product = new Product()
+            {
+                Id = lastID.First() + 1,
+                Name = product.name.ToString(),
+                Description = product.description.ToString(),
+                Color = product.color.ToString(),
+                Price = price,
+                Amount = product.amount,
+                ProductSize = productSize, // referentie naar Product size..
+                ImageName = product.imageName,
+            };
+            _context.Add(new_product);
+
+            // geef in de frontend collectie(array/list..) mee aan categorien called "categories" met > , {heren, shirt, Nike}
+            //Deze loop voegt voor elke category string in product.categories een nieuwe ProductCategory toe aan de database
+            //category is string 
+            var lastIDCat = from q in _context.ProductCategory orderby -q.Id select q.Id;
+            int lastIDCatInt = lastIDCat.First() + 1;
+
+            foreach (var category in product.cat)
+            {
+
+                int catID = category;
+                Category cat = _context.Categories.Where(c => c.Id == catID).Select(c => c).FirstOrDefault();
+
+                ProductCategory pc = new ProductCategory()
+                {
+                    Id = lastIDCatInt,
+                    Product = new_product,
+                    Category = cat
+                };
+                _context.Add(pc); // Maak voor ProductCAtegort ook sequence met startswith, want heeft ook inital data, anders krijg je errors.
+                lastIDCatInt++;
+            }
+            _context.SaveChanges();
+            return new_product;
+        }
+
+        [HttpPost("new/Product/v1")]
         public async Task<IActionResult> CreateNewProduct()  //deze functie haalt de wishlist data van de user
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -260,6 +312,22 @@ namespace backend.Controllers
                 ProductSizeId = p.size,
             };
             _context.Products.Add(product);
+            _context.SaveChanges();
+
+            var lastIDCat = from q in _context.ProductCategory orderby -q.Id select q.Id;
+            int lastIDCatInt = lastIDCat.First() + 1;
+            foreach (var category in p.cat)
+            {
+                Console.WriteLine(lastID.First() + 1);
+                ProductCategory pc = new ProductCategory()
+                {
+                    Id = lastIDCatInt,
+                    ProductId = lastID.First() + 1,
+                    CategoryId = category
+                };
+                _context.ProductCategory.Add(pc); // Maak voor ProductCAtegort ook sequence met startswith, want heeft ook inital data, anders krijg je errors.
+                lastIDCatInt ++;
+            }
             _context.SaveChanges();
 
             return Ok(product);

@@ -9,12 +9,25 @@ class AdminUsers extends React.Component<any, any>{
         this.state = { users: null ,search: null, searchString: "" };
     }
 
-    public async componentDidMount() {
-        const call: ApiCall = new ApiCall();
-        call.setURL('Adminuserdata');
-        await this.setState({ users: await call.result() });
+
+
+    public componentDidMount() {
+        this.refresh();
     }
 
+    public componentDidUpdate() {
+        this.refresh();
+    }
+
+    public async refresh() {
+        const call: ApiCall = new ApiCall();
+        call.setURL('Adminuserdata');
+        
+        if (await call.result() !== this.state.users) {
+            await this.setState({ users: await call.result() });
+        }
+
+    }
     public render() {
 
         return (

@@ -10,10 +10,21 @@ class AdminUsers extends React.Component<any, any>{
         this.state = { products: null,search:null ,searchString:""};
     }
 
-    public async componentDidMount() {
+    public componentDidMount() {
+        this.refresh();
+    }
+
+    public componentDidUpdate(){
+        this.refresh();
+    }
+
+    public async refresh(){
         const call: ApiCall = new ApiCall();
         call.setURL('allProducts');
-        await this.setState({ products: await call.result() });
+        if (await call.result() !== this.state.products){
+            await this.setState({ products: await call.result() });
+        }
+        
     }
 
     public render() {

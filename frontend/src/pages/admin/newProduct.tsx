@@ -47,7 +47,7 @@ class AdminNewProduct extends React.Component<any, any>{
 
                                         <div className="carousel-inner text-center text-md-left" role="listbox">
                                             <div className="carousel-item active">
-                                                <img src={product.url} alt="First slide" className="img-fluid img-thumbnail" />
+                                                {product.url ? <img src={product.url} alt="First slide" className="img-fluid img-thumbnail" /> : ""}
                                             </div>
 
 
@@ -63,28 +63,27 @@ class AdminNewProduct extends React.Component<any, any>{
 
                                 <h3 className="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
                                     <span className="grey-text">
-                                        <small>€{product.price}</small>
+                                        {product.price?<small>€{product.price}</small>:""}
                                     </span>
                                 </h3>
 
                                 <p className="ml-xl-0 ml-4">{product.description}
                                 </p>
 
-                                <p className="ml-xl-0 ml-4">
-                                    <strong>Kleur: </strong>{product.color}</p>
+                                
+                                    {product.color ? <p className="ml-xl-0 ml-4"><strong>Kleur: </strong>{product.color}</p> : ""}
 
 
-                                <strong>Maat: </strong>
+                                {product.sizeName ? <strong>Maat: </strong>:""}
 
                                 <h3 className="h3-responsive text-center text-md-left mt-2 mb-5 ml-xl-0 ml-4">
                                     {product.sizeName}
-
                                 </h3>
 
                                 <section className="Beschikbaarheid">
                                     <div className="mt-5">
-                                        <p className="grey-text">
-                                            <strong>Beschikbaarheid: </strong>{product.amount}</p>
+                                        
+                                        {product.amount ? <p className="grey-text"><strong>Beschikbaarheid: </strong>{product.amount}</p> : ""}
                                     </div>
                                     <div className="mt-5">
                                         {this.state.selectedCat.map(this.renderSelectedCat)}

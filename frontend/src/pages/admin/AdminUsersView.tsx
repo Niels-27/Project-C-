@@ -17,15 +17,17 @@ class AdminUsers extends React.Component<any, any>{
             street: String,
             city:String
         },
-            user_adr:null};
+            user_adr:null,
+            orders:null};
     }
 
     public async componentDidMount() {
         const call: ApiCall = new ApiCall();
         call.setURL('AdminuserdataView', this.props.match.params.id);
         const result = await call.result();
-        await this.setState({ user: result, userInput:{name : result.name,email : result.email, rank:result.rank }});
+        await this.setState({ user: result, userInput: { name: result.name, email: result.email, rank: result.rank },orders: await this.getUserOrders(result.id)});
         await this.getAddresInfo(this.state.user.id);
+        
     }
 
 
@@ -52,6 +54,7 @@ class AdminUsers extends React.Component<any, any>{
 
     public render() {
         if (this.state.user) {
+            console.log(this.state.orders );
             const user = this.state.user;
             const input = this.state.userInput;
             return (
@@ -78,6 +81,7 @@ class AdminUsers extends React.Component<any, any>{
                         <hr />
                         {this.renderAdress()}
                         <hr />
+                            {this.state.orders ? this.state.orders.map(this.renderOrder) : "Geen orders gevonden"}
                     </div>
                     <div className="col-sm-6">
                     <div style={{maxWidth:'300px',width:'100%'}}>
@@ -96,9 +100,6 @@ class AdminUsers extends React.Component<any, any>{
  
                     </div>
 
-                    <div className="col-sm-6">
-                        {user.orders ? user.orders.map(this.renderOrder) : "Geen orders gevonden"}
-                    </div>
                 </div>
                 </div>
             );
@@ -123,6 +124,14 @@ class AdminUsers extends React.Component<any, any>{
         call.setURL('removeUser', id);
         const result = await call.MakeDeliteCall();
         return result;
+    }
+
+    private async getUserOrders(id){
+        const call: ApiCall = new ApiCall();
+        call.setURL('getOrders', id);
+        const result = await call.result();
+        return result;
+        
     }
 
     private renderAdress =() =>{
@@ -168,8 +177,24 @@ class AdminUsers extends React.Component<any, any>{
         const result = await call.result({ id: state.user.id,name: state.userInput.name, email: state.userInput.email, rank: state.userInput.rank });
         console.log(result);
     }
-    private renderOrder(order) {
-        return (<p>Order: {order}</p>);
+    private renderOrder = (order) => {
+        console.log("order");
+
+        return (<div>
+            <p>order datum : {order[0].date}</p>
+            {order.map(this.mapOrderItems)}
+        </div>);
+    }
+
+    private mapOrderItems(item){
+        return (<div style={{paddingLeft:'15px'}}>
+            <div style={{ width: '10%' ,float:'left'}}><img src={item.imageName} height="25p" /></div>
+            <div style={{ width: '10%', float: 'left'}}>{item.amount} x</div>
+            <div style={{ width: '60%', float: 'left'}}>{item.name}</div>
+            <div style={{ width: '10%', float: 'left'}}>{item.price}</div>
+            <div style={{ width: '10%', float: 'left' }}>{item.price * item.amount}</div>
+        </div>);
+
     }
     private displayRank = (rank) => {
         switch (rank) {
