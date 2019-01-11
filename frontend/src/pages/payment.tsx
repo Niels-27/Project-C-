@@ -16,8 +16,8 @@ class Payment extends React.Component<any, any>{
         super(props);
 
         this.state = {
-            showPopup: false, value: '', fields: {}, name: null, number: null,
-            errors: [null, null], isSubmitDisabled: true, notClicked: true,
+            showPopup: false, value: '', fields: {},nameValue : '',numberValue : '', cvcValue: '', monthValue: '', yearValue: '',
+            errors: [null, null, null, null, null], isSubmitDisabled: true, notClicked: true, IsDisabled : true,
             items: this.cookie.get('ShoppingCard') || undefined, products: null, map: null,
             order: {
                 cookie: {},
@@ -46,33 +46,67 @@ class Payment extends React.Component<any, any>{
         this.UpdateItems();
     }
 
-    public togglePopup = (e) => {
-        e.preventDefault();
-
-        this.setState({
-            showPopup: !this.state.showPopup && alert('You have successfully payed!')
-        })
-    }
-
-
-
+    
 
     public handleChange = (event) => {
 
 
         this.handleValidation(event.target);
+
         this.setState({ value: event.target.value });
+        
         // console.log("derp");
     }
+    public handleNameCardChange = (event) => {
 
 
+        this.handleValidation(event.target);
+
+        this.setState({ nameValue: event.target.value });
+        
+    }
+
+    public handleNumberCardChange = (event) => {
+
+
+        this.handleValidation(event.target);
+
+        this.setState({ numberValue: event.target.value });
+        }
+
+    public handleCvcChange = (event) => {
+
+
+            this.handleValidation(event.target);
+    
+            this.setState({ cvcValue: event.target.value });
+            
+            
+        }
+        public handleMonthChange = (event) => {
+
+
+            this.handleValidation(event.target);
+    
+            this.setState({ monthValue: event.target.value });
+            
+        } 
+        public handleYearChange = (event) => {
+
+
+            this.handleValidation(event.target);
+    
+            this.setState({ yearValue: event.target.value });
+            
+        }       
+    
     public handleValidation(fields) {
 
         var errors: string = "";
         const fieldName = fields.name;
         fields = fields.value;
         const tField = typeof fields;
-        console.log(tField, fieldName);
+        // console.log(tField, fieldName, fields);
         let formIsValid = true;
 
 
@@ -80,20 +114,44 @@ class Payment extends React.Component<any, any>{
         console.log(fieldName);
 
 
-        if (tField !== "undefined" && fieldName === 'name') {
+        if (tField!=="undefined" && fieldName === 'name') {
             if (!fields.match(/^[a-zA-Z]+$/)) {
                 formIsValid = false;
                 errors = "Can't be empty & Only letters";
             }
         }
 
-        if (tField !== "undefined" && fieldName === 'number') {
+        if (tField!== "undefined" && fieldName === 'number') {
             if (!fields.match(/^[0-9]+$/)) {
                 formIsValid = false;
                 errors = "Can't be empty & Only numbers";
             }
 
         }
+
+        if (tField !== "undefined" && fieldName === 'cvc') {
+            if (!fields.match(/^[0-9]+$/)) {
+                formIsValid = false;
+                errors = "Can't be empty & Only numbers";
+            }
+
+        }
+
+        if (tField !== "undefined" && fieldName === 'month') {
+            if (!fields.match(/^[0-9]+$/)) {
+                formIsValid = false;
+                errors = "Can't be empty & Only numbers";
+            }
+
+        }
+        if (tField !== "undefined" && fieldName === 'year') {
+            if (!fields.match(/^[0-9]+$/)) {
+                formIsValid = false;
+                errors = "Can't be empty & Only numbers";
+            }
+
+        }
+
 
 
 
@@ -112,8 +170,28 @@ class Payment extends React.Component<any, any>{
             currentError[1] = errors;
             this.setState({ errors: currentError })
         }
+        if (fieldName === "cvc") {
+            //  console.log(this.state.errors)
+            const currentError = this.state.errors;
+            currentError[2] = errors;
+            this.setState({ errors: currentError })
+        }
+        if (fieldName === "month") {
+            //  console.log(this.state.errors)
+            const currentError = this.state.errors;
+            currentError[3] = errors;
+            this.setState({ errors: currentError })
+        }
+        if (fieldName === "year") {
+            //  console.log(this.state.errors)
+            const currentError = this.state.errors;
+            currentError[4] = errors;
+            this.setState({ errors: currentError })
+        }
 
+       
 
+        // console.log(fields);
         console.log(formIsValid)
         return formIsValid;
 
@@ -132,6 +210,7 @@ class Payment extends React.Component<any, any>{
 
     public contactSubmit = (fields) => {
         this.setState({ notClicked: false })
+       
         //  console.log('bye')
         const { address, userData } = this.props;
         console.log(userData)
@@ -167,7 +246,9 @@ class Payment extends React.Component<any, any>{
 
         fields.preventDefault();
         // if(this.handleValidation(fields))
-        if ((this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === '')) {
+        if ((this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === '') &&
+        (this.state.errors[2] === null || this.state.errors[2] === '')&& (this.state.errors[3] === null || this.state.errors[3] === '')
+         && (this.state.errors[4] === null || this.state.errors[4] === '')) {
             if(this.props.location.state.addresUser){
                 this.sendMail(this.props.match.params.price, this.props.location.state.addresUser.email ); //  gavindhollander
             } 
@@ -175,8 +256,11 @@ class Payment extends React.Component<any, any>{
                 this.sendMail(this.props.match.params.price, userData.email); //  gavindhollander
             }
         }
-        else {
-            alert("Form has errors.")
+        else
+         {
+             
+            
+            alert("Er is een error.Check de velden opnieuw")
             this.setState({ notClicked: true })
 
         }
@@ -185,7 +269,9 @@ class Payment extends React.Component<any, any>{
     }
 
     public handleChangeValidation = (e) => {
-        this.setState({ fields: e.target.value });
+        
+        this.setState({ fields: e.target.value});
+        
     }
 
 
@@ -200,6 +286,8 @@ class Payment extends React.Component<any, any>{
         console.log(this.state.products)
         const cancel = ()  => {
             this.props.history.push({pathname:"/ShoppingCard", state: {}})
+
+            
         }
         return (
 
@@ -232,14 +320,14 @@ class Payment extends React.Component<any, any>{
                         <div className='form-row justify-content-center md-4'>
                             <div className='col-md-16'>
                                 <label htmlFor='control-label' style={{ fontWeight: "bold" }} >Name on Card</label>
-                                <input className='form-control' name='name' type='text' value={this.state.fields.name} onChange={this.handleChange} />
+                                <input className='form-control' id = 'namecard'name='name' type='text' value={this.state.fields.name} onChange={this.handleNameCardChange} />
                                 <span style={{ color: "red" }}>{this.state.errors[0]}</span>
                             </div>
                         </div>
                         <div className='form-row justify-content-center mb-3'>
                             <div className='col-md-18 form-group required'>
                                 <label className='control-label' style={{ fontWeight: "bold" }}>Card Number</label>
-                                <input className='form-control card-number' name='number' type='text' value={this.state.fields.number} onChange={this.handleChange} />
+                                <input className='form-control card-number' name='number' type='text' value={this.state.number} onChange={this.handleNumberCardChange} />
                                 <span style={{ color: "red" }}>{this.state.errors[1]}</span>
                             </div>
                         </div>
@@ -247,15 +335,24 @@ class Payment extends React.Component<any, any>{
                         <div className='form-row justify-content-center mt-3'>
                             <div className='col-xs-4 form-group cvc required' >
                                 <label className='control-label' style={{ fontWeight: "bold" }}>CVC</label>
-                                <input className='form-control card-cvc' placeholder='ex. 311' type='text' /></div>
+                                <span style={{ color: "red" }}>{this.state.errors[2]}</span>
+                                <input className='form-control card-cvc' placeholder='ex. 311' type='text' name = 'cvc' value={this.state.fields.cvc} onChange={this.handleCvcChange}/></div>
+                                
                             <div className='col-xs-7 form-group expiration required'>
+                            
                                 <label className='control-label' style={{ fontWeight: "bold" }}>Expiration</label>
-                                <input className='form-control card-expiry-month' placeholder='MM' size={2} type='text' /></div>
+                                <span style={{ color: "red" }}>{this.state.errors[3]}</span>
+                                <input className='form-control card-expiry-month' placeholder='MM' size={2} type='text' name = 'month' value = {this.state.fields.month} onChange={this.handleMonthChange}/></div>
 
                             <div className='col-xs-4 form-group expiration required'>
                                 <label className='control-label' style={{ fontWeight: "bold" }}>Date</label>
-                                <input className='form-control card-expiry-year' placeholder='YYYY' size={4} type='text' />
+                                <span style={{ color: "red" }}>{this.state.errors[4]}</span>
+                                <input className='form-control card-expiry-year' placeholder='YYYY' size={4} type='text' name= 'year' value={this.state.fields.year} onChange={this.handleYearChange} />
+                                
+                               
+                                
                             </div>
+                            
 
                         </div>
                         <div className='form-row'>
@@ -268,7 +365,7 @@ class Payment extends React.Component<any, any>{
                         </div>
                         <div className='form-row'>
                             <div className='row justify-content-center mt-3 mb-4 col-md-12 form-group'>
-                                <button className='form-control btn btn-primary submit-button standard-button' disabled={!(this.props.userData && this.props.address && this.state.notClicked && this.state.products)} type='submit' id="pay" onClick={this.contactSubmit} >Pay »</button>
+                                <button className='form-control btn btn-primary submit-button standard-button' disabled={!(this.props.userData && this.props.address && this.state.notClicked && this.state.products && this.state.nameValue && this.state.numberValue && this.state.cvcValue && this.state.monthValue && this.state.yearValue)} type='submit' id="pay"  >Pay »</button>
                                
                             </div>
                             <div className="mt-1" style={{textAlign:"center", paddingLeft:50, paddingRight:50}}>
