@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Col, Nav, NavItem, Row } from 'reactstrap';
+import {Col, Nav, NavItem, NavLink, Row } from 'reactstrap';
 import './footer.css' ;
 
 
@@ -9,53 +9,26 @@ import './footer.css' ;
     <Row className="">
       <Col className="">
         <Nav justified className="">
-        <NavItem>
+          <NavItem>
             Customer Service
-            <li className="nav-item ">
-                            <a className="nav-link " href="#">Contact us</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">Shipping & Delivery</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">My Orders</a>
-                </li>
+            <NavLink className="nav-item" >Contact us</NavLink>
+            <NavLink className="nav-item" >Shipping & Delivery</NavLink>
+            <NavLink className="nav-item" >My Orders</NavLink>
           </NavItem>
           <NavItem>
             Legal Information
-            <li className="nav-item">
-                            <a className="nav-link" href="#">Terms & Conditions</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">Privacy Policy</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">Right of Withdrawal</a>
-                </li>
+            <NavLink className="nav-item" >Terms & Conditions</NavLink>
+            <NavLink className="nav-item" >Privacy Policy</NavLink>
+            <NavLink className="nav-item" >Right of Withdrawal</NavLink>
           </NavItem>
-          <NavItem
-            title="Item">
+          <NavItem title="Item">
             About
-            <li className="nav-item">
-                            <a className="nav-link" href="#">About HR Fashion</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">Store Locations</a>
-                </li>
-          </NavItem>
-          <NavItem
-            title="Item">
-            Follow Us 
-            {/* social media Links here
-             <li className="nav-item">
-                            <a className="nav-link" href="#">Facebook</a>
-                </li>
-                <li className="nav-item">
-                            <a className="nav-link" href="#">Twitter</a>
-                </li> */}
-          </NavItem>
-          
-               
+            <NavLink className="nav-item" >About HR Fashion</NavLink>
+            <NavLink className="nav-item" >Store Locations</NavLink>
+        </NavItem>
+        <NavItem title="Item">
+          Follow Us 
+        </NavItem>
         </Nav>
          <div className="text-right  copyright">
           © HR 2018
@@ -67,3 +40,4 @@ import './footer.css' ;
   );
 }
  export default Footer; 
+

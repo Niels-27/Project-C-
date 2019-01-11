@@ -66,6 +66,9 @@ class ApiCall {
             case "removeAddress":
                 this.link = "/user/removeAddress";
                 break;
+            case "wishlistAdd":
+                this.link = "/user/wishlistAdd";
+                break;
             case "wishlistdata":
                 this.link = "/user/getWishListInfo";
                 break;     

@@ -139,11 +139,15 @@ class Payment extends React.Component<any, any>{
         console.log(userData.id)
         var userID = userData.id;
         var adresID = address.id
-        if (this.props.location.state) {
-            if (this.props.location.state.addresUser) {
+
+        if(this.props.location.state){
+             if (this.props.location.state.addresUser) {
                 userID = this.props.location.state.addresUser.userId;
                 adresID = this.props.location.state.addresUser.addressId;
             }
+            if(this.props.location.state.chosenAddress)  {
+                adresID = this.props.location.state.chosenAddress.id;
+            } 
         }
         
         this.setState(prevState => ({
@@ -164,11 +168,12 @@ class Payment extends React.Component<any, any>{
         fields.preventDefault();
         // if(this.handleValidation(fields))
         if ((this.state.errors[0] === null || this.state.errors[0] === '') && (this.state.errors[1] === null || this.state.errors[1] === '')) {
-
-            this.sendMail(this.props.match.params.price, "nofit64@gmail.com"); //  gavindhollander
-
-
-
+            if(this.props.location.state.addresUser){
+                this.sendMail(this.props.match.params.price, this.props.location.state.addresUser.email ); //  gavindhollander
+            } 
+            else{
+                this.sendMail(this.props.match.params.price, userData.email); //  gavindhollander
+            }
         }
         else {
             alert("Form has errors.")
@@ -267,7 +272,7 @@ class Payment extends React.Component<any, any>{
                                
                             </div>
                             <div className="mt-1" style={{textAlign:"center", paddingLeft:50, paddingRight:50}}>
-                            <button style={{position: "relative", left: 100}}className=' btn btn-secondary btn-md'onClick={cancel} >Cancel bestelling</button>
+                            <button style={{position: "relative", left: 100}}className=' btn btn-secondary btn-md' disabled={!(this.state.notClicked)}onClick={cancel} >Cancel bestelling</button>
                             </div>
                         </div>
 

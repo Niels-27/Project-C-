@@ -76,6 +76,7 @@ interface IFormikValues
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
                 if (userData.rank === 4) {
                     location.reload();
+
                 }
                 //  this.props.history.push("/")
             }, (error) => 

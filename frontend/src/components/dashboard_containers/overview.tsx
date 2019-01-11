@@ -4,6 +4,7 @@ class Overview extends React.Component<any,any>{
     constructor(props: any) {
         super(props);
         this.GetInfix = this.GetInfix.bind(this)
+        this.renderAdres = this.renderAdres.bind(this)
     }
 
     public render() {
@@ -21,18 +22,7 @@ class Overview extends React.Component<any,any>{
                 Hier kan je het overzicht van jouw bestellingen, accountgegevens en geschiedenis bekijken en beheren.    
             </p>
             <div className="row boxes">
-                <div className="col-6 col-sm-5 window">
-                    <div className="card">
-                        <div className="card-header cardHeader">
-                        
-                        <p className="cardText"><b>Laatste orderstatus</b></p> <p className="cardLinks"><a href="/dashboard/orders">Bestellingsoverzicht</a></p>
-            
-                        </div> 
-                        <div className="card-body">
-                            <p className="card-text">[Laatste orderstatus]</p>                  
-                        </div>
-                        </div>
-                    </div>
+        
                 <div className="col-6 col-sm-5 window">
                     <div className="card">
                         <div className="card-header cardHeader">
@@ -46,31 +36,17 @@ class Overview extends React.Component<any,any>{
                         </div>
                     </div>
                 </div>
-
-                <div className="w-100 d-none d-md-block mt-md-4"/>
-
-                <div className="col-6 col-sm-5 window">
-                    <div className="card">
-                        <div className="card-header cardHeader">
-                        
-                        <p className="cardText"><b>Geschiedenis</b></p> <p className="cardLinks"><a href="/dashboard/history">Geschiedenisoverzicht</a></p> 
-            
-                        </div> 
-                        <div className="card-body">
-                            <p className="card-text">[Geschiedenis]</p>                  
-                        </div>
-                    </div>
-                </div>
                 <div className="col-6 col-sm-5  window">
                     <div className="card">
                         <div className="card-header cardHeader">
                         
-                        <p className="cardText"><b>Addressen</b></p>  <p className="cardLinks"><a href="/dashboard/addressen">Wijzig of voeg nieuw adres toe</a></p>
+                        <p className="cardText"><b>Hoofdadres</b></p>  <p className="cardLinks"><a href="/dashboard/addressen">Wijzig of voeg nieuw adres toe</a></p>
                         </div> 
                         <div className="card-body">
                             <div className="card-text">
-                            <div><p style={{margin: 0}}>{address.street} {address.postalCode} {address.city} {address.country.name}</p>
-                            </div></div>  
+                            {this.props.userData.addresses.map(this.renderAdres)}
+                            
+                            </div>  
                                    
                         </div>
                     </div>                   
@@ -83,6 +59,12 @@ class Overview extends React.Component<any,any>{
                 {showresults}        
             </div>   
         );
+    }
+    private renderAdres = (address) =>{
+        return(<div key={address.id}
+        ><p style={{margin: 0}}>{address.street} {address.postalCode} {address.city} {address.country.name}</p>
+        </div>);
+
     }
     private GetInfix(gender : string){
         switch(gender){

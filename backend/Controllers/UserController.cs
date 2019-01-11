@@ -130,8 +130,8 @@ namespace backend.Controllers
         }
           private string AuthenticateUser(string email, dynamic password){ // deze functie kijkt of het wachtwoord klopt
             string encodedSalt, encodedKey;
-            encodedSalt = _context.Users.Where(u => u.Email == email).Select(u => u.Salt).FirstOrDefault();//load salt based on email
-            encodedKey = _context.Users.Where(u => u.Email == email).Select(u => u.Key).FirstOrDefault(); //load key based on email
+            encodedSalt = _context.Users.Where(u => u.Email == email && u.Rank != 2).Select(u => u.Salt).FirstOrDefault();//load salt based on email
+            encodedKey = _context.Users.Where(u => u.Email == email && u.Rank != 2).Select(u => u.Key).FirstOrDefault(); //load key based on email
             if(encodedKey == null || encodedSalt == null ){
                 return "Er is een error.";
                 }
@@ -203,7 +203,7 @@ namespace backend.Controllers
             int userID = Int32.Parse(userData.unique_name.ToString());
 
 
-            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).Select(u => u).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userID).Include(a=> a.Addresses).ThenInclude(c => c.Country).Select(u => u).FirstOrDefault();
             user.Key = "";
             user.Salt = "";
             return Ok(user);          
@@ -264,9 +264,10 @@ namespace backend.Controllers
            
             dynamic userData = JValue.Parse(this.RequestBody);
             int userID = Int32.Parse(userData.unique_name.ToString());
+            
+            // Wishlist bevat de id's van de producten
+            var wishlist = _context.WishListProducts.Where(u => u.UserId == userID).Select(u => u.Product).ToList();  //list with products
 
-            var wishlist = _context.WishListProducts.Where(u => u.Id == userID).Select(u => u.Product).ToList();  //list with products
-    
             return Ok(wishlist);          
         }
          [HttpPost]
@@ -451,9 +452,58 @@ namespace backend.Controllers
 
             GuestDTO guest =  new GuestDTO(){
                 UserId = new_user.Id,
-                AddressId = new_address.Id
+                AddressId = new_address.Id,
+                Email = new_user.Email.ToString(),
             };
             return (guest);
         }  
+        [HttpPost]   //Deze functie voegt een item toe aan de wishlist
+        [Route("wishlistAdd")]
+        public async Task<IActionResult> PostWishListItem()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                // Dit is je JSON data | USERID + ITEMID is nodig
+                this.RequestBody = await reader.ReadToEndAsync();
+                Console.WriteLine(this.RequestBody);
+            }
+           
+            // Zet de JSON naar een string
+            dynamic userData = JValue.Parse(this.RequestBody);
+            Console.WriteLine(userData.user_id);
+            // System.Console.WriteLine(userData.user_id + userData.product_id);
+            // ^v gekopieerde code. Vraag of je zelf een aparte json moet maken.
+
+            // unique_name is de UserID
+            int userID = Int32.Parse(userData.user_id.ToString());
+            int productID = Int32.Parse(userData.product_id.ToString());
+
+            System.Console.WriteLine("test" + userID + productID);
+         
+            WishListProduct new_wishitem = new WishListProduct(){
+                UserId = userID,
+                ProductId = productID  // hier moet het productid komen die uit de json komt
+            };
+            
+            _context.WishListProducts.Add(new_wishitem);
+            _context.SaveChanges();
+
+            return Ok(new_wishitem);
+        }
+
+        
+        [HttpDelete("wishlistDelete/{userID}/{itemID}")]
+        public IActionResult DeleteWishItem(int userID, int itemID)
+        {
+            var result = (from m in _context.WishListProducts where m.UserId ==  userID && m.ProductId == itemID select m).FirstOrDefault();
+            if(result == null){
+                return NoContent();
+            }
+
+            _context.WishListProducts.Remove(result);
+            _context.SaveChanges();
+
+            return Ok();
+        }        
     }
 }

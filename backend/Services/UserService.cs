@@ -41,7 +41,7 @@ namespace backend.Services
 
         public UserDTO AuthenticateWithToken(string email)
         {
-            var user = _context.Users.Where(x => x.Email == email).Select(AsUserDto).SingleOrDefault();
+            var user = _context.Users.Where(x => x.Email == email && x.Rank != 2).Select(AsUserDto).SingleOrDefault();
             if (user == null) // something gone wrong
                 return null;
 

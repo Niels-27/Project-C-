@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
-import { PostAddress} from '../../../actions/userActions';
+import { PostAddress} from '../../actions/userActions';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import * as Yup from 'yup';
 /* tslint:disable:no-empty */
@@ -72,9 +72,10 @@ class AdresModal extends React.Component<any, any & IFormikValues>{
             await this.props.PostAddress(adresObject, 'postAddress')
             .then(addedAdres => {console.log(addedAdres)}, (error) => console.log(error))  
             formik.resetForm();
-            this.props.toggle();
-            this.props.trigger();               
-        } 
+            this.props.toggle(); 
+            this.props.trigger();                
+        }
+        
         formik.setSubmitting(false)
     }
     private renderFormik = (formik: FormikProps<IFormikValues>) => {

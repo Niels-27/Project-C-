@@ -25,15 +25,11 @@ export default function(ComposedComponent) {
         console.log(this.props)
         console.log(this.props.location.state)    
         if((lol.items.length === 0)){
-            this.props.history.push('/ShoppingCard');}
+            this.props.history.push('/forbidden');}
         
         else if(!this.props.location.state){
               this.props.history.push('/forbidden');
-            }
-        else if(!this.props.isAuthenticated && !this.props.location.state){
-              this.props.history.push("/ShoppingCard");
-          } 
-       
+            }     
     }
     public componentWillUpdate(nextProps) {
         console.log(this.state.items)
@@ -41,18 +37,14 @@ export default function(ComposedComponent) {
         console.log(lol)
         console.log(lol.items)
         console.log(this.props.location.state)
-        if (!nextProps.isAuthenticated) {
-            this.props.history.push('/forbidden');
-        }
-        else if(lol.items.length === 0){
-          this.props.history.push('/forbidden');
-        }
-        
+
+        if(lol.items.length === 0){
+          this.props.history.push('/ShoppingCard');
+        }    
         else if(!this.props.location.state){
-          this.props.history.push('/forbidden');
+          this.props.history.push('/ShoppingCard');
         }
     }
-
     public render() {
       var showComponent = <div>..</div>
      
