@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Row, Col, Container } from 'reactstrap';
+import { MdFavorite } from "react-icons/md"; // Hiermee Importeer je de Icons
 
 
 import { Link } from 'react-router-dom';
@@ -25,6 +26,7 @@ class App extends React.Component<IProps&any, any> {
         this.state = {
             product: {
                 modal: false,
+                modal2: false,
                 name: "",
                 imageName: "",
                 price: "",
@@ -37,6 +39,7 @@ class App extends React.Component<IProps&any, any> {
         };
 
         this.toggle = this.toggle.bind(this);
+        this.toggle2 = this.toggle2.bind(this);
     }
 
     public async componentDidMount() {
@@ -59,6 +62,7 @@ class App extends React.Component<IProps&any, any> {
     }
 
     public SaveToWishFunc = () =>{
+        this.toggle2();
         this.setState(prevState => ({
             wishobject: {
                 user_id: this.props.userData.id,
@@ -82,9 +86,16 @@ class App extends React.Component<IProps&any, any> {
         });
       }
 
+      public toggle2() {
+        this.setState({
+          modal2: !this.state.modal2
+        });
+      }
+
     public render() {
         var renderItem = <span>loading</span>;
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
+        const closeBtn2 = <button className="close" onClick={this.toggle2}>&times;</button>;
         
         if (this.state.product !== null) {
             var beschikbaarheid = <span>{this.state.product.amount}</span>
@@ -136,7 +147,7 @@ class App extends React.Component<IProps&any, any> {
                             </h3>
 
                             <Button type="button" className="btn btn-success btn-lg w-100" disabled={this.state.product.amount <= 0} onClick={this.addProductToShoppiongCard}>Koop Nu</Button>
-                            <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.SaveToWishFunc} style={{marginTop:15}}>Smash Like</Button>
+                            <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.SaveToWishFunc} style={{marginTop:15}}>Smash Like <MdFavorite size={30} style={{ color: 'white' }} /></Button>
 
                             <Modal isOpen={this.state.modal} toggle={this.toggle}  >
                                 <ModalHeader toggle={this.toggle} close={closeBtn}>In winkelmandje geplaatst</ModalHeader>                                
@@ -168,6 +179,42 @@ class App extends React.Component<IProps&any, any> {
                                                 <Link style={{color:"white", textDecoration:"none"}} to="/ShoppingCard">Afrekenen</Link>
                                             </Button>
                                             <Button type="button" className="btn btn-success w-100" onClick={this.toggle}>Verder Winkelen</Button>
+                                        </Col>
+                                    </Row>
+                                    </Container>
+                                </ModalBody>
+                            </Modal>
+
+                            <Modal isOpen={this.state.modal2} toggle={this.toggle2}  >
+                                <ModalHeader toggle={this.toggle2} close={closeBtn2}>Product is toegevoegd aan de Wishlist!</ModalHeader>                                
+                                <ModalBody>
+                                    <Container>
+                                    <Row>
+                                        <Col xs="7">
+                                            <Row>
+                                            <Col xs="5">
+                                                <img src={this.state.product.imageName} style={{width:100, height:100}}/>
+                                            </Col>
+                                            <Col xs="7">
+                                                <table>
+                                                    <tr>
+                                                        <td>{this.state.product.name}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>€{this.state.product.price}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Maat: {this.state.product.sizeName}</td>
+                                                    </tr>
+                                                </table>
+                                            </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col xs="5">
+                                            <Button type="button" className="btn btn-success w-100" style={{marginBottom:15}}>
+                                                <Link style={{color:"white", textDecoration:"none"}} to="/wishlist">Bekijk Wishlist</Link>
+                                            </Button>
+                                            <Button type="button" className="btn btn-success w-100" onClick={this.toggle2}>Verder Winkelen</Button>
                                         </Col>
                                     </Row>
                                     </Container>
