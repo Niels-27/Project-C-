@@ -26,7 +26,8 @@ namespace backend.Services
             {       
                 Id = x.Id,
                 Name = x.Name,
-                Email = x.Email
+                Email = x.Email,
+                Rank = x.Rank
             };
         private readonly AppSettings _appSettings;
         FashionContext _context;

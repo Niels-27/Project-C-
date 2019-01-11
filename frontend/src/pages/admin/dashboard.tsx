@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import './dashboard.css';
 import { withRouter, Link} from 'react-router-dom'
+import UserMenu from './userMenu';
 class Dashboard extends React.Component<any, any>{
 
     constructor(props: any) {
@@ -12,14 +13,16 @@ class Dashboard extends React.Component<any, any>{
 
     }
 
+
     public render() {
+
+
         return (
             <div>
                 <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
                     <a className="navbar-brand mr-1" >HR Admin</a>
-                        <button className="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle">
-                            <i className="fas fa-bars"/>
-                        </button>
+
+                        <UserMenu />
                 </nav>
                 <div id="wrapper">
                     <ul className="sidebar-admin navbar-nav">

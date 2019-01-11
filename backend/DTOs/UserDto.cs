@@ -9,6 +9,8 @@ namespace backend.DTOs
 
         public string Email { get; set; }
         public string Token { get; set; }
+
+        public int Rank {get;set;}
     }
 
     public class GuestDTO

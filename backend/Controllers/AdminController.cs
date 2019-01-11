@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
+using System.Text;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace backend.Controllers
 {
@@ -30,7 +34,189 @@ namespace backend.Controllers
             var result = from m in _context.Users select m;
             return result;
         }
+        public class countUserRegs
+        {
+            public string month;
+            public string amount;
+        }
+        [HttpGet("stats/users/registrations")]
+  
+        public List<string> StatsGetAllUsers()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = from m in _context.Users where m.Rank != 2 select m.CreateOn;
+            List<string> items = new List<string>();
+            List<string> returnList = new List<string>();
 
+            foreach (var item in result)
+            {
+                if(item.ToString("yyyy") == thisYear.ToString()){
+                   items.Add(item.ToString("MM")); 
+                }
+                
+            }
+            Dictionary<string, int> counts = items.GroupBy(x => x)
+                                                        .ToDictionary(g => g.Key,
+                                                                        g => g.Count());
+
+            for (int i = 1; i < 13; i++)
+            {
+                if (counts.ContainsKey(i.ToString("D2")))
+                {
+                    returnList.Add(counts[i.ToString("D2")].ToString());
+                }else{
+                    returnList.Add("0");
+                }
+                
+            }
+
+
+            return returnList;
+        }
+        public class countUsers{
+            public int amount;
+            public int rank;
+        }
+        [HttpGet("stats/users/vs/guest")]
+
+        public IQueryable<countUsers> StatsGetAllUsersVSgest()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = _context.Users.GroupBy(user => user.Rank)
+            .Select(r => new countUsers
+            {
+                rank = r.Key,
+                amount = r.Select(p => p.Id).Count()
+            });
+
+
+
+            return result;
+        }
+
+        [HttpGet("stats/sales/thisYear")]
+
+        public List<string> GetStatsSalesThisYear()
+        {
+            var thisYear = DateTime.Now.Year;
+            var result = from m in _context.ProductsSold select m;
+            List<string> items = new List<string>();
+            List<string> returnList = new List<string>();
+
+            foreach (var item in result)
+            {
+                if (item.Date.ToString("yyyy") == thisYear.ToString())
+                {
+                    for (int i = 0; i < item.Amount; i++)
+                    {
+                        items.Add(item.Date.ToString("MM"));
+                    } 
+                }
+
+            }
+            Dictionary<string, int> counts = items.GroupBy(x => x)
+                                                        .ToDictionary(g => g.Key,
+                                                                        g => g.Count());
+            
+            for (int i = 1; i < 13; i++)
+            {
+                if (counts.ContainsKey(i.ToString("D2")))
+                {
+                    returnList.Add(counts[i.ToString("D2")].ToString());
+                }
+                else
+                {
+                    returnList.Add("0");
+                }
+
+            }
+
+            return returnList;
+        }
+
+        public class BestSelling{
+            public int id;
+            public IQueryable<string> name;
+            public int sold;
+        }
+        [HttpGet("stats/sales/thenBest")]
+        public IQueryable<BestSelling> GetStatsThenBestThisYear()
+        {
+            var thisYear = DateTime.Now.Year;
+            
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new BestSelling{
+                id = r.Key,
+                name = this.getNameOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold).Take(10);
+
+            return result;
+        }
+        public IQueryable<string> getNameOfProduct(int id){
+            var x = from m in _context.Products where m.Id == id select m.Name;
+            return x;
+        }
+        public class ManOrWomanClass
+        {
+            public int id;
+            public IQueryable<int> manOrWoman;
+            public int sold;
+        }
+   
+        [HttpGet("stats/overallSales/manOrWoman")]
+        public IQueryable<ManOrWomanClass> StatsManOrWoman()
+        {
+
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new ManOrWomanClass
+            {
+                id = r.Key,
+                manOrWoman = this.getCatOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold);
+
+
+            return result;
+        }
+        public IQueryable<int> getCatOfProduct(int id)
+        {
+            var x = from m in _context.ProductCategory where m.ProductId == id && (m.CategoryId == 1 || m.CategoryId == 2) select m.CategoryId;
+            Console.WriteLine(x);
+            return x;
+        }
+
+        public class categorieReturnClass{
+            public int id;
+            public IQueryable<IEnumerable<Category>> cat;
+            public int sold;
+        }
+
+        [HttpGet("stats/overallSales/Categorie")]
+        public IOrderedQueryable<categorieReturnClass> StatsCategorie()
+        {
+
+            var result = _context.ProductsSold.GroupBy(item => item.ProductId)
+            .Select(r => new categorieReturnClass
+            {
+                id = r.Key,
+                cat = this.getAllCatOfProduct(r.Key),
+                sold = r.Select(p => p.Amount).Sum()
+            }).OrderByDescending(g => g.sold);
+
+
+            return result;
+        }
+        public IQueryable<IEnumerable<Category>> getAllCatOfProduct(int id)
+        {
+            var x = from m in _context.ProductCategory 
+                    join cat in _context.Categories on m.CategoryId equals cat.Id into g
+                    where m.ProductId == id && (m.CategoryId != 1 && m.CategoryId != 2) 
+                    select g;
+
+            Console.WriteLine(x);
+            return x;
+        }
         // GET api/admin/products/id
         [HttpGet("products/{id}")]
         public IActionResult GetProductById(int id)
@@ -52,6 +238,117 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
+        [HttpPost("new/Product")]
+
+        public async Task<Product> InsertProduct()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic product = JValue.Parse(this.RequestBody);
+
+            int sizeID = product.size;
+            ProductSize productSize = _context.ProductSizes.Where(ps => ps.Id == sizeID).Select(ps => ps).FirstOrDefault();
+
+            decimal price = product.price;
+            var lastID = from q in _context.Products orderby -q.Id select q.Id;
+            Product new_product = new Product()
+            {
+                Id = lastID.First() + 1,
+                Name = product.name.ToString(),
+                Description = product.description.ToString(),
+                Color = product.color.ToString(),
+                Price = price,
+                Amount = product.amount,
+                ProductSize = productSize, // referentie naar Product size..
+                ImageName = product.imageName,
+            };
+            _context.Add(new_product);
+
+            // geef in de frontend collectie(array/list..) mee aan categorien called "categories" met > , {heren, shirt, Nike}
+            //Deze loop voegt voor elke category string in product.categories een nieuwe ProductCategory toe aan de database
+            //category is string 
+            var lastIDCat = from q in _context.ProductCategory orderby -q.Id select q.Id;
+            int lastIDCatInt = lastIDCat.First() + 1;
+
+            foreach (var category in product.cat)
+            {
+
+                int catID = category;
+                Category cat = _context.Categories.Where(c => c.Id == catID).Select(c => c).FirstOrDefault();
+
+                ProductCategory pc = new ProductCategory()
+                {
+                    Id = lastIDCatInt,
+                    Product = new_product,
+                    Category = cat
+                };
+                _context.Add(pc); // Maak voor ProductCAtegort ook sequence met startswith, want heeft ook inital data, anders krijg je errors.
+                lastIDCatInt++;
+            }
+            _context.SaveChanges();
+            return new_product;
+        }
+
+        [HttpPost("new/Product/v1")]
+        public async Task<IActionResult> CreateNewProduct()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+
+            dynamic p = JValue.Parse(this.RequestBody);
+            var lastID = from q in _context.Products orderby -q.Id select q.Id;
+            Product product = new Product(){
+                Id = lastID.First() + 1,
+                ImageName = p.imageName,
+                Name = p.name,
+                Price = p.price,
+                Color = p.color,
+                Amount = p.amount,
+                Description = p.description,
+                ProductSizeId = p.size,
+            };
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            var lastIDCat = from q in _context.ProductCategory orderby -q.Id select q.Id;
+            int lastIDCatInt = lastIDCat.First() + 1;
+            foreach (var category in p.cat)
+            {
+                Console.WriteLine(lastID.First() + 1);
+                ProductCategory pc = new ProductCategory()
+                {
+                    Id = lastIDCatInt,
+                    ProductId = lastID.First() + 1,
+                    CategoryId = category
+                };
+                _context.ProductCategory.Add(pc); // Maak voor ProductCAtegort ook sequence met startswith, want heeft ook inital data, anders krijg je errors.
+                lastIDCatInt ++;
+            }
+            _context.SaveChanges();
+
+            return Ok(product);
+        }
+
+        [HttpGet("cattegorie/all")]
+        public IQueryable<Category> GetAllCattegories()
+        {
+            var result = from c in _context.Categories orderby c.Id select c;
+            return result;
+        }
+        [HttpGet("sizes/all")]
+        public IOrderedQueryable<ProductSize> GetAllSizes()
+        {
+            var result = from c in _context.ProductSizes orderby c.Id select c;
+            return result;
+        }
+        private string RequestBody;
+        
+ 
+
         // POST api/admin/categories/create
         [HttpPost("users/create")]
         public IActionResult PostCategory([FromBody]User user)
@@ -65,7 +362,28 @@ namespace backend.Controllers
             return Ok();
 
         }
+        [HttpPost("products/update/byid")]
+        public async Task<IActionResult> UpdateProductById()  //deze functie haalt de wishlist data van de user
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                this.RequestBody = await reader.ReadToEndAsync();
+            }
+            dynamic up = JValue.Parse(this.RequestBody);
+            int id = Int32.Parse(up.id.ToString());
 
+            var products = _context.Products.Where(a => a.Id == id).Select(a => a).FirstOrDefault();
+            products.ImageName = up.ImageName;
+            products.Name = up.Name;
+            products.Color = up.Color;
+            products.Price = up.Price;
+            products.Description = up.Description;
+
+            _context.Products.Update(products);
+            _context.SaveChanges();
+
+            return Ok(products);
+        }
        // PUT api/admin/products/id
         [HttpPut("products/update/{id}")]
         public IActionResult PutProduct(int id, [FromBody]Product product_edit)

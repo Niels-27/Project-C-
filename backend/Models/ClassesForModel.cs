@@ -23,6 +23,8 @@ namespace backend.Models {
         public ICollection<ProductCategory> Categories { get; set; }  // One To Many
 
     }
+
+
     public class ProductSize
     {
         [Key]

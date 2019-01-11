@@ -719,6 +719,7 @@ namespace backend.Migrations
 
                     b.HasData(
                         new { Id = 1, CreateOn = new DateTime(2019, 1, 9, 13, 57, 23, 197, DateTimeKind.Local), Email = "admin@hrfashion.nl", Key = "smcJ/dBZATN4Mn117ExHtUwi6xA=", Name = "admin", Rank = 4, Salt = "Ukp7BqmIS61j+hZQ0BowmIKycaQ=" }
+
                     );
                 });
 

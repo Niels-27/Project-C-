@@ -74,10 +74,9 @@ interface IFormikValues
             await this.props.login(values).then(userData =>
             {
                 alert("Je bent met succes ingelogd.\n" + "Welkom, " + userData.name + "!");
-                if(this.props.location.state){
-                    if(this.props.location.state.origin){
-                        this.props.history.push("/");
-                    }
+                if (userData.rank === 4) {
+                    location.reload();
+
                 }
                 //  this.props.history.push("/")
             }, (error) => 

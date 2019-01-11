@@ -9,7 +9,6 @@ import * as PropTypes from 'prop-types';
 // import { any } from 'prop-types';
 import ApiCall from '../logic/apiCall';
 
-
 class Payment extends React.Component<any, any>{
     public static propTypes = { postOrder: PropTypes.func.isRequired }
     public cookie: Cookie = new Cookie();
@@ -123,9 +122,11 @@ class Payment extends React.Component<any, any>{
 
     public async sendMail(first, seccond) {
         const call: ApiCall = new ApiCall();
+        const cookie: Cookie = new Cookie();
         call.setURL("paymentSucces", seccond, first);
         await call.result()
         alert('Bestelling met succes afgerond! Je krijgt een email met een bevestiging van je aankoop!')
+        cookie.remove('ShoppingCard');
         this.props.history.push("/");
     }
 
@@ -138,15 +139,17 @@ class Payment extends React.Component<any, any>{
         console.log(userData.id)
         var userID = userData.id;
         var adresID = address.id
+
         if(this.props.location.state){
-            if(this.props.location.state.addresUser){
+             if (this.props.location.state.addresUser) {
                 userID = this.props.location.state.addresUser.userId;
                 adresID = this.props.location.state.addresUser.addressId;
-            } 
+            }
             if(this.props.location.state.chosenAddress)  {
                 adresID = this.props.location.state.chosenAddress.id;
             } 
         }
+        
         this.setState(prevState => ({
             order: {
                 ...prevState.order,
