@@ -123,6 +123,7 @@ namespace backend.Controllers
             else{
                 _context.Update(user);
             }
+            System.Console.WriteLine(user.Salt);
               //add user to database
             _context.SaveChanges();
             }
@@ -245,7 +246,6 @@ namespace backend.Controllers
             {
                 this.RequestBody = await reader.ReadToEndAsync();
             }       
-            Console.WriteLine("HALLO HIER UIT GET ALL ADDRESSES");
             dynamic address = JValue.Parse(this.RequestBody);
             int addressID = address.id;
             var new_address = _context.Addresses.Where(a => a.Id == addressID).Include(c => c.Country).Select(a => a).FirstOrDefault();
@@ -367,7 +367,7 @@ namespace backend.Controllers
             int id = Int32.Parse(up.id.ToString());
 
             User user = _context.Users.Where(u => u.Id == id).Select(u => u).FirstOrDefault();
-
+            System.Console.WriteLine(up.newPassword);
             var encodedUser = EncodeAndStoreUser(user, up.newPassword, false);
             
             return Ok(encodedUser);          

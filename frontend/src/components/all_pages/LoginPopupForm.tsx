@@ -78,6 +78,14 @@ interface IFormikValues
                     location.reload();
 
                 }
+                // else if(this.props.location.state && userData.rank !== 4 ){
+                //     if(this.props.location.state.origin){
+                //         this.props.history.push("/");
+                //     }
+                // }
+                // else{
+                //     this.props.history.push("/");
+                // }
                 //  this.props.history.push("/")
             }, (error) => 
                     {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");

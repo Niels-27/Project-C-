@@ -44,7 +44,7 @@ class Overview extends React.Component<any,any>{
                         </div> 
                         <div className="card-body">
                             <div className="card-text">
-                            {this.props.userData.addresses.map(this.renderAdres)}
+                            {this.props.userData.addresses.slice(0, 1).map(this.renderAdres)}   <a href="/dashboard/accountdetails">Verander hoofdadres</a>
                             
                             </div>  
                                    

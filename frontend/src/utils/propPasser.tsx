@@ -22,7 +22,11 @@ export default function(ComposedComponent) {
           console.log(this.props.user)
           await retrieveData(this.props.user, "userdata")   // get user info
           .then(res => {this.setState({user: res})},
-          (error) => {this.setState({user: error})});   
+          (error) => {this.setState({user: error})}); 
+          await retrieveData(this.props.user,"allAdresses")  // get addresses
+          .then(res => {this.setState({addressList: res})},
+           (error) => {this.setState({addressList: error})});  
+           console.log(this.state.value)   
       }
     public async componentDidMount(){
       const {retrieveData} = this.props;

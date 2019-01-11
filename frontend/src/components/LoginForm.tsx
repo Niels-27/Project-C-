@@ -66,7 +66,6 @@ interface IFormikValues
                 if(userData.rank === 4){
                     location.reload();
                 }
-                this.props.history.push("/")
 
             }, (error) => 
                 {alert("Er is iets misgegaan tijdens het inloggen. Probeer het later nog eens. ");
