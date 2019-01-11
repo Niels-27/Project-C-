@@ -20,9 +20,9 @@ class Addressen extends React.Component<any,any>{
         return this.state.modal;
       } 
     public render() {
-        const {userData} = this.props
+        const {userData, addresses} = this.props
         var showresults = <span>..</span>
-        if ( userData ){
+        if ( userData && addresses ){
             showresults = (
             <div> 
             <h5><b>Mijn adressen</b></h5>
@@ -31,10 +31,10 @@ class Addressen extends React.Component<any,any>{
                 <b>Je mag maximaal 4 addressen beheren.</b>
             </p>
             <div className="row boxes">
-                {userData.addresses.map(this.renderAdres)}
+                {addresses.map(this.renderAdres)}
             </div>
             <div className="mt-4">
-            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={userData.addresses.length ===4}>
+            <button className="btn btn-success btn-md" onClick={this.toggle} disabled={addresses.length ===4}>
                                 <strong>Voeg een adres toe</strong>
             </button>
             </div>

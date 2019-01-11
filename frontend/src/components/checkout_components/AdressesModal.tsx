@@ -25,9 +25,9 @@ class AddressenModal extends React.Component<any, any>{
       }
       
     public render() {
-        const { userData } = this.props
+        const { userData, addresses } = this.props
         var showresults = <div>Laden..</div>
-        if (userData) {
+        if (userData && addresses) {
         showresults=(<div>
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
                 <ModalHeader toggle={this.props.toggle}>Adres kiezen</ModalHeader>
@@ -36,10 +36,10 @@ class AddressenModal extends React.Component<any, any>{
                     <b>Kies een adres als het afleveradres.</b>
                     </p>
                     <div className="row boxes">
-                        {this.props.userData.addresses.map(this.renderAddresses)}
+                        {addresses.map(this.renderAddresses)}
                     </div>
                     <div className="mt-4">
-                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={this.props.userData.addresses.length ===4} onClick={this.toggle}>
+                              <Button type="submit" color="primary" style={{ float: "left" }} disabled={addresses.length ===4} onClick={this.toggle}>
                                            Voeg nieuw adres toe
                             </Button>
                 

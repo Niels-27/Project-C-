@@ -41,15 +41,18 @@ class WishListPage extends React.Component<any,any>{
 
 
     public renderWishListItem = (wishitem, index) => {
-
+        var beschikbaarheid = <span>{wishitem.amount}</span>
+        if(wishitem.amount <= 0){
+            beschikbaarheid = <span className="text-danger">Uitverkocht</span>
+        }
         return (
                 <tr key={index} id={wishitem.id}>
                         <td><img src={wishitem.imageName} style={{width: 100, height: 100}}/></td>
                         <td>{wishitem.name}</td> 
                         <td>{wishitem.price}</td>
-                        <td>{wishitem.amount}</td>
+                        <td>{beschikbaarheid}</td>
                         <td>
-                            <button type="button" className="btn btn-success w-100" style={{marginBottom: 10}} onClick={this.addProductToShoppiongCard.bind(this, wishitem.id)}>
+                            <button type="button" className="btn btn-success w-100" style={{marginBottom: 10}} disabled={wishitem.amount <= 0} onClick={this.addProductToShoppiongCard.bind(this, wishitem.id)}>
                                 Toevoegen
                             </button>
                             <br/>

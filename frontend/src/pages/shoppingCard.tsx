@@ -90,7 +90,7 @@ class ShoppingCard extends React.Component<any, any> {
 
                 <td className="col-md-2" style={{ textAlign: 'center' }}>
                    
-                    <button className="ItemsIncreaseUp increaseItem btn btn-default" onClick={increaseButton}>+</button>
+                    <button className="ItemsIncreaseUp increaseItem btn btn-default" disabled={map[items.id] >= items.amount} onClick={increaseButton}>+</button>
                     <input className="ItemsIncreaseInput increaseItem" value={map[items.id]} readOnly/>
                     <button className="ItemsIncreaseDown increaseItem btn btn-default" onClick={decreseButton}>-</button>
                 </td>
