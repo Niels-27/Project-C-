@@ -30,6 +30,7 @@ public class FashionContext : DbContext  //De database
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<ProductCategory>()  // Relation Many-To-Many: product to product-category and category to product-category
             .HasKey(t => new { t.Id });  //Primary Key
 

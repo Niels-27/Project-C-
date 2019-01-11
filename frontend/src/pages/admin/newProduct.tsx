@@ -209,7 +209,12 @@ class AdminNewProduct extends React.Component<any, any>{
             cat: this.state.selectedCat,
             amount:this.state.amount
         });
-        alert(result);
+        if (typeof result === "object"){
+            alert("Product " + result.name + " is succesvol aangemaakt");
+        }else{
+          alert(result);  
+        }
+        
 
     }
 

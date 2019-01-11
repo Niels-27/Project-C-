@@ -4,6 +4,8 @@ import requireAuth from './utils/requireAuth';
 import { RetrieveData } from './actions/userActions';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import CookieConsent from "react-cookie-consent";
+
 // normal page coompinents.
 import Navbar from './components/all_pages/NavBar';
 import MenuBar from './components/all_pages/menu';
@@ -95,6 +97,9 @@ class Routes extends React.Component<any,any> {
             <Route component={pageNotFound} />
 
           </Switch>
+          <CookieConsent>
+            This website uses cookies to enhance the user experience.
+          </CookieConsent>
           <Footer />
         </div>
       </Router>

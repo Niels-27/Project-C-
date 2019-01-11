@@ -39,7 +39,7 @@ class UserMenu extends React.Component<any, any>{
     }
     private handleClick(e) {
         this.props.logout();
-        // this.props.history.push('/');
+        location.reload();
     }
 }
 

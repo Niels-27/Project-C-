@@ -238,25 +238,31 @@ namespace backend.Controllers
             return new ObjectResult(user);
         }
 
+
         [HttpPost("new/Product")]
-        public async void CreateNewProduct()  //deze functie haalt de wishlist data van de user
+        public async Task<IActionResult> CreateNewProduct()  //deze functie haalt de wishlist data van de user
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 this.RequestBody = await reader.ReadToEndAsync();
             }
+
             dynamic p = JValue.Parse(this.RequestBody);
+            var lastID = from q in _context.Products orderby -q.Id select q.Id;
             Product product = new Product(){
+                Id = lastID.First() + 1,
                 ImageName = p.imageName,
                 Name = p.name,
                 Price = p.price,
                 Color = p.color,
                 Amount = p.amount,
                 Description = p.description,
-                ProductSizeId = p.size
+                ProductSizeId = p.size,
             };
-            _context.Add(product);
+            _context.Products.Add(product);
             _context.SaveChanges();
+
+            return Ok(product);
         }
 
         [HttpGet("cattegorie/all")]
