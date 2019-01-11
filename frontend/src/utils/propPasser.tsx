@@ -9,7 +9,7 @@ export default function(ComposedComponent) {
       retrieveData: PropTypes.func.isRequired, isAuthenticated: PropTypes.bool.isRequired};
       constructor(props: any) {
         super(props);
-        this.state = {user: null, address:null, value: null}
+        this.state = {user: null, address:null, value: null, addressList:null}
         this.giveId = this.giveId.bind(this)
         this.triggerPropPasser = this.triggerPropPasser.bind(this);
       } 
@@ -36,6 +36,11 @@ export default function(ComposedComponent) {
            (error) => {this.setState({address: error})});  
            console.log(this.state.value) 
 
+           await retrieveData(this.props.user,"allAdresses")  // get addresses
+          .then(res => {this.setState({addressList: res})},
+           (error) => {this.setState({addressList: error})});  
+           console.log(this.state.value) 
+
            if(this.state.value!=null){
               if(!this.props.isAuthenticated){
                 this.setState({value: null})
@@ -47,9 +52,9 @@ export default function(ComposedComponent) {
       console.log(this.state.user)
       console.log(this.state.address)
       console.log(this.state.value)
-      var showComponent  =   <ComposedComponent trigger={this.triggerPropPasser} userData={this.state.user} address = {this.state.address} giveId={this.giveId}{...this.props} />
+      var showComponent  =   <ComposedComponent addresses={this.state.addressList} trigger={this.triggerPropPasser} userData={this.state.user} address = {this.state.address} giveId={this.giveId}{...this.props} />
       if(this.state.value !== null){
-        showComponent= <ComposedComponent trigger={this.triggerPropPasser} userData={this.state.user} address = {this.state.value} giveId={this.giveId}{...this.props} />
+        showComponent= <ComposedComponent addresses={this.state.addressList} trigger={this.triggerPropPasser} userData={this.state.user} address = {this.state.value} giveId={this.giveId}{...this.props} />
       }
       return (
         <div>{showComponent}</div>

@@ -87,6 +87,10 @@ class App extends React.Component<IProps&any, any> {
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
         
         if (this.state.product !== null) {
+            var beschikbaarheid = <span>{this.state.product.amount}</span>
+            if(this.state.product.amount <= 0){
+                beschikbaarheid = <span className="text-danger">Uitverkocht</span>
+            }
             renderItem = (
                 <div className="mt-5 hoverable">
                     <Link to='/'>Home </Link> > {this.state.product.name}
@@ -131,7 +135,7 @@ class App extends React.Component<IProps&any, any> {
 
                             </h3>
 
-                            <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.addProductToShoppiongCard}>Koop Nu</Button>
+                            <Button type="button" className="btn btn-success btn-lg w-100" disabled={this.state.product.amount <= 0} onClick={this.addProductToShoppiongCard}>Koop Nu</Button>
                             <Button type="button" className="btn btn-success btn-lg w-100" onClick={this.SaveToWishFunc} style={{marginTop:15}}>Smash Like</Button>
 
                             <Modal isOpen={this.state.modal} toggle={this.toggle}  >
@@ -173,7 +177,7 @@ class App extends React.Component<IProps&any, any> {
                             <section className="Beschikbaarheid">
                                 <div className="mt-5">
                                     <p className="grey-text">
-                                        <strong>Beschikbaarheid: </strong>{this.state.product.amount}</p>
+                                        <strong>Beschikbaarheid: </strong>{beschikbaarheid}</p>
                                 </div>
                             </section>
 
