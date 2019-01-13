@@ -176,6 +176,9 @@ class AdminUsers extends React.Component<any, any>{
         const call: ApiCall = new ApiCall();
         call.setURL('AdminuserdataChange');
         const result = await call.result({ id: state.user.id,name: state.userInput.name, email: state.userInput.email, rank: state.userInput.rank });
+        if(result.name){
+            alert("Gebruiker is bewerkt!");
+        }
         console.log(result);
     }
     private renderOrder = (order) => {
@@ -187,11 +190,12 @@ class AdminUsers extends React.Component<any, any>{
         return (<div>
             <p>Order datum : {render}</p>
             {order.map(this.mapOrderItems)}
+            <div className="clear"/>
         </div>);
     }
 
     private mapOrderItems(item){
-        return (<div style={{paddingLeft:'15px'}}>
+        return (<div style={{paddingLeft:'15px'}} className="clear">
             <div style={{ width: '10%' ,float:'left'}}><img src={item.imageName} height="25p" /></div>
             <div style={{ width: '10%', float: 'left'}}>{item.amount} x</div>
             <div style={{ width: '60%', float: 'left'}}>{item.name}</div>
