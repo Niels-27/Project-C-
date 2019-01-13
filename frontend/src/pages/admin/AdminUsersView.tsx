@@ -135,7 +135,7 @@ class AdminUsers extends React.Component<any, any>{
     }
 
     private renderAdress =() =>{
-        if(this.state.user_adr !== null){
+        if (this.state.user_adr !== null && this.state.user_adr.city && this.state.user_adr.street && this.state.user_adr.country){
             return(<div>
                 {this.state.user_adr.city + " "}
                 {this.state.user_adr.street + " "}
@@ -144,8 +144,9 @@ class AdminUsers extends React.Component<any, any>{
 
                 
                 </div>);
+        }else{
+            return <p>Deze gebruiker heeft geen adres opgeslagen</p>;
         }
-        return ;
     }
     private async getAddresInfo(id){
         const call: ApiCall = new ApiCall();
@@ -179,9 +180,12 @@ class AdminUsers extends React.Component<any, any>{
     }
     private renderOrder = (order) => {
         console.log("order");
-
+        const d = order[0].date.split("T");
+        const dd = d[0].split("-")
+        const t = d[1].split(":");
+        const render = dd[2] + "-" + dd[1] +"-"+ dd[0] + " om: " + t[0]+":"+t[1];
         return (<div>
-            <p>order datum : {order[0].date}</p>
+            <p>Order datum : {render}</p>
             {order.map(this.mapOrderItems)}
         </div>);
     }

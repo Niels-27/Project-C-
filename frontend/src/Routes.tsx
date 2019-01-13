@@ -63,7 +63,7 @@ class Routes extends React.Component<any,any> {
     const { user } = this.state;
     if (user){
       console.log(user)
-      if(user.rank === 44){
+      if(user.rank === 4){
         return this.renderAdmin();
       }
     }
