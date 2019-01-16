@@ -76,7 +76,7 @@ class Addressen extends React.Component<any,any>{
                 </div> 
                 <div className="card-body">
                 <div className="card-text">
-                            <div><p style={{margin: 0}}>{address.street} {address.zipcode} {address.city} {address.country.name}</p>
+                            <div><p style={{margin: 0}}>{address.street} {address.postalCode} {address.city} {address.country.name}</p>
                             </div></div>                
                 </div>
             </div>

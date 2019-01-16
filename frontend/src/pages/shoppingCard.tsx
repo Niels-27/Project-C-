@@ -227,11 +227,11 @@ class ShoppingCard extends React.Component<any, any> {
 
     private returnAvailebility = (amount,stock) =>{
         if (amount <= stock){
-            return <span className="text-succes"><strong>Op voordaad</strong></span>;
+            return <span className="text-succes"><strong>Op voorraad</strong></span>;
         } else if (stock === 0){
-            return <span className="text-danger"><strong>Niet op vooraad</strong></span>;
+            return <span className="text-danger"><strong>Niet op voorraad</strong></span>;
         }else{
-            return <span className="text-warning"><strong>Niet goenoeg op vooraad</strong></span>;
+            return <span className="text-warning"><strong>Niet goenoeg op voorraad</strong></span>;
         }
         
     }
