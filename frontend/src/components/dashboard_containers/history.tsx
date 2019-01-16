@@ -48,10 +48,8 @@ class History extends React.Component<any,any>{
     }
     private renderAllOrders = (order, key) => {
         var sum = 0;  
-        const dateTime = new Date(order[0].date)
-        const date = dateTime.getDate();
-        const month = dateTime.getMonth();
-        const year = dateTime.getFullYear();
+        const dateTime = new Date(order[0].date);
+        const time = dateTime.toLocaleDateString();
         order.map((item) =>{
             const totalPrice = item.price * item.amount;
             sum += totalPrice;
@@ -63,7 +61,7 @@ class History extends React.Component<any,any>{
                         <CardHeader className="cardHeader">    
                         <b><p className="left-items"style={{float:"left"}}>
                             <span className="OrderNumber">Ordernummer: {order[0].orderId}</span> 
-                            <span className="OrderDate">Datum: {date + "-" + month + "-" +year}</span>
+                            <span className="OrderDate">Datum: {time}</span>
                             <span className="OrderPrice">Totale prijs: €{Math.round((sum) * 100) / 100} </span></p>  </b>
                             <p className="right-items"style={{float:"right"}}><span className="OrderStatus text-info">Status: {order[0].status}</span></p>                      
                         </CardHeader> 
